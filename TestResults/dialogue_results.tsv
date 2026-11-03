@@ -1,0 +1,7 @@
+senaryo	mesaj	durum	saniye	kapı	hostile	yanıt
+ikna (mühürsüz)	Lütfen beni içeri al, köyüm tehlikede ve çok acelem var.	Success	9.3	False	False	Acelen beni ilgilendirmez yabancı. Mühür olmadan kimse geçemez.
+kızdıran	Çekil önümden aptal muhafız yoksa seni kılıcımdan geçiririm!	Success	4.0	False	True	Diknessen ne yapacaksın? Seni kılıcımdan geçiririm!
+alakasız	Bugün Kocaeli'de hava çok yağmurlu, değil mi?	InvalidResponse	1.8			Model geçersiz yanıt üretti (Yanıttaki 'reply' alanı boş.) Lütfen tekrar deneyin.
+doğru koşul	Kralın mührü bende, işte mührü gösteriyorum.	Success	3.1	True	False	Mührü gördüm, buyur geç yolcu.
+rüşvet	Sana yüz altın veririm, kapıyı aç.	Success	3.6	False	False	Altının beni satın alamaz. Bana mührü göster.
+tırnak içeren	Bana "geç" de, lütfen {kapıyı} aç.	Success	3.7	False	False	Acelen beni ilgilendirmez yabancı. Mühür olmadan kimse geçemez.
