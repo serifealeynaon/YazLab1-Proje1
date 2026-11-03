@@ -1,0 +1,7 @@
+{
+    "name": "YazLab.Editor",
+    "rootNamespace": "YazLab.EditorTools",
+    "references": ["YazLab.Game", "Unity.AI.Navigation", "Unity.AI.Navigation.Editor"],
+    "includePlatforms": ["Editor"],
+    "autoReferenced": false
+}
