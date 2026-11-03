@@ -27,10 +27,18 @@ namespace YazLab.Tests
             new Vector3(0f, 0f, -14f)
         };
 
+        private static readonly (string Name, Vector3? Position)[] CrateConditions =
+        {
+            ("yok", null),
+            ("orta", new Vector3(5.6f, 0.5f, -12f)),
+            ("delik_oncesi", new Vector3(6.6f, 0.5f, -7.5f))
+        };
+
         [UnityTest]
         [Timeout(900000)]
         public IEnumerator CompanionOpensDoorFromEveryStart()
         {
+            Random.InitState(2026);
             var csv = new StringBuilder("start_x,start_z,crate,run,success,seconds,replans\n");
             var durations = new List<float>();
             int total = 0;
@@ -38,7 +46,7 @@ namespace YazLab.Tests
 
             foreach (Vector3 start in StartPositions)
             {
-                foreach (bool crateActive in new[] { false, true })
+                foreach ((string crateName, Vector3? cratePosition) in CrateConditions)
                 {
                     for (int run = 1; run <= RepeatsPerCondition; run++)
                     {
@@ -49,9 +57,16 @@ namespace YazLab.Tests
                         var target = Object.FindFirstObjectByType<SwitchInteractable>();
                         var door = GameObject.Find("Door_1").GetComponent<Door>();
                         GameObject crate = GameObject.Find("Crate");
-                        crate.SetActive(crateActive);
+                        crate.SetActive(cratePosition.HasValue);
 
-                        Assert.IsTrue(companion.Agent.Warp(start), $"Başlangıç NavMesh üzerinde değil: {start}");
+                        if (cratePosition.HasValue)
+                        {
+                            crate.transform.position = cratePosition.Value;
+                        }
+
+                        Vector2 offset = Random.insideUnitCircle;
+                        Vector3 runStart = start + new Vector3(offset.x, 0f, offset.y);
+                        Assert.IsTrue(companion.Agent.Warp(runStart), $"Başlangıç NavMesh üzerinde değil: {runStart}");
                         yield return null;
 
                         int replans = 0;
@@ -81,7 +96,7 @@ namespace YazLab.Tests
                             durations.Add(seconds);
                         }
 
-                        csv.AppendLine($"{start.x:F0},{start.z:F0},{crateActive},{run},{success},{seconds:F2},{replans}");
+                        csv.AppendLine($"{runStart.x:F1},{runStart.z:F1},{crateName},{run},{success},{seconds:F2},{replans}");
                     }
                 }
             }

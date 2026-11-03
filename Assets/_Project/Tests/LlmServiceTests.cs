@@ -141,7 +141,20 @@ namespace YazLab.Tests
             File.WriteAllText("TestResults/dialogue_results.tsv", report.ToString());
         }
 
+        [UnityTest]
+        public IEnumerator EmptyReplyThenValid_RetriesAndSucceeds()
+        {
+            yield return RunWithCannedContent(LlmStatus.Success,
+                "{\\\"reply\\\":\\\"\\\",\\\"door_unlocked\\\":false,\\\"hostile\\\":false}",
+                "{\\\"reply\\\":\\\"Geçemezsin\\\",\\\"door_unlocked\\\":false,\\\"hostile\\\":false}");
+        }
+
         private static IEnumerator RunWithCannedContent(string escapedContent, LlmStatus expected)
+        {
+            yield return RunWithCannedContent(expected, escapedContent);
+        }
+
+        private static IEnumerator RunWithCannedContent(LlmStatus expected, params string[] escapedContents)
         {
             var listener = new TcpListener(IPAddress.Loopback, 0);
             listener.Start();
@@ -149,16 +162,20 @@ namespace YazLab.Tests
 
             Task serverTask = Task.Run(async () =>
             {
-                using TcpClient client = await listener.AcceptTcpClientAsync();
-                using NetworkStream stream = client.GetStream();
-                var buffer = new byte[65536];
-                await stream.ReadAsync(buffer, 0, buffer.Length);
-                string body = "{\"message\":{\"role\":\"assistant\",\"content\":\"" + escapedContent + "\"}}";
-                byte[] bodyBytes = Encoding.UTF8.GetBytes(body);
-                string header = $"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: {bodyBytes.Length}\r\nConnection: close\r\n\r\n";
-                byte[] headerBytes = Encoding.ASCII.GetBytes(header);
-                await stream.WriteAsync(headerBytes, 0, headerBytes.Length);
-                await stream.WriteAsync(bodyBytes, 0, bodyBytes.Length);
+                for (int index = 0; ; index++)
+                {
+                    using TcpClient client = await listener.AcceptTcpClientAsync();
+                    using NetworkStream stream = client.GetStream();
+                    var buffer = new byte[65536];
+                    await stream.ReadAsync(buffer, 0, buffer.Length);
+                    string content = escapedContents[Mathf.Min(index, escapedContents.Length - 1)];
+                    string body = "{\"message\":{\"role\":\"assistant\",\"content\":\"" + content + "\"}}";
+                    byte[] bodyBytes = Encoding.UTF8.GetBytes(body);
+                    string header = $"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: {bodyBytes.Length}\r\nConnection: close\r\n\r\n";
+                    byte[] headerBytes = Encoding.ASCII.GetBytes(header);
+                    await stream.WriteAsync(headerBytes, 0, headerBytes.Length);
+                    await stream.WriteAsync(bodyBytes, 0, bodyBytes.Length);
+                }
             });
 
             var service = new OllamaDialogueService(Settings($"http://127.0.0.1:{port}", timeout: 5), new JsonNpcResponseParser());
