@@ -46,6 +46,7 @@ namespace YazLab.Companion
 
         private void Start()
         {
+            Agent.enabled = true;
             ChangeState(new FollowPlayerState());
         }
 

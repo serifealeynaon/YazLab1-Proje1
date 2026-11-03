@@ -213,6 +213,7 @@ namespace YazLab.EditorTools
             agent.angularSpeed = 360f;
             agent.acceleration = 12f;
             agent.stoppingDistance = 0f;
+            agent.enabled = false;
 
             var sensor = root.AddComponent<RaycastSensor>();
             var sensorObject = new SerializedObject(sensor);
