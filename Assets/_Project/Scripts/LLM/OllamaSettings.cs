@@ -10,6 +10,7 @@ namespace YazLab.LLM
         public string model = "llama3.2:3b";
         public int timeoutSeconds = 45;
         public int maxHistoryMessages = 8;
+        public int invalidResponseRetries = 1;
         [Range(0f, 1.5f)] public float temperature = 0.4f;
         public int maxTokens = 120;
         [TextArea(6, 20)] public string systemPrompt;

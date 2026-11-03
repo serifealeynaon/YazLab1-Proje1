@@ -45,29 +45,19 @@ namespace YazLab.LLM
 
             try
             {
-                OllamaChatRequest request = BuildRequest(playerMessage);
-                using UnityWebRequest webRequest = CreateWebRequest(request);
-                await WaitAsync(webRequest, cancellationToken);
+                LlmResult result = null;
 
-                float elapsed = Time.realtimeSinceStartup - startTime;
-
-                if (webRequest.result != UnityWebRequest.Result.Success)
+                for (int attempt = 0; attempt <= settings.invalidResponseRetries; attempt++)
                 {
-                    return ToFailure(webRequest, elapsed);
+                    result = await SendOnceAsync(playerMessage, startTime, cancellationToken);
+
+                    if (result.Status != LlmStatus.InvalidResponse)
+                    {
+                        break;
+                    }
                 }
 
-                OllamaChatResponse response = JsonUtility.FromJson<OllamaChatResponse>(webRequest.downloadHandler.text);
-                string content = response?.message?.content;
-                Debug.Log($"[LLM] Ham yanıt ({elapsed:F1} sn): {content}");
-
-                if (!parser.TryParse(content, out NpcAction action, out string parseError))
-                {
-                    return LlmResult.Failure(LlmStatus.InvalidResponse,
-                        $"Model geçersiz yanıt üretti ({parseError}) Lütfen tekrar deneyin.", elapsed);
-                }
-
-                Remember(playerMessage, content);
-                return LlmResult.Success(action, elapsed);
+                return result;
             }
             catch (OperationCanceledException)
             {
@@ -80,6 +70,33 @@ namespace YazLab.LLM
                 return LlmResult.Failure(LlmStatus.InvalidResponse,
                     "Model yanıtı işlenemedi. Lütfen tekrar deneyin.", Time.realtimeSinceStartup - startTime);
             }
+        }
+
+        private async Task<LlmResult> SendOnceAsync(string playerMessage, float startTime, CancellationToken cancellationToken)
+        {
+            OllamaChatRequest request = BuildRequest(playerMessage);
+            using UnityWebRequest webRequest = CreateWebRequest(request);
+            await WaitAsync(webRequest, cancellationToken);
+
+            float elapsed = Time.realtimeSinceStartup - startTime;
+
+            if (webRequest.result != UnityWebRequest.Result.Success)
+            {
+                return ToFailure(webRequest, elapsed);
+            }
+
+            OllamaChatResponse response = JsonUtility.FromJson<OllamaChatResponse>(webRequest.downloadHandler.text);
+            string content = response?.message?.content;
+            Debug.Log($"[LLM] Ham yanıt ({elapsed:F1} sn): {content}");
+
+            if (!parser.TryParse(content, out NpcAction action, out string parseError))
+            {
+                return LlmResult.Failure(LlmStatus.InvalidResponse,
+                    $"Model geçersiz yanıt üretti ({parseError}) Lütfen tekrar deneyin.", elapsed);
+            }
+
+            Remember(playerMessage, content);
+            return LlmResult.Success(action, elapsed);
         }
 
         private OllamaChatRequest BuildRequest(string playerMessage)
