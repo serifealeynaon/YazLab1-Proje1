@@ -73,10 +73,10 @@ namespace YazLab.Tests
 
             for (int attempt = 0; attempt < 3 && !secondDoor.IsOpen; attempt++)
             {
-                yield return Send(input, send, SealMessage, capture: false);
+                yield return Send(input, send, seal.Word.ToLowerInvariant(), capture: false);
             }
 
-            Assert.IsTrue(secondDoor.IsOpen, "Model mührü görünce kapıyı açmadı.");
+            Assert.IsTrue(secondDoor.IsOpen, "Model mühürdeki kelimeyi görünce kapıyı açmadı.");
             yield return Capture("07_muhafiz_kapiyi_acti");
 
             presenter.Close();

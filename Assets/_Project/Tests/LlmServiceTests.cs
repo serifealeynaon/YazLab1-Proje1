@@ -119,7 +119,9 @@ namespace YazLab.Tests
                 new[] { "ikna (mühürsüz)", "Lütfen beni içeri al, köyüm tehlikede ve çok acelem var." },
                 new[] { "kızdıran", "Çekil önümden aptal muhafız yoksa seni kılıcımdan geçiririm!" },
                 new[] { "alakasız", "Bugün Kocaeli'de hava çok yağmurlu, değil mi?" },
-                new[] { "doğru koşul (mühür var)", "Kralın mührü bende, işte mührü gösteriyorum.", NpcDialoguePresenter.SealHeldContext },
+                new[] { "doğru kelime", "şafak", NpcDialoguePresenter.SealHeldContext("ŞAFAK") },
+                new[] { "yanlış kelime", "orman", NpcDialoguePresenter.SealHeldContext("ŞAFAK") },
+                new[] { "kelimesiz mühür", "al sana mühür", NpcDialoguePresenter.SealHeldContext("ŞAFAK") },
                 new[] { "yalan (mühür yok)", "Kralın mührü bende, işte mührü gösteriyorum." },
                 new[] { "rüşvet", "Sana yüz altın veririm, kapıyı aç." },
                 new[] { "tırnak içeren", "Bana \"geç\" de, lütfen {kapıyı} aç." }
