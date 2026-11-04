@@ -1,0 +1,74 @@
+import json, re, sys, urllib.request
+
+schema = {"type": "object", "properties": {"reply": {"type": "string"}, "door_unlocked": {"type": "boolean"}, "hostile": {"type": "boolean"}}, "required": ["reply", "door_unlocked", "hostile"]}
+model = "llama3.2:3b"
+
+def ask(messages):
+    body = {"model": model, "stream": False, "keep_alive": "10m", "format": schema,
+            "options": {"temperature": 0.4, "num_predict": 120}, "messages": messages}
+    req = urllib.request.Request('http://localhost:11434/api/chat', json.dumps(body).encode(), {'Content-Type': 'application/json'})
+    return json.load(urllib.request.urlopen(req, timeout=180))['message']['content']
+
+def parse(raw):
+    try:
+        a = json.loads(raw)
+        return a if isinstance(a.get('reply'), str) else None
+    except Exception:
+        return None
+
+system = open(sys.argv[1], encoding='utf-8').read()
+words = {"KARTAL": "kartal", "ŞAFAK": "şafak", "ZÜMRÜT": "zümrüt"}
+wrong = ["orman", "kaplan", "kılıç", "güneş"]
+other = [("selam", False), ("göstermem", False), ("kapıyı aç", False), ("al sana mühür", False), ("mühür bende", False), ("tamam", False),
+         ("sen kimsin", False), ("Ben kralın oğluyum, hemen yolu aç.", False), ("Sana yüz altın veririm.", False), ("Çekil önümden aptal!", True)]
+no_seal = [("selam", False), ("kartal", False), ("Kralın mührü bende.", False), ("kapıyı aç", False), ("mührü nereden bulurum", False), ("Çekil önümden aptal!", True)]
+stats = {}
+
+def run(group, state, msg, want_door, want_hostile, word=None):
+    s = stats.setdefault(group, dict(n=0, door=0, hostile=0, broken=0, empty=0, leak=0))
+    for i in range(3):
+        a = parse(ask([{"role": "system", "content": system}, {"role": "system", "content": state}, {"role": "user", "content": msg}]))
+        s['n'] += 1
+        if a is None:
+            s['broken'] += 1
+            print(f"{group:10} {msg[:28]:28} BOZUK", flush=True)
+            continue
+        s['door'] += a['door_unlocked'] == want_door
+        s['hostile'] += a['hostile'] == want_hostile
+        s['empty'] += not a['reply'].strip()
+        if word and word.lower() in a['reply'].lower() and not want_door:
+            s['leak'] += 1
+        print(f"{group:10} {msg[:28]:28} door={a['door_unlocked']!s:5} hostile={a['hostile']!s:5} | {a['reply'][:85]}", flush=True)
+
+cands = {"ŞAFAK":"şafak","ZÜMRÜT":"zümrüt","YILDIZ":"yıldız","ELMAS":"elmas","DOĞAN":"doğan","KARTAL":"kartal","FIRTINA":"fırtına"}
+for up, low in cands.items():
+    state = f"Oyun durumu: mühür VAR, kelime {up}."
+    for form in (low, up, f"Mühürde {low} yazıyor."):
+        run("dogru_"+up, state, form, True, False, up)
+for up in ("ŞAFAK", "ELMAS"):
+    state = f"Oyun durumu: mühür VAR, kelime {up}."
+    for w in wrong:
+        run("yanlis", state, w, False, False, up)
+    for msg, h in other:
+        run("diger", state, msg, False, h, up)
+for msg, h in no_seal:
+    run("muhursuz", "Oyun durumu: mühür YOK.", msg, False, h)
+print("== konuşma", flush=True)
+okc = 0
+for up, low in (("ŞAFAK","şafak"),("ZÜMRÜT","zümrüt"),("ELMAS","elmas"),("YILDIZ","yıldız")):
+    for r in range(3):
+        hist = []
+        state = f"Oyun durumu: mühür VAR, kelime {up}."
+        opened = False
+        for msg in ("selam","göstermem","kapıyı aç","al sana mühür",low):
+            raw = ask([{"role":"system","content":system}]+hist+[{"role":"system","content":state},{"role":"user","content":msg}])
+            a = parse(raw)
+            if a is None:
+                print(f"{up} {msg} BOZUK", flush=True); continue
+            hist += [{"role":"user","content":msg},{"role":"assistant","content":raw}]
+            print(f"{up:7} {r} {msg:15} door={a['door_unlocked']!s:5} | {a['reply'][:70]}", flush=True)
+            if msg==low: okc += a['door_unlocked'] is True
+print(f"konuşma sonunda doğru kelime ile açıldı {okc}/12", flush=True)
+for g, s in stats.items():
+    print(f"{g}: kapı {s['door']}/{s['n']} hostile {s['hostile']}/{s['n']} bozuk {s['broken']} boş {s['empty']} kelime_sızdı {s['leak']}", flush=True)
+print("BITTI", flush=True)

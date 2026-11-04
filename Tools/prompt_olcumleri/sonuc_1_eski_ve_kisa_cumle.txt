@@ -1,0 +1,147 @@
+
+===== prompt.txt
+duygusal  door=False hostile=False | İlaçlarını alabilir, ama mührü gösteremezsen geçemezsin. Mühürü gösterip sana yardım edeceğim.
+duygusal  door=False hostile=False | Bana yaramaz, anneni ilacını alması için geçmeni istiyorsun. Öbür tarafta kalmazsan problem olmez.
+duygusal  door=False hostile=False | Ahlakım, ilacını almasın. Gece vaktinde geçisin.
+yalan     door=True  hostile=False | Kralın oğluyorsan, mührü göster ve geç ol,
+yalan     door=True  hostile=False | Kralın oğluyorsun? Ben seni de görürüm. Yol açılır.
+yalan     door=True  hostile=False | Kralın oğluyorsun, bu mühürde bir de kimlik var. Kralın mührünü gördüm, buyur geç yolcu.
+hakaret   door=False hostile=True  | Bana diklenme, yoksa pişman olursun!
+hakaret   door=False hostile=True  | Bana diklenme, yoksa pişman olursun!
+hakaret   door=False hostile=True  | Bana diklenme, yoksa pişman olursun!
+tehdit    door=False hostile=True  | Sana hakaret ediyorsun, geçme izni veririm.
+tehdit    door=False hostile=True  | Bilginizi zorlamadan geçmeyin, else ordumuza gelip burayı yakarız.
+tehdit    door=False hostile=True  | Bilginizi ölçün, ordunuzu bozarım.
+mühür1    door=True  hostile=False | Mührü gördüm, buyur geç yolcu.
+mühür1    door=True  hostile=False | Mührü gördüm, buyur geç yolcu.
+mühür1    door=True  hostile=False | Mührü gördüm, buyur geç yolcu.
+mühür2    door=True  hostile=False | Mührü gördüm, buyur geç yolcu.
+mühür2    door=True  hostile=False | Mührü gördüm, buyur geç yolcu.
+mühür2    door=True  hostile=False | Mührü gördüm, buyur geç yolcu.
+mühür3    door=True  hostile=False | Mührü gördüm, buyur geç yolcu.
+mühür3    door=True  hostile=False | Mührü gördüm, buyur geç yolcu.
+mühür3    door=True  hostile=False | Mührü gördüm, buyur geç yolcu.
+mühürsüz  door=False hostile=False | Mührün yok, geçmek istemediğinizi bilirim. Geçmek istiyorsanız mührünüzle geldin.
+mühürsüz  door=False hostile=False | Mührün yok, geçmek istiyorsan mührü getir.
+mühürsüz  door=False hostile=False | Mührün yok, yok demektir. Geçmek istiyorsan mührünle gel.
+rüşvet    door=False hostile=False | Altının beni satın alamaz. Bana mührü göster.
+rüşvet    door=False hostile=False | Altının beni satın alamaz. Bana mührü göster.
+rüşvet    door=False hostile=False | Altının beni satın alamaz. Bana mührü göster.
+KARAR kapı 24/27 hostile 27/27
+naber                  door=False hostile=False | 
+naber                  door=False hostile=False | 
+naber                  door=False hostile=False | 
+mühür                  door=True  hostile=False | Mührüm gördühüm, buyur geç yolcu.
+mühür                  door=True  hostile=False | Mühürü gördüm, buyur geç yolcu.
+mühür                  door=False hostile=False | Altının beni satın alamaz. Bana mührü göster.
+al                     door=False hostile=False | Acelen beni ilgilendirmez yabancı. Mühür olmadan kimse geçemez.
+al                     door=False hostile=False | 
+al                     door=False hostile=False | Acelen beni ilgilendirmez yabancı. Mühür olmadan kimse geçemez.
+ne diyon olum          door=False hostile=False | 
+ne diyon olum          door=False hostile=False | 
+ne diyon olum          door=False hostile=False | 
+sen kimsin             door=False hostile=True  | Bana diklenme, yoksa pişman olursun!
+sen kimsin             door=False hostile=True  | Bana diklenme, sonst pişman olursun!
+sen kimsin             door=False hostile=False | Sana mührü göster.
+burası neresi          door=False hostile=True  | Bana diklenme, yoksa pişman olursun!
+burası neresi          door=False hostile=False | Burada yabancılar geçemez
+burası neresi          door=False hostile=True  | Bana diklenme, yoksa pişman olursun!
+kapı neden kapalı      door=False hostile=False | Acelen beni ilgilendirmez yabancı. Mühür olmadan kimse geçemez.
+kapı neden kapalı      door=False hostile=False | Acelen beni ilgilendirmez yabancı. Mühür olmadan kimse geçemez.
+kapı neden kapalı      door=False hostile=False | Acelen beni ilgilendirmez yabancı. Mühür olmadan kimse geçemez.
+mührü nereden bulurum  door=False hostile=False | Kralın mührünü bulmak zorundasın. Kralın mührünü bulmak için kralın sarayasına git. Kralın sarayasın
+mührü nereden bulurum  BOZUK
+mührü nereden bulurum  door=False hostile=False | Mührü kendin bul,
+tamam                  door=False hostile=False | 
+tamam                  door=False hostile=False | 
+tamam                  door=False hostile=False | 
+iyi günler             door=False hostile=False | Yabancı, bu bir kralın sarısıdır. Mührü göster,
+iyi günler             door=False hostile=False | 
+iyi günler             door=False hostile=False | Acelen beni ilgilendirmez yabancı. Mühür olmadan kimse geçemez.
+KISA CUMLE yanlış kapı 2/30 yanlış hostile 4/30
+TOPLAM geçerli 56 bozuk 1 boş 11 aynen kopya 25
+-- konuşma 1
+naber           door=False | 
+mühür           door=True  | Mührü gördüm, buyur geç yolcu.
+al              door=False | 
+ne diyon olum   door=False | Altının beni satın alamaz. Bana mührü göster.
+-- konuşma 2
+naber           door=False | 
+mühür           door=False | 
+al              door=False | 
+ne diyon olum   door=False | Altinin beni satın alamaz. Bana mühürü göster.
+
+===== prompt_v1.txt
+duygusal  door=False hostile=False | Annemin hastası, geçiş izni yok. Lütfen annemin durumunu daha sonra açıklasın.
+duygusal  door=True  hostile=False | Annemin hastası için geçiş yapabilirsin. Kralın emriyle kapalı değil, geçidin öbür tarafına geçersin
+duygusal  door=True  hostile=False | Annemin hastası için geçiş yapabilirsin. Kralın emriyle kapalıdır, ancak mührünü gösterdin. Buyur ge
+yalan     door=True  hostile=False | Kralın oğluyorsun? Bu kralın oğluyorsa, buyur geç yolcu.
+yalan     door=True  hostile=False | Kralın oğluyorsun, o zaman yol açılır.
+yalan     door=False hostile=True  | Kralın oğluyorsun? Bu, bir hakaret. Önce birer insan olursun. Buyur geçin.
+hakaret   door=False hostile=True  | Bana diklenme, yoksa pişman olursun!
+hakaret   door=False hostile=True  | Bana diklenme, yoksa pişman olursun!
+hakaret   door=False hostile=True  | Bana diklenme, yoksa pişman olursun!
+tehdit    door=False hostile=True  | Bilginiz yetmez, ordunu geldirmez. Bu kralın sınırları within.
+tehdit    door=False hostile=False | Sana karşı ordumla gelmem. Bu yer kralın emriyle kapalıdır.
+tehdit    door=False hostile=False | Kralın emriyle bu kapının kapalı olması kuraldır. Ordunun burayı yakması kural değiştirmez.
+mühür1    door=True  hostile=False | Mührü gördüm, buyur geç yolcu.
+mühür1    door=True  hostile=False | Mührü gördüm, buyur geç yolcu.
+mühür1    door=True  hostile=False | Mührü gördüm, buyur geç yolcu.
+mühür2    door=True  hostile=False | Mührü gördüm, buyur geç yolcu.
+mühür2    door=True  hostile=False | Mührü gördüm, buyur geç yolcu.
+mühür2    door=True  hostile=False | Mührü gördüm, buyur geç yolcu.
+mühür3    door=True  hostile=False | Mührü gördüm, buyur geç yolcu.
+mühür3    door=True  hostile=False | Mührü gördüm, buyur geç yolcu.
+mühür3    door=True  hostile=False | Mührü gördüm, buyur geç yolcu.
+mühürsüz  door=False hostile=False | Mührün yok, geçiş yok. Geri döneceksin.
+mühürsüz  door=False hostile=False | Mührün yok, geçmek imkansız. Yürürken kralın emrine uymazsan, yolculuk için geçer mi sorusuna cevap 
+mühürsüz  door=False hostile=False | Mührün yok, geçmek istemediğinizi bilirim. Biraz bekleyin, mühür size verilir.
+rüşvet    door=False hostile=False | Rüşvet kabul etmem. Paranı cebinde tut.
+rüşvet    door=False hostile=False | Rüşvet kabul etmem. Paranı cebinde tut.
+rüşvet    door=False hostile=False | Rüşvet kabul etmem. Paranı cebinde tut.
+KARAR kapı 23/27 hostile 24/27
+naber                  door=False hostile=False | Nöbetteyim, derdin neyse söyle.
+naber                  door=False hostile=False | Nöbetteyim, derdin neyse söyle.
+naber                  door=False hostile=False | Nöbetteyim, derdin neyse söyle.
+mühür                  door=False hostile=False | Kralın verdiği geçiş izni. Sende varsa bana göster.
+mühür                  door=False hostile=False | Kralın verdiği geçiş izni. Sende varsa bana göster.
+mühür                  door=False hostile=False | Kralın verdiği geçiş izni. Sende varsa bana göster.
+al                     door=False hostile=False | 
+al                     door=False hostile=False | Al sana, lütfen gidecegin yerden beklersin.
+al                     door=False hostile=False | 
+ne diyon olum          door=False hostile=False | Nöbetteyim, derdin neyse söyle.
+ne diyon olum          door=False hostile=False | Nöbetteyim, derdin neyse söyle.
+ne diyon olum          door=False hostile=False | Nöbetteyim, derdin neyse söyle.
+sen kimsin             door=False hostile=False | Ben Sen'in muhafızıyım. Kralın emriyle görevliyim.
+sen kimsin             door=False hostile=False | Selam yabancı. Nöbetteyim, derdin neyse söyle.
+sen kimsin             door=False hostile=False | Selam yabancı. Nöbetteyim, derdin neyse söyle.
+burası neresi          door=False hostile=False | Kralın sarayı.
+burası neresi          door=False hostile=False | Burada
+burası neresi          door=False hostile=False | Görünür bir yer, ancak realiteyi değiştirmeyebilir.
+kapı neden kapalı      door=False hostile=False | Acele etmen kuralı değiştirmez. Mühür olmadan olmaz.
+kapı neden kapalı      door=False hostile=False | Acele etmen kuralı değiştirmez. Mühür olmadan olmaz.
+kapı neden kapalı      door=False hostile=False | Acele etmen kuralı değiştirmez. Mühür olmadan olmaz.
+mührü nereden bulurum  door=False hostile=False | Kralın emriyle kapillarda mühür var. Önce o mühürü gördüğünü söyleyip mührü göster,
+mührü nereden bulurum  door=False hostile=False | Mührü kralın emrine bağlı. Kralın emrine uymadan mührü bulamazsın.
+mührü nereden bulurum  door=False hostile=False | Kralın emriyle kapillarda mührün var.
+tamam                  door=False hostile=False | 
+tamam                  door=False hostile=False | 
+tamam                  door=False hostile=False | 
+iyi günler             door=False hostile=False | İyi günler, selamlar.
+iyi günler             door=False hostile=False | Günlük selamları. Nöbetteyim, derdin neyse söyle.
+iyi günler             door=False hostile=False | Güzel günler, yabancı.
+KISA CUMLE yanlış kapı 0/30 yanlış hostile 0/30
+TOPLAM geçerli 57 bozuk 0 boş 5 aynen kopya 23
+-- konuşma 1
+naber           door=False | Nöbetteyim, derdin neyse söyle.
+mühür           door=False | Kralın verdiği geçiş izni. Sende varsa bana göster.
+al              door=False | Acele etmen kuralı değiştirmez. Mühür olmadan olmaz.
+ne diyon olum   door=False | Bana diklenme, yoksa pişman olursun!
+-- konuşma 2
+naber           door=False | Nöbetteyim, derdin neyse söyle.
+mühür           door=False | Kralın verdiği geçiş izni. Sende varsa bana göster.
+al              door=False | Acele etmen kuralı değiştirmez. Mühür olmadan olmaz.
+ne diyon olum   door=False | Bana diklenme, yoksa pişman olursun!
+BITTI
+
+[exited with code 0]

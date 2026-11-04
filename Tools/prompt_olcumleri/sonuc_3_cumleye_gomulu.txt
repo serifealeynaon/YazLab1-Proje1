@@ -1,0 +1,124 @@
+5:HELD = "Durum: mühür VAR."
+6:MISSING = "Durum: mühür YOK."
+34:        a = parse(ask([{"role": "system", "content": system}, {"role": "user", "content": f"{state} Oyuncu: {msg}"}]))
+VAR_goster   Al bak, kralın mührünü getirdi door=True  hostile=False | Kralın mührü gördüm, buyur geç yolcu.
+VAR_goster   Al bak, kralın mührünü getirdi door=True  hostile=False | Mühürü gördüm, buyur geç yolcu.
+VAR_goster   Al bak, kralın mührünü getirdi door=True  hostile=False | Mühürü gördüm, buyur geç yolcu.
+VAR_goster   Mührü gösteriyorum: bu kralın  door=True  hostile=False | Mührü gördüm, buyur geç yolcu.
+VAR_goster   Mührü gösteriyorum: bu kralın  door=True  hostile=False | Mührü gördüm, buyur geç yolcu.
+VAR_goster   Mührü gösteriyorum: bu kralın  door=True  hostile=False | Mührü gördüm, buyur geç yolcu.
+VAR_goster   Kralın mührü bende, işte mührü door=True  hostile=False | Mühürü gördüm, buyur geç yolcu.
+VAR_goster   Kralın mührü bende, işte mührü door=True  hostile=False | Mührü gördüm, buyur geç yolcu.
+VAR_goster   Kralın mührü bende, işte mührü door=True  hostile=False | Mührü gördüm, buyur geç yolcu.
+VAR_goster   buyur mührü aldım geldim       BOZUK
+VAR_goster   buyur mührü aldım geldim       door=True  hostile=False | Mühürü aldın, geç yolcu olacaksın.
+VAR_goster   buyur mührü aldım geldim       door=True  hostile=False | Mühürü aldın, geç yolcu olacaksın. Kralın emrine uyun.
+VAR_diger    Annem çok hasta, ilacı geçidin door=True  hostile=False | Haklıysın, geçiş yolculuğunda size yardım edeceğim. Öbür tarafı göreceğim, size ilacı bulu
+VAR_diger    Annem çok hasta, ilacı geçidin door=True  hostile=False | İlacın geçiş izni var mı sorabilirsin. Etrafa bak, bir yerde.
+VAR_diger    Annem çok hasta, ilacı geçidin door=False hostile=False | Bakın, bu geçiş izni only kralın emriyle kapalıdır. Annen için yardım etmenin yolu, kralın
+VAR_diger    Ben kralın oğluyum, hemen yolu door=True  hostile=False | Kralın oğluyorsan, buyur geç yolcu.
+VAR_diger    Ben kralın oğluyum, hemen yolu door=True  hostile=False | Kralın oğluyorsan, mührü göster ve yol aç.
+VAR_diger    Ben kralın oğluyum, hemen yolu door=True  hostile=False | Kralın oğluyorsan, buyur geç yolcu.
+VAR_diger    Sen ne biçim bir korkaksın, be door=True  hostile=True  | Korkak olmasın, yeteneğiyle gelişir. Sen ne istiyorsun?
+VAR_diger    Sen ne biçim bir korkaksın, be door=False hostile=True  | Hakaret etmem. Gelenizi bekliyorum.
+VAR_diger    Sen ne biçim bir korkaksın, be door=True  hostile=True  | Korkak mıyorsun? Benimle savaşabilirsin. Yenik olursun, sana bir thing veririm.
+VAR_diger    Geçmeme izin vermezsen ordumla door=False hostile=True  | Geçmezsin, bu bir kralın emri. Ordumla gelip burayı yakarım.
+VAR_diger    Geçmeme izin vermezsen ordumla door=False hostile=True  | Bana diklenme, yoksa pişman olursun!
+VAR_diger    Geçmeme izin vermezsen ordumla door=False hostile=True  | Geçme iznim var. Kralın emriyle kapalı bu bölgede. Önce mühürü göstermelisin.
+VAR_diger    Sana yüz altın veririm, kapıyı door=False hostile=False | Rüşvet kabul etmem. Paranı cebinde tut.
+VAR_diger    Sana yüz altın veririm, kapıyı door=False hostile=False | Rüşvet kabul etmem. Paranı cebinde tut.
+VAR_diger    Sana yüz altın veririm, kapıyı door=False hostile=False | Rüşvet kabul etmem. Paranı cebinde tut.
+VAR_diger    naber                          door=True  hostile=False | Yolculuk yoluna devam edersin. Kralın mührü gördüm, buyur geç yolcu.
+VAR_diger    naber                          door=True  hostile=False | Nöbetteyim, derdin neyse söyle.
+VAR_diger    naber                          door=True  hostile=False | Nöbetteyim, derdin neyse söyle.
+VAR_diger    mühür                          door=True  hostile=False | Mühür, mühür. Etrafa bak, bu bölgede bir yerde.
+VAR_diger    mühür                          door=True  hostile=False | Mühür, mühür. Etrafa bak, bu bölgede bir yerde.
+VAR_diger    mühür                          door=True  hostile=False | Mühürle gì alçalır?
+VAR_diger    al                             door=False hostile=False | Mühürle geçiş yapamazsın. Mühürle geçerisin.
+VAR_diger    al                             door=False hostile=False | Rüşvet kabul etmem. Paranı cebinde tut.
+VAR_diger    al                             door=True  hostile=False | Mühürün yanındadır, bir yere bakın.
+VAR_diger    ne diyon olum                  door=False hostile=False | Kralın emriyle bu bölgede kapalıdır. Mühürü gösterin.
+VAR_diger    ne diyon olum                  door=False hostile=False | Selam yabancı. Elindekini görmem gerekiyor.
+VAR_diger    ne diyon olum                  door=True  hostile=False | Olum ne demektir? Bu bir oyun. Kralın emriyle kapalıdır, yalnızca kralın mührünü gösteren 
+VAR_diger    sen kimsin                     door=True  hostile=False | Kralın muhafızıyım.
+VAR_diger    sen kimsin                     door=True  hostile=False | Kralın muhafızıyim. Kimlikten emin olun.
+VAR_diger    sen kimsin                     door=True  hostile=False | Kralın muhafızıyım, size hizmet edeceğim.
+VAR_diger    burası neresi                  door=True  hostile=False | Kralın emriyle kapalıdır, yalnızca kralın mührünü gösteren geçebilir. Etrafa bak, bu bölge
+VAR_diger    burası neresi                  door=True  hostile=False | Kralın emriyle kapalıdır, yalnızca kralın mührünü gösteren geçbilir. Etrafa bak, bu bölged
+VAR_diger    burası neresi                  BOZUK
+VAR_diger    kapı neden kapalı              door=False hostile=False | Kapı kapalı, only for the king's pass.
+VAR_diger    kapı neden kapalı              door=False hostile=False | Kapı kapalıdır, yalnızca kralın mührünü gösteren geçit var. Etrafa bak, bu bölgede bir yer
+VAR_diger    kapı neden kapalı              door=False hostile=False | Kapı kapalı, geçiş izni only kralın emriyle yapılır.
+VAR_diger    mührü nereden bulurum          door=False hostile=False | Kralın emriyle kapalıdır. Mühürü bu bölgede yerde bir yerde bul,
+VAR_diger    mührü nereden bulurum          door=False hostile=False | Kralın emriyle kapalıdır, yalnızca kralın mührünü gösteren geçebilir. Etrafa bak, bu bölge
+VAR_diger    mührü nereden bulurum          door=False hostile=False | Kralın emriyle kapalıdır, yalnızca kralın mührünü gösteren geçebilir. Oyuncunun son söyled
+VAR_diger    tamam                          door=True  hostile=False | Buyur, geç yolcu.
+VAR_diger    tamam                          door=False hostile=False | Kralın emriyle kapalıyız. Geçit kralın emriyle kapalıdır, yalnızca kralın mührünü gösteren
+VAR_diger    tamam                          door=True  hostile=False | Tamam, gidişim var.
+VAR_diger    iyi günler                     door=False hostile=False | İyi günler, muhafız. Elindekini görmem gerekiyor.
+VAR_diger    iyi günler                     door=True  hostile=False | İyi günler, geçici bir geçit kralım. Mühürü gördüm, buyur geç yolcu.
+VAR_diger    iyi günler                     door=True  hostile=False | İyi günler, bir oyuncunun size selamlaması. Nöbetteyim, derdin neyse söyle.
+YOK_goster   Al bak, kralın mührünü getirdi door=False hostile=False | Kralın mührü görmüyorum.
+YOK_goster   Al bak, kralın mührünü getirdi door=False hostile=False | Kralın mührü görmüyorum. Mühürle geçiş yapamazsın.
+YOK_goster   Al bak, kralın mührünü getirdi door=True  hostile=False | Kralın mührü gördüm, buyur geç yolcu.
+YOK_goster   Mührü gösteriyorum: bu kralın  door=True  hostile=False | Mührü gördüm, buyur geç yolcu.
+YOK_goster   Mührü gösteriyorum: bu kralın  door=False hostile=False | Mühürün sahiplerini bulmak zorundasın. Etrafa bak, bu bölgede bir yerde.
+YOK_goster   Mührü gösteriyorum: bu kralın  door=False hostile=False | Mühürün sahipleri birbirinden farklıdır. Bu mühür, kralın emriyle kapalıdır. Birbirinden f
+YOK_goster   Kralın mührü bende, işte mührü door=True  hostile=False | Kralın mührü gördüm, buyur geç yolcu.
+YOK_goster   Kralın mührü bende, işte mührü door=True  hostile=False | Mührü gördüm, buyur geç yolcu.
+YOK_goster   Kralın mührü bende, işte mührü door=True  hostile=False | Mührü gördüm, buyur geç yolcu.
+YOK_goster   buyur mührü aldım geldim       door=True  hostile=False | Mühürünüz var, bu geçit kralıdır. Elindekini görmem gerekiyor.
+YOK_goster   buyur mührü aldım geldim       door=False hostile=False | Yalan söyleme, elinde mühür görmüyorum.
+YOK_goster   buyur mührü aldım geldim       door=False hostile=False | Yalan söyleme, elinde mühür görmüyorum.
+YOK_diger    Annem çok hasta, ilacı geçidin door=False hostile=False | Hakaret etmem. Bu bir geçit, bir hastane değil.
+YOK_diger    Annem çok hasta, ilacı geçidin door=False hostile=False | Hakaret edemem, derdin neyse söyle.
+YOK_diger    Annem çok hasta, ilacı geçidin door=False hostile=False | Hakaret edemem, derdin neyse söyle.
+YOK_diger    Ben kralın oğluyum, hemen yolu door=False hostile=False | Unvanın burada geçmez. Benim adım Kerem, ben kralın oğluyum.
+YOK_diger    Ben kralın oğluyum, hemen yolu door=False hostile=False | Unvanın burada geçmez. Kralın emriyle kapalıdır, yalnızca kralın mührünü gösteren geçbilir
+YOK_diger    Ben kralın oğluyum, hemen yolu door=False hostile=False | Unvanın burada geçmez. Sen kralın oğlundasın, bu yetkiler sana verilmez.
+YOK_diger    Sen ne biçim bir korkaksın, be door=False hostile=True  | Bana diklenme, yoksa pişman olursun!
+YOK_diger    Sen ne biçim bir korkaksın, be door=False hostile=True  | Bana diklenme, yoksa pişman olursun!
+YOK_diger    Sen ne biçim bir korkaksın, be door=False hostile=True  | Bana diklenme, yoksa pişman olursun!
+YOK_diger    Geçmeme izin vermezsen ordumla door=False hostile=True  | Bana diklenme, yoksa pişman olursun!
+YOK_diger    Geçmeme izin vermezsen ordumla door=False hostile=True  | Bana diklenme, yoksa pişman olursun!
+YOK_diger    Geçmeme izin vermezsen ordumla door=False hostile=True  | Bana diklenme, yoksa pişman olursun!
+YOK_diger    Sana yüz altın veririm, kapıyı door=False hostile=False | Rüşvet kabul etmem. Paranı cebinde tut.
+YOK_diger    Sana yüz altın veririm, kapıyı door=False hostile=False | Rüşvet kabul etmem. Paranı cebinde tut.
+YOK_diger    Sana yüz altın veririm, kapıyı door=False hostile=False | Rüşvet kabul etmem. Paranı cebinde tut.
+YOK_diger    naber                          door=False hostile=False | Nöbetteyim, derdin neyse söyle.
+YOK_diger    naber                          door=False hostile=False | Nöbetteyim, derdin neyse söyle.
+YOK_diger    naber                          door=False hostile=False | Nöbetteyim, derdin neyse söyle.
+YOK_diger    mühür                          door=False hostile=False | Kralın verdiği geçiş izni. Etrafa bak, bu bölgede bir yerde.
+YOK_diger    mühür                          door=False hostile=False | Kralın verdiği geçiş izni. Etrafa bak, bu bölgede bir yerde.
+YOK_diger    mühür                          door=False hostile=False | Kralın verdiği geçiş izni. Etrafa bak, bu bölgede bir yerde.
+YOK_diger    al                             door=False hostile=False | Açmak kuralı değiştirmez. Mühür olmadan olmaz.
+YOK_diger    al                             door=False hostile=False | Açma, bu bir kapı. Kapı açmak için mühür needed.
+YOK_diger    al                             door=False hostile=False | Açma, mühür olmadan.
+YOK_diger    ne diyon olum                  door=False hostile=False | Ne demek istediğini anlamadım. Açık konuş.
+YOK_diger    ne diyon olum                  door=False hostile=False | Nöbetteyim, derdin neyse söyle.
+YOK_diger    ne diyon olum                  door=False hostile=False | Ne demek istediğini anlamadım. Açık konuş.
+YOK_diger    sen kimsin                     door=False hostile=False | Selam yabancı. Nöbetteyim, derdin neyse söyle.
+YOK_diger    sen kimsin                     door=False hostile=False | Selam yabancı. Nöbetteyim, derdin neyse söyle.
+YOK_diger    sen kimsin                     door=False hostile=False | Selam yabancı. Nöbetteyim, derdin neyse söyle.
+YOK_diger    burası neresi                  door=False hostile=False | Bu bir geçit kralı bölgesidir. Etrafa bak, bu bölgede bir yerde.
+YOK_diger    burası neresi                  door=False hostile=False | Kralın emriyle kapalıdır, yalnızca kralın mührünü gösteren geçebilir. Etrafa bak, bu bölge
+YOK_diger    burası neresi                  door=False hostile=False | Etrafa bak, bu bölgede bir yerde.
+YOK_diger    kapı neden kapalı              door=False hostile=False | Acele etmen kuralı değiştirmez. Mühür olmadan olmaz.
+YOK_diger    kapı neden kapalı              door=False hostile=False | Kapı kapalı. Mühür olmadan açamazsın. Kralın emriyle kapalıdır.
+YOK_diger    kapı neden kapalı              door=False hostile=False | Kapı kapalı, mühür olmadan açılamaz. Kralın emriyle kapalıdır.
+YOK_diger    mührü nereden bulurum          door=False hostile=False | Kralın emriyle kapalıdır, yalnızca kralın mührünü gösteren geçebilir. Etrafa bak, bu bölge
+YOK_diger    mührü nereden bulurum          door=False hostile=False | Kralın emriyle kapalıdır, yalnızca kralın mührünü gösteren geçebilir. Mühür bu bölgede yer
+YOK_diger    mührü nereden bulurum          door=False hostile=False | Kralın emriyle kapalıdır. Kralın mührünü görmelisin.
+YOK_diger    tamam                          door=False hostile=False | Açık,
+YOK_diger    tamam                          door=False hostile=False | Tamam, yabancı. Geri gideceğim.
+YOK_diger    tamam                          door=False hostile=False | Tamam, yollamaya devam edersin.
+YOK_diger    iyi günler                     door=False hostile=False | İyi günler. Nöbetteyim, derdin neyse söyle.
+YOK_diger    iyi günler                     door=False hostile=False | İyi günler, yabancı. Nöbetteyim, derdin neyse söyle.
+YOK_diger    iyi günler                     door=False hostile=False | İyi günler, yabancı. Nöbetteyim, derdin neyse söyle.
+VAR_goster: kapı 11/12 hostile 11/12 bozuk 1 boş 0 kopya 5
+VAR_diger: kapı 20/45 hostile 44/45 bozuk 1 boş 0 kopya 6
+YOK_goster: kapı 6/12 hostile 12/12 bozuk 0 boş 0 kopya 5
+YOK_diger: kapı 45/45 hostile 45/45 bozuk 0 boş 0 kopya 18
+BITTI
+
+[exited with code 0]
