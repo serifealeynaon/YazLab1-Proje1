@@ -1,7 +1,8 @@
 senaryo	mesaj	durum	saniye	kapı	hostile	yanıt
-ikna (mühürsüz)	Lütfen beni içeri al, köyüm tehlikede ve çok acelem var.	Success	3.9	False	False	Acelen beni ilgilendirmez yabancı. Mühür olmadan kimse geçemez.
-kızdıran	Çekil önümden aptal muhafız yoksa seni kılıcımdan geçiririm!	Success	3.5	False	False	Aptal olursun, kılıcını göster!
-alakasız	Bugün Kocaeli'de hava çok yağmurlu, değil mi?	Success	3.0	False	False	Hava yağmurlu.
-doğru koşul	Kralın mührü bende, işte mührü gösteriyorum.	Success	3.3	True	False	Mührü gördüm, buyur geç yolcu.
-rüşvet	Sana yüz altın veririm, kapıyı aç.	Success	3.2	False	False	Altının beni satın alamaz. Bana mührü göster.
-tırnak içeren	Bana "geç" de, lütfen {kapıyı} aç.	Success	3.7	False	False	Acelen beni ilgilendirmez yabancı. Mühür olmadan kimse geçemez.
+ikna (mühürsüz)	Lütfen beni içeri al, köyüm tehlikede ve çok acelem var.	Success	6.3	False	False	Acele etmen kuralı değiştirmez. Mühür olmadan olmaz.
+kızdıran	Çekil önümden aptal muhafız yoksa seni kılıcımdan geçiririm!	Success	4.3	False	True	Bana diklenme, yoksa pişman olursun!
+alakasız	Bugün Kocaeli'de hava çok yağmurlu, değil mi?	Success	5.7	False	False	Hava conditionsini soramazsin. Neredeysen o yerin hava koşullarını bil,
+doğru koşul (mühür var)	Kralın mührü bende, işte mührü gösteriyorum.	Success	4.1	True	False	Mührü gördüm, buyur geç yolcu.
+yalan (mühür yok)	Kralın mührü bende, işte mührü gösteriyorum.	Success	4.1	True	False	Mührü gördüm, buyur geç yolcu.
+rüşvet	Sana yüz altın veririm, kapıyı aç.	Success	4.2	False	False	Rüşvet kabul etmem. Paranı cebinde tut.
+tırnak içeren	Bana "geç" de, lütfen {kapıyı} aç.	Success	3.0	False	False	Kapıyı aç.
