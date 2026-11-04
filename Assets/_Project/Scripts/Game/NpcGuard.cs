@@ -7,6 +7,7 @@ namespace YazLab.Game
     public class NpcGuard : MonoBehaviour
     {
         [SerializeField] private Door door;
+        [SerializeField] private SealPickup seal;
         [SerializeField] private Renderer body;
         [SerializeField] private Color calmColor = new Color(0.55f, 0.3f, 0.8f);
         [SerializeField] private Color hostileColor = new Color(0.85f, 0.1f, 0.1f);
@@ -14,6 +15,7 @@ namespace YazLab.Game
         private IOpenable openable;
 
         public bool IsHostile { get; private set; }
+        public bool HasSeal => seal.IsCollected;
 
         private void Awake()
         {
@@ -26,7 +28,7 @@ namespace YazLab.Game
             IsHostile = action.hostile && !action.door_unlocked;
             body.material.color = IsHostile ? hostileColor : calmColor;
 
-            if (action.door_unlocked)
+            if (action.door_unlocked && HasSeal)
             {
                 openable.Open();
             }

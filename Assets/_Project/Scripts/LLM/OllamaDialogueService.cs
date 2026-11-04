@@ -13,6 +13,7 @@ namespace YazLab.LLM
         private readonly OllamaSettings settings;
         private readonly INpcResponseParser parser;
         private readonly List<OllamaMessage> history = new List<OllamaMessage>();
+        private string context;
 
         public OllamaDialogueService(OllamaSettings settings, INpcResponseParser parser)
         {
@@ -23,6 +24,11 @@ namespace YazLab.LLM
         public void ResetConversation()
         {
             history.Clear();
+        }
+
+        public void SetContext(string context)
+        {
+            this.context = context;
         }
 
         public async Task PreloadAsync(CancellationToken cancellationToken)
@@ -107,6 +113,12 @@ namespace YazLab.LLM
             {
                 messages.Add(new OllamaMessage("system", settings.systemPrompt));
                 messages.AddRange(history);
+
+                if (!string.IsNullOrEmpty(context))
+                {
+                    messages.Add(new OllamaMessage("system", context));
+                }
+
                 messages.Add(new OllamaMessage("user", playerMessage));
             }
 

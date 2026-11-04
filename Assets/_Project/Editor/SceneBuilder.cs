@@ -47,11 +47,12 @@ namespace YazLab.EditorTools
             Door secondDoor = CreateDoor("Door_2", new Vector3(0f, 1.5f, 10f));
             SwitchInteractable switchTarget = CreateSwitch(firstDoor);
             CreateCrate();
+            SealPickup seal = CreateSeal();
             FinishZone finishZone = CreateFinishZone();
 
             PlayerController player = CreatePlayer();
             CompanionController companion = CreateCompanion(player.transform);
-            NpcGuard guard = CreateGuard(secondDoor);
+            NpcGuard guard = CreateGuard(secondDoor, seal);
             CreateCamera(player.transform);
 
             HudView hud;
@@ -77,6 +78,7 @@ namespace YazLab.EditorTools
             Assign(flow, "finishZone", finishZone);
             Assign(flow, "hud", hud);
             Assign(flow, "endScreen", endScreen);
+            Assign(flow, "seal", seal);
 
             BakeNavMesh(ground);
 
@@ -177,6 +179,15 @@ namespace YazLab.EditorTools
             crate.AddComponent<DiscoverableCrate>();
         }
 
+        private static SealPickup CreateSeal()
+        {
+            GameObject seal = Cube("Seal", new Vector3(-6f, 0.4f, 2f), new Vector3(0.7f, 0.7f, 0.7f),
+                0, "Seal", new Color(1f, 0.75f, 0.1f));
+            seal.transform.rotation = Quaternion.Euler(0f, 45f, 0f);
+            Object.DestroyImmediate(seal.GetComponent<Collider>());
+            return seal.AddComponent<SealPickup>();
+        }
+
         private static FinishZone CreateFinishZone()
         {
             GameObject zone = Cube("FinishZone", new Vector3(0f, 0.5f, 18f), new Vector3(8f, 1f, 4f),
@@ -227,7 +238,7 @@ namespace YazLab.EditorTools
             return companion;
         }
 
-        private static NpcGuard CreateGuard(Door door)
+        private static NpcGuard CreateGuard(Door door, SealPickup seal)
         {
             var root = new GameObject("NPC_Guard");
             root.layer = ActorLayer;
@@ -237,6 +248,7 @@ namespace YazLab.EditorTools
             GameObject body = Visual(root.transform, PrimitiveType.Capsule, Vector3.zero, Vector3.one, "Guard", new Color(0.55f, 0.3f, 0.8f));
             var guard = root.AddComponent<NpcGuard>();
             Assign(guard, "door", door);
+            Assign(guard, "seal", seal);
             Assign(guard, "body", body.GetComponent<Renderer>());
             return guard;
         }

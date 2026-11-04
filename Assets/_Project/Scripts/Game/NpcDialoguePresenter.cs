@@ -8,6 +8,9 @@ namespace YazLab.Game
 {
     public class NpcDialoguePresenter : MonoBehaviour
     {
+        public const string SealHeldContext = "Oyun durumu: mühür VAR.";
+        public const string SealMissingContext = "Oyun durumu: mühür YOK.";
+
         [SerializeField] private OllamaSettings settings = new OllamaSettings();
         [SerializeField] private DialogueView dialogueView;
         [SerializeField] private NpcGuard guard;
@@ -55,6 +58,7 @@ namespace YazLab.Game
 
             try
             {
+                service.SetContext(guard.HasSeal ? SealHeldContext : SealMissingContext);
                 LlmResult result = await service.SendAsync(message, lifetime.Token);
 
                 if (result.Status == LlmStatus.Cancelled)
@@ -64,7 +68,15 @@ namespace YazLab.Game
 
                 if (result.IsSuccess)
                 {
-                    view.AddNpcLine(result.Action.reply);
+                    if (result.Action.door_unlocked && !guard.HasSeal)
+                    {
+                        view.AddSystemLine("Kapı açılmadı: önce kralın mührünü bulmalısın.");
+                    }
+                    else
+                    {
+                        view.AddNpcLine(result.Action.reply);
+                    }
+
                     guard.Apply(result.Action);
                 }
                 else
