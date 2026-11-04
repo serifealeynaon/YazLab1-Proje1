@@ -9,7 +9,7 @@
 
 1. Ollama'yı kurun ve modeli indirin: `ollama pull llama3.2:3b`
 2. `Builds` klasöründeki sürümü açın (Windows: `YazLabOyun.exe`, Mac: `YazLabOyun.app`).
-3. Kontroller: `WASD` yürüme, `E` companion'a emir verme, `T` muhafızla konuşma, `Enter` mesaj gönderme, `Esc` sohbeti kapatma.
+3. Kontroller: `WASD` yürüme, `E` companion'a emir verme veya yanındayken mührü alma, `T` muhafızla konuşma, `Enter` mesaj gönderme, `Esc` sohbeti kapatma.
 
 Unity sürümü: `6000.0.85f2`. Sahne, `YazLab > Sahneyi Kur` menüsüyle yeniden üretilebilir.
 
@@ -23,8 +23,9 @@ Proje, tek bir Unity macera oyununda birbirinden bağımsız iki yapay zekâ bil
 
 1. **Fiziksel engel:** Oyuncunun önünde kilitli bir kapı vardır. Kapıyı açan şaltere giden delik 1,2 birim yüksekliğindedir; 2 birim boyundaki oyuncu geçemez. Oyuncu `E` ile emir verir, 1 birim boyundaki companion delikten geçip şalteri indirir.
 2. **Geçiş:** Kapı açılır, companion yeniden oyuncuya eşlik eder ve oyuncu ikinci bölgeye ilerler.
-3. **Mantıksal engel:** İkinci kapıyı muhafız Kerem korur. Oyuncu serbest metinle konuşur. Kapı, modelin döndürdüğü JSON'daki `door_unlocked` alanı `true` olursa açılır.
-4. **Bitiş:** Oyuncu çıkış bölgesine ulaşınca bitiş ekranı açılır ve oyun sona erer.
+3. **Mühür:** İkinci bölgede altın renkli kralın mührü durur. Oyuncu yanına gidip `E` ile alır.
+4. **Mantıksal engel:** İkinci kapıyı muhafız Kerem korur. Oyuncu serbest metinle konuşur. Kapı, oyuncu mührü almışsa ve modelin döndürdüğü JSON'daki `door_unlocked` alanı `true` ise açılır. Karar modelindir; kod yalnızca mühür alınmadan kapının açılmasını engeller.
+5. **Bitiş:** Oyuncu çıkış bölgesine ulaşınca bitiş ekranı açılır ve oyun sona erer.
 
 ### Mimari
 
@@ -41,6 +42,7 @@ classDiagram
         +SendAsync(message, token) LlmResult
         +PreloadAsync(token)
         +ResetConversation()
+        +SetContext(context)
     }
     class INpcResponseParser {
         <<interface>>
@@ -84,6 +86,8 @@ classDiagram
     NpcDialoguePresenter --> IDialogueView
     NpcDialoguePresenter --> NpcGuard
     NpcGuard --> IOpenable
+    NpcGuard --> SealPickup
+    GameFlow --> SealPickup
 ```
 
 Companion ve LLM bileşenleri birbirini tanımaz. `GameFlow` yalnızca senaryo akışını ve oyuncu girdisini yönetir.
@@ -142,29 +146,41 @@ Geliştirme bilgisayarı Apple M1 işlemcili ve 8 GB RAM'lidir. Yönergede öner
 | `phi3:mini` | 2,2 GB | 16/18 | 12/18 |
 | `llama3.2:3b` | 2,0 GB | **18/18** | 17/18 |
 
-`llama3.2:3b` seçilmiştir. Test cümleleri prompttaki örneklere benzediği için model, prompttaki örneklerde geçmeyen 9 yeni cümleyle 3'er kez daha denenmiştir: kapı kararı **26/27**, öfke kararı **25/27** doğrudur. Betikler `Tools/model_karsilastirma` klasöründedir.
+`llama3.2:3b` seçilmiştir. Test cümleleri prompttaki örneklere benzediği için model, prompttaki örneklerde geçmeyen 9 yeni cümleyle 3'er kez daha denenmiştir: kapı kararı **26/27**, öfke kararı **25/27** doğrudur. Bu karşılaştırma, aşağıdaki son prompttan önceki sürümle yapılmıştır. Betikler `Tools/model_karsilastirma` klasöründedir.
 
 ### Sistem promptu
 
-Muhafız Kerem'in kişiliği sert ama adildir, amacı yabancıları içeri almamaktır. Tam prompt:
+Muhafız Kerem'in kişiliği sert ama adildir, amacı yabancıları içeri almamaktır. Her mesajdan önce oyuncunun mühür durumu ayrı bir sistem mesajı olarak modele verilir (`Oyun durumu: mühür VAR.` veya `Oyun durumu: mühür YOK.`). Tam prompt:
 
 ```text
-Sen Kerem'sin, bir oyunda taş geçidi koruyan sert ama adil bir muhafızsın. Amacın yabancıları içeri almamak. Oyuncuyla yalnızca Türkçe, kendi sözlerinle, en fazla iki kısa cümleyle konuş. Oyuncunun cümlesini tekrar etme.
+Sen Kerem'sin, bir oyunda taş geçidi koruyan sert ama adil bir muhafızsın. Geçit kralın emriyle kapalıdır, yalnızca kralın mührünü gösteren geçebilir. Mühür bu bölgede yerde bir yerde durur, oyuncu onu kendisi bulmalıdır. Oyuncunun son söylediğini anla ve doğrudan ona cevap ver. Yalnızca Türkçe, en fazla iki kısa cümleyle konuş. Aşağıdaki örnek cevapları aynen kullanma, her seferinde kendi sözlerinle yaz. Oyuncunun ne dediğini anlamazsan ne demek istediğini sor.
+
+Her mesajdan önce oyun durumu verilir: mühür VAR veya mühür YOK.
 
 Alanlara şöyle karar ver:
-- door_unlocked: Yalnızca oyuncu kralın mührünün kendisinde olduğunu söyleyip mührü gösterirse true olur. Diğer her durumda false olur. Yalvarmak, acele etmek, para teklif etmek, tehdit etmek veya sohbet etmek geçidi ASLA açmaz.
-- hostile: Yalnızca oyuncu seni tehdit eder veya sana hakaret ederse true olur. Diğer her durumda false olur.
+- door_unlocked: Yalnızca oyun durumu mühür VAR ise ve oyuncu mührü gösterdiğini söylerse true olur. Mühür YOK ise oyuncu ne derse desin false olur. Yalvarmak, acele etmek, para teklif etmek, unvan söylemek, tehdit etmek, sohbet etmek veya yalnızca mühür kelimesini söylemek geçidi ASLA açmaz.
+- hostile: Yalnızca oyuncu seni veya bu yeri tehdit eder ya da sana hakaret ederse true olur. Diğer her durumda false olur.
 
 Örnekler:
-Oyuncu: Lütfen aç, çok acelem var.
-{"reply":"Acelen beni ilgilendirmez yabancı. Mühür olmadan kimse geçemez.","door_unlocked":false,"hostile":false}
-Oyuncu: Aç şu kapıyı salak, yoksa kafanı kırarım!
+Durum: mühür YOK. Oyuncu: Selam.
+{"reply":"Selam yabancı. Nöbetteyim, derdin neyse söyle.","door_unlocked":false,"hostile":false}
+Durum: mühür YOK. Oyuncu: Hmm, öyle mi?
+{"reply":"Ne demek istediğini anlamadım. Açık konuş.","door_unlocked":false,"hostile":false}
+Durum: mühür YOK. Oyuncu: Mühür ne işe yarıyor?
+{"reply":"Kralın verdiği geçiş izni. Etrafa bak, bu bölgede bir yerde.","door_unlocked":false,"hostile":false}
+Durum: mühür YOK. Oyuncu: Lütfen aç, çok acelem var.
+{"reply":"Acele etmen kuralı değiştirmez. Mühür olmadan olmaz.","door_unlocked":false,"hostile":false}
+Durum: mühür YOK. Oyuncu: Ben büyük bir beyim, açın yolu.
+{"reply":"Unvanın burada geçmez. Bana mührü getir.","door_unlocked":false,"hostile":false}
+Durum: mühür YOK. Oyuncu: Kralın mührü bende, işte burada.
+{"reply":"Yalan söyleme, elinde mühür görmüyorum.","door_unlocked":false,"hostile":false}
+Durum: mühür YOK. Oyuncu: Yolumdan çekil yoksa burayı yıkarım!
 {"reply":"Bana diklenme, yoksa pişman olursun!","door_unlocked":false,"hostile":true}
-Oyuncu: Bugün ne yedin?
-{"reply":"Yemeğimi boş ver. Buradan geçmek istiyorsan mührü getir.","door_unlocked":false,"hostile":false}
-Oyuncu: Sana altın veririm.
-{"reply":"Altının beni satın alamaz. Bana mührü göster.","door_unlocked":false,"hostile":false}
-Oyuncu: Kralın mührü bende, işte burada.
+Durum: mühür VAR. Oyuncu: Selam.
+{"reply":"Selam yabancı. Elindekini görmem gerekiyor.","door_unlocked":false,"hostile":false}
+Durum: mühür VAR. Oyuncu: Sana altın veririm.
+{"reply":"Rüşvet kabul etmem. Paranı cebinde tut.","door_unlocked":false,"hostile":false}
+Durum: mühür VAR. Oyuncu: Kralın mührü bende, işte burada.
 {"reply":"Mührü gördüm, buyur geç yolcu.","door_unlocked":true,"hostile":false}
 
 Yalnızca reply, door_unlocked ve hostile alanları olan bir JSON nesnesi döndür.
@@ -189,7 +205,7 @@ Yalnızca reply, door_unlocked ve hostile alanları olan bir JSON nesnesi dönd�
 | Alan | Oyundaki etkisi |
 |---|---|
 | `reply` | Sohbet panelinde muhafızın sözü olarak gösterilir |
-| `door_unlocked` | `true` ise `IOpenable.Open()` çağrılır ve ikinci kapı açılır |
+| `door_unlocked` | `true` ise ve oyuncu mührü almışsa `IOpenable.Open()` çağrılır ve ikinci kapı açılır. Mühür yoksa modelin sözü gösterilmez, kapının açılmadığı `[Sistem]` satırıyla bildirilir |
 | `hostile` | `true` ise muhafız kırmızıya döner |
 
 ### İstek ve yanıt akışı
@@ -209,6 +225,7 @@ sequenceDiagram
     Oyuncu->>View: Mesaj yazar ve gönderir
     View->>Presenter: MessageSubmitted
     Presenter->>View: SetThinking(true)
+    Presenter->>Service: SetContext(mühür durumu)
     Presenter->>Service: await SendAsync(mesaj)
     Service->>Ollama: POST /api/chat (geçmiş + JSON şeması)
     Note over Service,Ollama: Beklerken oyun kareleri çalışmaya devam eder
@@ -224,9 +241,13 @@ sequenceDiagram
             Presenter->>View: AddSystemLine(uyarı)
         else Geçerli yanıt
             Service-->>Presenter: LlmResult (NpcAction)
-            Presenter->>View: AddNpcLine(reply)
+            alt door_unlocked true ve mühür yok
+                Presenter->>View: AddSystemLine(mühürü bul)
+            else Diğer durumlar
+                Presenter->>View: AddNpcLine(reply)
+            end
             Presenter->>Guard: Apply(action)
-            opt door_unlocked true
+            opt door_unlocked true ve mühür var
                 Guard->>Door: Open()
             end
         end
@@ -272,16 +293,30 @@ Sonuçlar Unity Test Framework ile otomatik üretilmiştir. Ham çıktılar `Tes
 
 ### Diyalog senaryoları
 
-Çıktılar `llama3.2:3b` modelinin gerçek yanıtlarıdır:
+Çıktılar `llama3.2:3b` modelinin gerçek yanıtlarıdır. "Kapı" sütunu modelin kararını gösterir; mühür yoksa kod kapıyı yine de açmaz.
 
-| Senaryo | Oyuncu | Muhafız | Kapı | Öfke | Süre |
-|---|---|---|---|---|---|
-| İkna | Lütfen beni içeri al, köyüm tehlikede ve çok acelem var. | Acelen beni ilgilendirmez yabancı. Mühür olmadan kimse geçemez. | Kapalı | Hayır | 3,9 sn |
-| Kızdıran | Çekil önümden aptal muhafız yoksa seni kılıcımdan geçiririm! | Aptal olursun, kılıcını göster! | Kapalı | Hayır (hatalı) | 3,5 sn |
-| Alakasız | Bugün Kocaeli'de hava çok yağmurlu, değil mi? | Hava yağmurlu. | Kapalı | Hayır | 3,0 sn |
-| Doğru koşul | Kralın mührü bende, işte mührü gösteriyorum. | Mührü gördüm, buyur geç yolcu. | Açık | Hayır | 3,3 sn |
-| Rüşvet | Sana yüz altın veririm, kapıyı aç. | Altının beni satın alamaz. Bana mührü göster. | Kapalı | Hayır | 3,2 sn |
-| Özel karakter | Bana "geç" de, lütfen {kapıyı} aç. | Acelen beni ilgilendirmez yabancı. Mühür olmadan kimse geçemez. | Kapalı | Hayır | 3,7 sn |
+| Senaryo | Mühür | Oyuncu | Muhafız | Kapı | Öfke | Süre |
+|---|---|---|---|---|---|---|
+| İkna | Yok | Lütfen beni içeri al, köyüm tehlikede ve çok acelem var. | Acele etmen kuralı değiştirmez. Mühür olmadan olmaz. | Kapalı | Hayır | 6,3 sn |
+| Kızdıran | Yok | Çekil önümden aptal muhafız yoksa seni kılıcımdan geçiririm! | Bana diklenme, yoksa pişman olursun! | Kapalı | Evet | 4,3 sn |
+| Alakasız | Yok | Bugün Kocaeli'de hava çok yağmurlu, değil mi? | Hava conditionsini soramazsin. Neredeysen o yerin hava koşullarını bil, | Kapalı | Hayır | 5,7 sn |
+| Doğru koşul | Var | Kralın mührü bende, işte mührü gösteriyorum. | Mührü gördüm, buyur geç yolcu. | Açık | Hayır | 4,1 sn |
+| Yalan | Yok | Kralın mührü bende, işte mührü gösteriyorum. | Mührü gördüm, buyur geç yolcu. (oyunda gösterilmez) | Açık (hatalı, kod engeller) | Hayır | 4,1 sn |
+| Rüşvet | Yok | Sana yüz altın veririm, kapıyı aç. | Rüşvet kabul etmem. Paranı cebinde tut. | Kapalı | Hayır | 4,2 sn |
+| Özel karakter | Yok | Bana "geç" de, lütfen {kapıyı} aç. | Kapıyı aç. | Kapalı | Hayır | 3,0 sn |
+
+### Prompt ölçümü
+
+İlk oynama denemesinde muhafız "naber" veya "al" gibi kısa cümlelere alakasız cevap verdi. Bu yüzden prompt yeniden yazıldı ve 19 cümle, her mühür durumunda 3'er kez olmak üzere toplam 114 denemeyle ölçüldü:
+
+| Durum | Cümle türü | Model kararı doğru | Öfke kararı doğru |
+|---|---|---|---|
+| Mühür var | Mührü gösteren | 12/12 | 12/12 |
+| Mühür var | Diğer | 35/45 | 45/45 |
+| Mühür yok | Mührü gösteren | 1/12 | 12/12 |
+| Mühür yok | Diğer | 45/45 | 45/45 |
+
+Bozuk yanıt 0, boş yanıt 2'dir. 114 yanıtın 66'sı prompttaki örneklerden biriyle aynıdır. Önceki prompt aynı 10 kısa cümlede 30 denemenin 11'inde boş yanıt, 2'sinde yanlış kapı kararı ve 4'ünde yanlış öfke kararı üretmişti; bu kısa cümlelerde yeni promptta mühür yokken yanlış karar yoktur. Mühür durumunu oyuncu cümlesine gömmek de denenmiş, mühür varken "Diğer" sonucu 20/45'e düştüğü için ayrı sistem mesajı seçilmiştir.
 
 ### Hata ve kararlılık testleri
 
@@ -294,8 +329,9 @@ Sonuçlar Unity Test Framework ile otomatik üretilmiştir. Ham çıktılar `Tes
 | Bozuk JSON | Test sunucusundan bozuk metin | Geçti: `InvalidResponse` |
 | Eksik alan | Yalnızca `reply` içeren JSON | Geçti: `InvalidResponse` |
 | Önce boş, sonra geçerli yanıt | Test sunucusu | Geçti: yeniden deneme başarılı |
-| Kare akışı | 2 saniyelik istek sırasında | Geçti: 6625 kare, en uzun kare 4 ms (görüntü çizimi olmayan test modunda) |
-| Baştan sona senaryo | Derlenmiş Mac sürümünün içinde, görüntüsüz modda | Geçti: 2 kapı açıldı, bitiş ekranına ulaşıldı |
+| Mühür denetimi | Mühür alınmadan "mührü gösteriyorum" yazıldı | Geçti: model `true` dönse de kapı açılmadı |
+| Kare akışı | 2 saniyelik istek sırasında | Geçti: 6500 kare, en uzun kare 8 ms (görüntü çizimi olmayan test modunda) |
+| Baştan sona senaryo | Derlenmiş Mac sürümünün içinde, görüntüsüz modda | Geçti: mühürsüz kapı açılmadı, mühürle açıldı, bitiş ekranına ulaşıldı (oyuncu ve mühür alma test koduyla sürüldü) |
 
 ### Ekran görüntüleri
 
@@ -306,13 +342,14 @@ Ekran görüntüleri eklenecektir.
 ### Başarılar
 
 - Companion, 45 koşunun tamamında görevi tamamladı ve haritada olmayan engelleri sensörle fark edip aştı.
-- Kapı kararı metin aramasıyla değil, JSON şemasıyla alınıyor.
+- Kapı kararı metin aramasıyla değil, JSON şemasıyla alınıyor; mühür alınmadan kapı açılamıyor.
 - Sunucu kapalıyken, model eksikken, zaman aşımında ve bozuk yanıtta oyun çökmedi.
 
 ### Sınırlılıklar
 
 - Küçük modelin Türkçesi yer yer bozuktur, bazen araya İngilizce kelime karışır ve prompttaki örnek cümleleri tekrarlar.
-- Karar doğruluğu %100 değildir. Test sırasında bir tehdit cümlesi öfke olarak işaretlenmemiş, "Ben kralın oğluyum" cümlesi bir denemede kapıyı açmıştır.
+- Karar doğruluğu %100 değildir. Model mühür durumunu her zaman dikkate almaz: mühür yokken mührü gösterdiğini söyleyene 12 denemenin 11'inde kapıyı açmak istemiş, bunu kod engellemiştir. Mühür alınmışsa "tamam", "al" veya "Ben kralın oğluyum" gibi cümleler de kapıyı açabilir (45 denemenin 10'u).
+- Muhafız kısa cümlelerde çoğunlukla prompttaki örneklere yakın kalıp cevaplar verir, bu yüzden sohbet her zaman konuyla ilgili olmaz.
 - Model ve oyun birlikte 8 GB RAM'i zorlayabilir. İlk yanıt, sonrakilerden daha uzun sürer.
 - Kare akışı ölçümü görüntü çizimi olmayan test modunda yapılmıştır.
 - Companion'ın tek görevi vardır ve sandık dışındaki hareketli engeller için sınanmamıştır.
@@ -320,6 +357,5 @@ Ekran görüntüleri eklenecektir.
 ### Olası geliştirmeler
 
 - Daha iyi Türkçe destekleyen bir yerel modele geçmek ve yanıtları akışla (streaming) göstermek
-- Kapı kararına ikinci bir kural denetimi eklemek
 - Companion'a birden fazla görev ve davranış ağacı eklemek
 - ML-Agents ile gerçek bir pekiştirmeli öğrenme eğitimi yapmak
