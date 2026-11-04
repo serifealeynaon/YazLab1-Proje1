@@ -4,11 +4,12 @@
 **Ders:** Yazılım Geliştirme Laboratuvarı-I, Proje 1
 **Ekip:** Şerife Aleyna ÖN
 **Tarih:** Kasım 2026
+**GitHub:** https://github.com/serifealeynaon/YazLab1-Proje1
 
 ## Çalıştırma
 
 1. Ollama'yı kurun ve modeli indirin: `ollama pull llama3.2:3b`
-2. `Builds` klasöründeki sürümü açın (Windows: `YazLabOyun.exe`, Mac: `YazLabOyun.app`).
+2. Teslim dosyasındaki `Builds` klasöründen sürümü açın (Windows: `YazLabOyun.exe`, Mac: `YazLabOyun.app`).
 3. Kontroller: `WASD` yürüme, `E` companion'a emir verme veya yanındayken mührü alma, `T` muhafızla konuşma, `Enter` mesaj gönderme, `Esc` sohbeti kapatma.
 
 Unity sürümü: `6000.0.85f2`. Sahne, `YazLab > Sahneyi Kur` menüsüyle yeniden üretilebilir.
@@ -342,7 +343,43 @@ Dört mesajlık bir sohbetin ardından doğru kelime yazıldığında kapı 12 d
 
 ### Ekran görüntüleri
 
-Ekran görüntüleri eklenecektir.
+Görüntüler, oyuncunun test koduyla sürüldüğü pencereli sürümden otomatik alınmıştır (sağ alttaki "Development Build" yazısı bu yüzdendir). Muhafızın cevapları modelin gerçek çıktısıdır.
+
+**Başlangıç: kilitli kapı, oyuncu ve companion**
+
+![Başlangıç](Docs/ekran_goruntuleri/01_baslangic.png)
+
+**Companion, haritada olmayan sandığı sensörle fark edip yeniden plan yapıyor (`Replan`)**
+
+![Companion, haritada olmayan sandığı sens](Docs/ekran_goruntuleri/02_companion_yolda.png)
+
+**Şalter indirildi, birinci kapı açıldı**
+
+![Şalter indirildi, birinci kapı açıldı](Docs/ekran_goruntuleri/03_birinci_kapi_acik.png)
+
+**İkinci bölge: muhafız, altın renkli mühür ve eşlik eden companion**
+
+![İkinci bölge](Docs/ekran_goruntuleri/04_companion_eslik_ediyor.png)
+
+**Model yanıtı beklenirken oyun akıyor, "Muhafız düşünüyor" gösteriliyor (FPS 55)**
+
+![Model yanıtı beklenirken oyun akıyor, "M](Docs/ekran_goruntuleri/05_dusunuyor.png)
+
+**Mührün yanında `E` ipucu. Muhafız, önceki mesajı yanlışlıkla hakaret saydığı için kırmızı**
+
+![Mührün yanında `E` ipucu. Muhafız, öncek](Docs/ekran_goruntuleri/06_muhur_yaninda.png)
+
+**Mühür alındı, kelime sol üstte görünüyor. Önceki satırda modelin hatalı öfke kararı görülüyor**
+
+![Mühür alındı, kelime sol üstte görünüyor](Docs/ekran_goruntuleri/07_kelime_ekranda.png)
+
+**Model doğru kelimeyle `door_unlocked: true` döndürdü, kapı açıldı**
+
+![Model doğru kelimeyle `door_unlocked](Docs/ekran_goruntuleri/08_muhafiz_kapiyi_acti.png)
+
+**Bitiş ekranı**
+
+![Bitiş ekranı](Docs/ekran_goruntuleri/09_bitis_ekrani.png)
 
 ## 6. Sonuç ve tartışma
 
@@ -358,7 +395,9 @@ Ekran görüntüleri eklenecektir.
 - Öfke kararı bu promptta daha zayıftır: masum cümleler bazen hakaret sayılır, muhafız boş yere kırmızıya döner.
 - Muhafız çoğunlukla prompttaki örneklere yakın kalıp cevaplar verir, bu yüzden sohbet her zaman konuyla ilgili olmaz. Türkçesi yer yer bozuktur, bazen araya İngilizce kelime karışır.
 - Model ve oyun birlikte 8 GB RAM'i zorlayabilir. İlk yanıt, sonrakilerden daha uzun sürer.
-- Kare akışı ölçümü görüntü çizimi olmayan test modunda yapılmıştır.
+- Pencereli oyunda ekrandaki sayaç 55-62 FPS göstermiştir; ayrı bir uzun süreli FPS ölçümü yapılmamıştır. 2 saniyelik kare akışı testi görüntü çizimi olmayan modda yapılmıştır.
+- Windows sürümü derlenmiş, ancak Windows bilgisayarda çalıştırılarak denenmemiştir.
+- Muhafızın yanıtları modelden gelse de çoğu kez prompttaki örneklere benzer; 114 denemenin ham çıktıları `Tools/prompt_olcumleri` klasöründedir.
 - Companion'ın tek görevi vardır ve sandık dışındaki hareketli engeller için sınanmamıştır.
 
 ### Olası geliştirmeler
