@@ -397,7 +397,7 @@ Görüntüler, oyuncunun test koduyla sürüldüğü pencereli sürümden otomat
 - Model ve oyun birlikte 8 GB RAM'i zorlayabilir. İlk yanıt, sonrakilerden daha uzun sürer.
 - Pencereli oyunda ekrandaki sayaç 55-62 FPS göstermiştir; ayrı bir uzun süreli FPS ölçümü yapılmamıştır. 2 saniyelik kare akışı testi görüntü çizimi olmayan modda yapılmıştır.
 - Windows sürümü derlenmiş, ancak Windows bilgisayarda çalıştırılarak denenmemiştir.
-- Muhafızın yanıtları modelden gelse de çoğu kez prompttaki örneklere benzer; 114 denemenin ham çıktıları `Tools/prompt_olcumleri` klasöründedir.
+- Muhafızın yanıtları modelden gelse de çoğu kez prompttaki örneklere benzer; ölçümlerin ham çıktıları `Tools/prompt_olcumleri` klasöründedir.
 - Companion'ın tek görevi vardır ve sandık dışındaki hareketli engeller için sınanmamıştır.
 
 ### Olası geliştirmeler
