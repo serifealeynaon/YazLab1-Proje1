@@ -68,8 +68,13 @@ namespace YazLab.Tests
             seal.Collect();
             Assert.IsFalse(seal.gameObject.activeSelf, "Mühür alındıktan sonra sahnede kaldı.");
             Teleport(player, new Vector3(0f, 1.1f, 4f));
+            yield return new WaitForSecondsRealtime(0.5f);
             presenter.Open();
             yield return null;
+            input.text = seal.Word.ToLowerInvariant();
+            yield return new WaitForSecondsRealtime(0.3f);
+            yield return Capture("06_kelime_ekranda");
+            input.text = string.Empty;
 
             for (int attempt = 0; attempt < 3 && !secondDoor.IsOpen; attempt++)
             {
