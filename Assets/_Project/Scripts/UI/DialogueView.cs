@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +14,9 @@ namespace YazLab.UI
         [SerializeField] private Button sendButton;
         [SerializeField] private Button closeButton;
 
+        private const int MaxLines = 30;
+
+        private readonly List<string> lines = new List<string>();
         private bool thinking;
 
         public event Action<string> MessageSubmitted;
@@ -104,7 +108,14 @@ namespace YazLab.UI
 
         private void Append(string line)
         {
-            logText.text = string.IsNullOrEmpty(logText.text) ? line : $"{logText.text}\n\n{line}";
+            lines.Add(line);
+
+            if (lines.Count > MaxLines)
+            {
+                lines.RemoveAt(0);
+            }
+
+            logText.text = string.Join("\n\n", lines);
         }
 
         private void FocusInput()

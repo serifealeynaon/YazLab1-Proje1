@@ -309,7 +309,8 @@ namespace YazLab.EditorTools
             GameObject panel = Panel(canvas, "DialoguePanel", new Vector2(0.15f, 0.08f), new Vector2(0.85f, 0.72f), new Color(0.05f, 0.05f, 0.1f, 0.92f));
             var logText = Label(panel.transform, "Log", new Vector2(0f, 0.28f), new Vector2(1f, 1f), new Vector2(20f, 0f), new Vector2(-70f, -15f), 20, TextAnchor.LowerLeft, Color.white);
             logText.supportRichText = true;
-            logText.verticalOverflow = VerticalWrapMode.Truncate;
+            logText.verticalOverflow = VerticalWrapMode.Overflow;
+            logText.gameObject.AddComponent<RectMask2D>();
             var thinking = Label(panel.transform, "Thinking", new Vector2(0f, 0.18f), new Vector2(1f, 0.28f), new Vector2(20f, 0f), new Vector2(-20f, 0f), 18, TextAnchor.MiddleLeft, new Color(1f, 0.9f, 0.5f));
 
             GameObject inputObject = DefaultControls.CreateInputField(new DefaultControls.Resources());
