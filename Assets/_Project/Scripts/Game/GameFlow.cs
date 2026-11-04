@@ -31,7 +31,7 @@ namespace YazLab.Game
             companion.StateChanged += state => hud.SetStatus($"Companion durumu: {state}");
             companion.TaskFailed += reason => hud.SetObjective($"Companion başaramadı: {reason}\n[E] Tekrar emir ver.");
             firstDoor.Opened += () => hud.SetObjective("Kapı açıldı! İlerle ve altın renkli kralın mührünü bul.");
-            seal.Collected += () => hud.SetObjective("Mührü aldın. Muhafıza git ve mührü göster.");
+            seal.Collected += () => hud.SetObjective($"Mührün üzerindeki kelime: {seal.Word}\nMuhafıza git ve bu kelimeyi söyle.");
             secondDoor.Opened += () => hud.SetObjective("Muhafız kapıyı açtı! Çıkışa ulaş.");
             finishZone.PlayerEntered += Finish;
             hud.SetStatus($"Companion durumu: {companion.CurrentStateName}");
@@ -71,7 +71,7 @@ namespace YazLab.Game
             if (firstDoor.IsOpen && !secondDoor.IsOpen && CanTalk())
             {
                 hud.SetObjective(seal.IsCollected
-                    ? "[T] Muhafıza mührü göster."
+                    ? $"Mührün üzerindeki kelime: {seal.Word}\n[T] Muhafıza bu kelimeyi söyle."
                     : "[T] Muhafızla konuş. Geçmek için önce kralın mührünü bulmalısın.");
             }
         }

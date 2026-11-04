@@ -8,7 +8,6 @@ namespace YazLab.Game
 {
     public class NpcDialoguePresenter : MonoBehaviour
     {
-        public const string SealHeldContext = "Oyun durumu: mühür VAR.";
         public const string SealMissingContext = "Oyun durumu: mühür YOK.";
 
         [SerializeField] private OllamaSettings settings = new OllamaSettings();
@@ -18,6 +17,11 @@ namespace YazLab.Game
         private readonly CancellationTokenSource lifetime = new CancellationTokenSource();
         private IDialogueView view;
         private ILlmDialogueService service;
+
+        public static string SealHeldContext(string word)
+        {
+            return $"Oyun durumu: mühür VAR, kelime {word}.";
+        }
 
         public OllamaSettings Settings => settings;
         public bool IsOpen => view.IsVisible;
@@ -58,7 +62,7 @@ namespace YazLab.Game
 
             try
             {
-                service.SetContext(guard.HasSeal ? SealHeldContext : SealMissingContext);
+                service.SetContext(guard.HasSeal ? SealHeldContext(guard.SealWord) : SealMissingContext);
                 LlmResult result = await service.SendAsync(message, lifetime.Token);
 
                 if (result.Status == LlmStatus.Cancelled)

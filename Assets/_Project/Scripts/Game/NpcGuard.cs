@@ -16,6 +16,7 @@ namespace YazLab.Game
 
         public bool IsHostile { get; private set; }
         public bool HasSeal => seal.IsCollected;
+        public string SealWord => seal.Word;
 
         private void Awake()
         {
