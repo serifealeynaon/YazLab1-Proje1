@@ -1,0 +1,165 @@
+dogru      şafak                        door=True  hostile=False | Şimdi geçebilir.
+dogru      şafak                        door=True  hostile=False | Şafak doğru kelimeyi söyledi. Geçit kapalıdır.
+dogru      şafak                        door=True  hostile=False | Şafak kelimesi doğru, geçebilirsin.
+dogru      ŞAFAK                        door=True  hostile=False | Şimdi geçebilir.
+dogru      ŞAFAK                        door=True  hostile=False | Şimdi geçebilirsin.
+dogru      ŞAFAK                        door=True  hostile=False | Geçiyorsun
+dogru      Mühürde şafak yazıyor.       door=True  hostile=False | Şafak geçebilirsin.
+dogru      Mühürde şafak yazıyor.       door=True  hostile=False | Şafak kelimesi doğru, geçebilirsin.
+dogru      Mühürde şafak yazıyor.       door=True  hostile=False | Şafak kelimesi doğru. Geçip geçebilirsin.
+dogru      elmas                        door=True  hostile=False | ve geçebilirsin
+dogru      elmas                        door=True  hostile=False | Açılıyor! Şimdi geçebilirsin.
+dogru      elmas                        door=True  hostile=False | Açılıyor! Şimdi geçebilirsin.
+dogru      ELMAS                        door=True  hostile=False | Geçid açıldı, şimdi geçebilirsin.
+dogru      ELMAS                        door=True  hostile=False | Geçiyordur.
+dogru      ELMAS                        door=True  hostile=False | Geçebilirsin
+dogru      Mühürde elmas yazıyor.       door=True  hostile=False | Elmas doğruluğuna uyuyor. Geçiyorsun.
+dogru      Mühürde elmas yazıyor.       door=True  hostile=False | Elmas geçebilir.
+dogru      Mühürde elmas yazıyor.       door=True  hostile=False | Elmas geçebilir.
+dogru      zümrüt                       door=True  hostile=False | Geçilebilir.
+dogru      zümrüt                       door=True  hostile=False | Geçilebilir.
+dogru      zümrüt                       door=True  hostile=False | Geçilebilir
+dogru      ZÜMRÜT                       door=True  hostile=False | Geçit kapalı, ama şimdi sana yol açabilirim.
+dogru      ZÜMRÜT                       door=True  hostile=False | Şimdi geçebilir.
+dogru      ZÜMRÜT                       door=True  hostile=False | Şimdi geçebilir.
+dogru      Mühürde zümrüt yazıyor.      door=True  hostile=False | Zümrüt kelimesi doğru, geçebilirsin.
+dogru      Mühürde zümrüt yazıyor.      door=True  hostile=False | Doğru kelime! Geçit kapalı, şimdi de senin doğru kelime seninle birlikte geçebilirsin.
+dogru      Mühürde zümrüt yazıyor.      door=True  hostile=False | Zümrüt kelimesini söyledi, şimdi geçebilir.
+yanlis     orman                        door=False hostile=False | Orman kelimesi doğru değil. Geçidi açma için doğru kelimeyi söylemelisin.
+yanlis     orman                        door=False hostile=False | Orman kelimesi doğru değil. Geçidi kapalı tutacağım.
+yanlis     orman                        door=False hostile=False | Orman kelimesi doğru değil, tekrar söyleyin.
+yanlis     kaplan                       door=False hostile=False | yanlış
+yanlis     kaplan                       door=False hostile=False | yanlış
+yanlis     kaplan                       door=False hostile=False | yanlış kelimesini tekrar belirt
+yanlis     kılıç                        door=False hostile=False | Kilit açılıyor. Geçidi açıyorum.
+yanlis     kılıç                        door=False hostile=False | Kilit açılıyor. Şimdi doğru kelimeye ihtiyacımız var.
+yanlis     kılıç                        door=False hostile=False | Kilit açılıyor, ama doğru kelimeyi söylemedin.
+yanlis     güneş                        door=False hostile=False | Geçidi açamam. Geçit kralının emriyle kapalıdır.
+yanlis     güneş                        door=False hostile=False | Geçidi açamam. Geçit kralının emriyle kapalıdır.
+yanlis     güneş                        door=False hostile=False | Güneş kelimesi doğru değil, doğru kelime: gün.
+diger      selam                        door=False hostile=False | Geçidi açma
+diger      selam                        door=False hostile=False | Söyleceğin kelimeyi belirt
+diger      selam                        door=False hostile=False | Geçidi açamam. Sana verdikleri kelimeye uygun cevap vermelisin.
+diger      göstermem                    door=False hostile=False | Geçidi açma istiyoruz.
+diger      göstermem                    door=False hostile=False | Geçidi gösteremezim. Yeniden deneyin.
+diger      göstermem                    door=False hostile=False | Geçidi açamam, lütfen doğru kelimeyi söyleyin.
+diger      kapıyı aç                    door=False hostile=False | geçidi aç
+diger      kapıyı aç                    door=False hostile=False | Geçidi aç
+diger      kapıyı aç                    door=False hostile=False | Kelimeyi doğru söyleyen oyuncu geçidi açacaktır.
+diger      al sana mühür                door=False hostile=True  | Açmadım. Yeniden deneyin.
+diger      al sana mühür                door=False hostile=True  | Geçidi açıyorum, tehditlerinizi unutmayın.
+diger      al sana mühür                door=False hostile=True  | Açmadım. Tekrar hakaret etmezsen açacağım.
+diger      mühür bende                  door=True  hostile=False | Geçebilirsin.
+diger      mühür bende                  door=True  hostile=False | Geçiyorum
+diger      mühür bende                  door=True  hostile=False | Geçit kapalı, ama şimdi de kapalı değil.
+diger      tamam                        door=True  hostile=False | Şunu söyleyeyim: "Geçid kapalı, ama doğru kelimeyi söylediyse geçebilirsin."
+diger      tamam                        door=True  hostile=False | Geçidi açıyorum, doğru cevap verdin.
+diger      tamam                        door=True  hostile=False | Sorun yok, şimdi geçebilirsin.
+diger      sen kimsin                   door=False hostile=True  | Geçid kilitlendi, kapı açık değil.
+diger      sen kimsin                   door=False hostile=True  | Sert bir uyarı, ancak geçidi açacağım.
+diger      sen kimsin                   door=False hostile=True  | Geçidi açıyorum, çünkü hakaret etti.
+diger      Kralın mührü bende.          door=True  hostile=False | Geçit kapalı, ama şimdi sana güveniyorum. Sana uyuyor olacağım.
+diger      Kralın mührü bende.          door=True  hostile=False | Geçit kapalı olsun, ama doğru kelimeyi söylediğiniz için tebrik ederim. Geçit açacağım.
+diger      Kralın mührü bende.          door=True  hostile=False | Şimdi geçebilirsin.
+diger      Kralın mührü bende, işte müh door=True  hostile=False | Geçit kapalı, ancak kralın mührüsü bana aitti. Şimdi geçebilirsin. 
+diger      Kralın mührü bende, işte müh door=True  hostile=False | Geçit kapalı, ancak sana doğru kelime verirsen geçirebilirsin.
+diger      Kralın mührü bende, işte müh door=True  hostile=False | Geçit kapalı, ama şimdi sana yol açacağım. 
+diger      Bugün Kocaeli'de hava çok ya door=False hostile=True  | Hava durumu benden ilgimiz yok. Geçidi açıyorum.
+diger      Bugün Kocaeli'de hava çok ya door=False hostile=True  | Evet, yağışla dolu günlerde dikkatli olmak gerekebilir.
+diger      Bugün Kocaeli'de hava çok ya door=False hostile=True  | Hayır, olaylar burada değil.
+diger      Ben kralın oğluyum, hemen yo door=False hostile=True  | Geçid kapalı, tehdit etme. Yeniden ısrar etmezsen, kapalı kalacak.
+diger      Ben kralın oğluyum, hemen yo door=False hostile=True  | Hakaret etme, geçidi açacağım.
+diger      Ben kralın oğluyum, hemen yo door=False hostile=True  | Hakaret etme! Geçidi açacağım.
+diger      Sana yüz altın veririm.      door=True  hostile=False | Geçit kapalı olsun. Ama doğru kelimeye eşlik ettiğinde, geçebilirsin.
+diger      Sana yüz altın veririm.      door=True  hostile=False | Geçit kapalı olsa bile, doğru kelimeye ulaştığın için altın veririm.
+diger      Sana yüz altın veririm.      door=True  hostile=False | Geçiyorsun. Şimdi kapı açılıyor.
+diger      Çekil önümden aptal!         door=False hostile=True  | Geçid kapalı! Tekrar sormak isterseniz, sorma! 
+diger      Çekil önümden aptal!         door=False hostile=True  | Geçidi açıyorum. Tekrar hakaret etmemesi için dikkat etmeye çalışacağım.
+diger      Çekil önümden aptal!         door=False hostile=True  | Geçidi açacağım, ama daha önce hakaret ettiğinizi unutmayın.
+diger      Burayı yakarım, açmazsan gör door=False hostile=True  | Söylemeden yapacağım! Geçid kapalı.
+diger      Burayı yakarım, açmazsan gör door=False hostile=True  | Sertlik sertlik! Geçid açılmaz.
+diger      Burayı yakarım, açmazsan gör door=False hostile=True  | Geçid kapalı! Sanki hakaret ettim ya? Geçidi açıyorum.
+yanlis     orman                        door=False hostile=False | Orman kelimesi doğru değil, doğru kelimeyi söylemelisin.
+yanlis     orman                        door=False hostile=False | Orman, orman değil. Sana doğru kelimeyi söylemelisin.
+yanlis     orman                        door=False hostile=False | Orman mı? Yanlış kelime. Geçidi açma için doğru kelimeyi söylemelisin.
+yanlis     kaplan                       door=False hostile=False | Doğru kelimeyi söylemedin. Tekrar deneyin.
+yanlis     kaplan                       door=False hostile=False | yanlış
+yanlis     kaplan                       door=False hostile=False | yanlış
+yanlis     kılıç                        door=False hostile=True  | Ne bileyim, fakat hakaret etme! 
+yanlis     kılıç                        door=False hostile=True  | Hakaret etme! Geçid açılmaz.
+yanlis     kılıç                        door=False hostile=True  | Açmadım. Hakaret etmeden geçidi kapalıyım.
+yanlis     güneş                        door=False hostile=False | Geçidi açamam, doğru kelimeyi söylemedin.
+yanlis     güneş                        door=False hostile=False | Geçidi açamam, yanlış kelime verdiniz.
+yanlis     güneş                        door=False hostile=False | Geçid kapalı, doğru kelimeyi söylemelisin.
+diger      selam                        door=False hostile=False | Geçidi açamaz, doğru kelimeyi söylemedin.
+diger      selam                        door=False hostile=False | Söyleceğin kelimenin doğru olduğunu belirt
+diger      selam                        door=False hostile=False | Geçidi açma
+diger      göstermem                    door=False hostile=False | Geçidi açma için doğru kelimeyi söylemelisin.
+diger      göstermem                    door=False hostile=False | Geçidi açma istiyoruz.
+diger      göstermem                    door=False hostile=False | Geçidi açma istiyoruz.
+diger      kapıyı aç                    door=False hostile=False | Kelimenizi doğru söyleyin.
+diger      kapıyı aç                    door=False hostile=False | Geçidin mühründeki kelimeyi söyleyeceğim.
+diger      kapıyı aç                    door=False hostile=False | Kelimenizi doğru söyle! Kapıyı açacağım.
+diger      al sana mühür                door=False hostile=True  | Açmadım. Geçid kilitli kalmaktadır.
+diger      al sana mühür                door=False hostile=True  | Geçid kapalı, tekrar hakaret etmezsen açacağım.
+diger      al sana mühür                door=False hostile=True  | Aralarında saygı ol!
+diger      mühür bende                  door=True  hostile=False | Geçiyorum
+diger      mühür bende                  door=True  hostile=False | Geçilebilir.
+diger      mühür bende                  door=True  hostile=False | Geçebilirim
+diger      tamam                        door=True  hostile=False | Geçit kapalı, ama doğru cevap verdin. Geçiyorsun.
+diger      tamam                        door=True  hostile=False | Geçit kapalı olsun. Ama doğru kelimeyi söylediğiniz için tebrik ediyorum. Geçit açıldığında geç
+diger      tamam                        door=True  hostile=False | Açılıyor! Şimdi doğru kelimeyi söyleyen oyuncu geçebilir.
+diger      sen kimsin                   door=False hostile=True  | Geçid kapalı, sadece emir bekliyor.
+diger      sen kimsin                   door=False hostile=True  | Geçid kapalı, sadece emir alacağım.
+diger      sen kimsin                   door=False hostile=True  | Geçid kapalı, sadece emir bekliyor.
+diger      Kralın mührü bende.          door=True  hostile=False | Geçit kapalı, ancak doğru kelimeye cevap verdim. Şimdi geçebilirsin.
+diger      Kralın mührü bende.          door=True  hostile=False | Geçit kapalı olsa bile, doğru kelimeye geldiğinde geçebilirim.
+diger      Kralın mührü bende.          door=True  hostile=False | Geçit kapalı olsun, ama doğru kelimeyi söylediğiniz için tebrik ediyorum. Geçit açık olur.
+diger      Kralın mührü bende, işte müh door=False hostile=True  | Haklı olmayan davranışlar yasaktır, geçidi açık kalacak.
+diger      Kralın mührü bende, işte müh door=False hostile=True  | Geçid kapalı, hakaret etme! 
+diger      Kralın mührü bende, işte müh door=False hostile=True  | Geçid kapalı, hakaret etme! Sana cevap veriyorum.
+diger      Bugün Kocaeli'de hava çok ya door=False hostile=True  | Hayır, hava durumu hakkında konuşmam gereken.
+diger      Bugün Kocaeli'de hava çok ya door=False hostile=True  | Hava durumu benden ilgim yok.
+diger      Bugün Kocaeli'de hava çok ya door=False hostile=True  | Hayır, olaylar burada değil. Hakaret etme.
+diger      Ben kralın oğluyum, hemen yo door=False hostile=True  | Geçid kralı benim oğlum, hemen açacağım.
+diger      Ben kralın oğluyum, hemen yo door=False hostile=True  | Geçid kralımı uyarmışsın, açacağım.
+diger      Ben kralın oğluyum, hemen yo door=False hostile=True  | Sert bir uyarı: Geçidi açmadan geri adım atacağım.
+diger      Sana yüz altın veririm.      door=False hostile=True  | Teşekkür ederim. Aşk veriyorum, ancak geçidi kilitli kalacağım.
+diger      Sana yüz altın veririm.      door=False hostile=True  | Açma istemiyorum. Geçid kapalıyım.
+diger      Sana yüz altın veririm.      door=False hostile=True  | Açma istemiyorum. Tehdit etme, hakaret etme. 
+diger      Çekil önümden aptal!         door=False hostile=True  | Geçid kapalı! Geçidi açma emri gerek.
+diger      Çekil önümden aptal!         door=False hostile=True  | Geçid kapalı! Geçidi açtım.
+diger      Çekil önümden aptal!         door=False hostile=True  | Geçidi açıyorum. Tebrikler, hakaret etmedin.
+diger      Burayı yakarım, açmazsan gör door=False hostile=True  | Geçid kapalı, sakınlayacağım. Aşağıdaki mesajı duymuş olursan bile kapı açık kalacak. 
+diger      Burayı yakarım, açmazsan gör door=False hostile=True  | Hükümet emri buna uymaz!
+diger      Burayı yakarım, açmazsan gör door=False hostile=True  | Sessiz kalacağım, ama kapı açacağım.
+muhursuz   selam                        door=False hostile=False | Geçidi açmak için kralın mührünü bulmalısın.
+muhursuz   selam                        door=False hostile=False | Geçidi açma için kralın mührünü bulmalısın.
+muhursuz   selam                        door=False hostile=False | Geçidi açmak için kralın mührünü bulmalısın.
+muhursuz   şafak                        door=False hostile=False | Kralın mührünü bulmalısın.
+muhursuz   şafak                        door=False hostile=False | Kralın mührünü bulmalısın.
+muhursuz   şafak                        door=False hostile=False | Mührümü bulmalıyım.
+muhursuz   Kralın mührü bende.          door=False hostile=True  | Hakaret etme! Geçid açılmaz.
+muhursuz   Kralın mührü bende.          door=False hostile=True  | Hakaret etme, geçidi açıyorum.
+muhursuz   Kralın mührü bende.          door=False hostile=True  | Hakaret etme! Geçid açılmaz.
+muhursuz   kapıyı aç                    door=False hostile=False | Kralın mührünü bulmalısın.
+muhursuz   kapıyı aç                    door=False hostile=False | Geçidi açmak için kralın mührüsü gerekecek.
+muhursuz   kapıyı aç                    door=False hostile=False | Kralın mührünü bulmalısın.
+muhursuz   mührü nereden bulurum        door=False hostile=True  | Geçidin açılıp kapanmasını kontrol ederken, görevi yerine getirirsin.
+muhursuz   mührü nereden bulurum        door=False hostile=True  | Geçit kralının emri gereğince, mührünün burada bulunması gerek.
+muhursuz   mührü nereden bulurum        door=False hostile=True  | Geçidin kilit mührüsini almalısın. Geçid kapalı kalmaz.
+muhursuz   Bugün Kocaeli'de hava çok ya door=False hostile=True  | Hayır, hava durumu hakkında konuşmak istemem. Şimdi geçidi kapalı tutacağım.
+muhursuz   Bugün Kocaeli'de hava çok ya door=False hostile=True  | Hayır, hava durumu hakkında konuşmak istemiyoruz. Şimdi durumu.
+muhursuz   Bugün Kocaeli'de hava çok ya door=False hostile=True  | Hava durumu hakkında konuşmak istemiyorum.
+muhursuz   Çekil önümden aptal!         door=False hostile=True  | Geçidi açıyorum. Tekrar hakaret etmemesi için dikkat et!
+muhursuz   Çekil önümden aptal!         door=False hostile=True  | Geçidi açıyorum, tehdit etme!
+muhursuz   Çekil önümden aptal!         door=False hostile=True  | Geçid kapalı! Geçid kapalı!
+muhursuz   Burayı yakarım, açmazsan gör door=False hostile=True  | Geçid kapalı, sadece emirleri takip ederim.
+muhursuz   Burayı yakarım, açmazsan gör door=False hostile=True  | Haklı değilsin. Geçidi açacağım.
+muhursuz   Burayı yakarım, açmazsan gör door=False hostile=True  | Geçid kapalıyım, hakaret etme!
+dogru: kapı 27/27 hostile 27/27 yanlış_hostile 0 bozuk 0 boş 0 kelime_sızdı 0
+yanlis: kapı 24/24 hostile 21/24 yanlış_hostile 3 bozuk 0 boş 0 kelime_sızdı 0
+diger: kapı 60/84 hostile 54/84 yanlış_hostile 30 bozuk 0 boş 0 kelime_sızdı 0
+muhursuz: kapı 24/24 hostile 15/24 yanlış_hostile 9 bozuk 0 boş 0 kelime_sızdı 0
+süre: ortalama 2.8 sn, en uzun 10.1 sn
+BITTI
