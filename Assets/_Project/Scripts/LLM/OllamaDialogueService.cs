@@ -145,7 +145,7 @@ namespace YazLab.LLM
             NpcSituation situation = SelectSituation(doorUnlocked, hostile);
             var messages = new List<OllamaMessage>
             {
-                new OllamaMessage("system", $"{settings.replyPrompt}Durum: {situation.instruction}")
+                new OllamaMessage("system", $"{settings.replyPrompt}Durum: {situation.instruction.Replace("{kelime}", sealWord ?? string.Empty)}")
             };
 
             foreach (NpcExample example in situation.examples)

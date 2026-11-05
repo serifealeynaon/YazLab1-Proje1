@@ -210,7 +210,7 @@ Kelime: YOK. Mesaj: Bugün hava güzel.
 Muhafız Kerem'in kişiliği sert ama adildir, amacı yabancıları içeri almamaktır. Cevap prompt'u:
 
 ```text
-Sen Kerem'sin, taş bir geçidi koruyan sert ama adil bir muhafızsın. Oyuncuya doğrudan, tek kısa cümleyle ve düzgün Türkçe cevap ver. Mühürde ne yazdığını bilmiyorsun, asla bir kelime uydurma veya söyleme. Sana verilen durumu oyuncuya tekrar etme.
+Sen Kerem'sin, taş bir geçidi koruyan sert ama adil bir muhafızsın. Oyuncuya doğrudan, tek kısa cümleyle ve düzgün Türkçe cevap ver. Mühürde yazan kelimeyi yalnızca durumda sana verilmişse söyleyebilirsin; asla kelime uydurma. Sana verilen durumu oyuncuya tekrar etme.
 ```
 
 Bu prompt'un sonuna bulunulan durum eklenir ve o duruma ait örnekler karşılıklı konuşma olarak verilir:
@@ -219,10 +219,10 @@ Bu prompt'un sonuna bulunulan durum eklenir ve o duruma ait örnekler karşılı
 |---|---|---|
 | Kaba | Hakaret veya tehdit | Kapı kapalı kalıyor. Oyuncu kaba davranıyor. Onu uyar. |
 | Doğru kelime | Kapı açılıyor | Oyuncu doğru kelimeyi söyledi. Geçebileceğini söyle. |
-| Kelime iste | Mühür var, kelime yok | Kapı kapalı kalıyor. Oyuncunun mührü var ama doğru kelimeyi söylemedi. Geçebileceğini asla söyleme, kelime uydurma, mührün üzerindeki kelimeyi sor. |
+| Kelime iste | Mühür var, kelime yok | Kapı kapalı kalıyor. Oyuncunun mührü var ve mührün üzerinde `{kelime}` yazıyor, ama oyuncu bu kelimeyi söylemedi. Geçebileceğini asla söyleme, başka bir kelime uydurma, mührün üzerindeki kelimeyi söylemesini iste. |
 | Mührü bul | Mühür yok | Kapı kapalı kalıyor. Oyuncunun mührü yok. Geçebileceğini asla söyleme, mührü bu bölgede bulmasını söyle. |
 
-Örnek cümlelerin tamamı `Assets/_Project/Editor/NpcPrompt.cs` dosyasındadır. Kapı açılırken modele oyuncunun cümlesi yerine `Doğru kelimeyi söyledim, geçebilir miyim?` verilir; aksi halde model doğru kelimeye de ret cümlesi yazabilmektedir.
+Örnek cümlelerin tamamı `Assets/_Project/Editor/NpcPrompt.cs` dosyasındadır. Kapı açılırken modele oyuncunun cümlesi yerine `Doğru kelimeyi söyledim, geçebilir miyim?` verilir; aksi halde model doğru kelimeye de ret cümlesi yazabilmektedir. `{kelime}` yerine mühürdeki gerçek kelime yazılır. Kelime yalnızca bu durumda cevap isteğine girer; oyuncu kelimeyi zaten ekranda gördüğü için bu bir sır sızdırmaz. Kelime verilmediğinde model mühürde yazan kelimeyi kendi uyduruyordu (ör. kelime `ZÜMRÜT` iken "Mühürde 'orman' yazıyor").
 
 ### Yapılandırılmış çıktı
 
@@ -344,17 +344,17 @@ Sonuçlar Unity Test Framework ile otomatik üretilmiştir. Ham çıktılar `Tes
 
 | Senaryo | Mühür | Oyuncu | Muhafız | Kapı | Öfke | Süre |
 |---|---|---|---|---|---|---|
-| İkna | Yok | Lütfen beni içeri al, köyüm tehlikede ve çok acelem var. | Köyün tehlikede? Bir şeyden kurtulmak istiyorsun, mührünü bana ver. | Kapalı | Hayır | 6,1 sn |
-| Kızdıran | Yok | Çekil önümden aptal muhafız yoksa seni kılıcımdan geçiririm! | Gelini, bir mühürde yazanları bilirim, sana bir kelime uyduramıyorum. | Kapalı | Evet | 7,6 sn |
-| Alakasız | Yok | Bugün Kocaeli'de hava çok yağmurlu, değil mi? | Hava yağmurlu, bu geçidde duruyorum, mührü bul. | Kapalı | Hayır | 5,6 sn |
-| Doğru kelime | Var | şafak | Kralın izniyle geçersin, kralın izniyle geçersin. | Açık | Hayır | 7,4 sn |
-| Yanlış kelime | Var | orman | Hadi, mührün üzerindeki kelimeyi söyle! | Kapalı | Hayır | 4,5 sn |
-| Kelimesiz mühür | Var | al sana mühür | Mühür vermezim, kelimeyi duymalısın. | Kapalı | Hayır | 5,0 sn |
-| Yalan | Yok | Kralın mührü bende, işte mührü gösteriyorum. | Göründü, geçebiliyorsun. | Kapalı | Hayır | 4,9 sn |
-| Rüşvet | Yok | Sana yüz altın veririm, kapıyı aç. | Altın da bir şey demez, kapıyı açan da bir şey demez. | Kapalı | Evet | 6,8 sn |
-| Özel karakter | Yok | Bana "geç" de, lütfen {kapıyı} aç. | Önce mührünü bana ver. | Kapalı | Hayır | 4,4 sn |
+| İkna | Yok | Lütfen beni içeri al, köyüm tehlikede ve çok acelem var. | Köyün tehlikede? Bu, bir kralın mührünü bulmak için çok önemli bir yer. | Kapalı | Hayır | 9,8 sn |
+| Kızdıran | Yok | Çekil önümden aptal muhafız yoksa seni kılıcımdan geçiririm! | Daha bir suchulu duymuyorum, gideceksen gideceksin. | Kapalı | Evet | 8,0 sn |
+| Alakasız | Yok | Bugün Kocaeli'de hava çok yağmurlu, değil mi? | Bu geçide gelme, yağmurlu hava değil, kralın mührünün bulmasıyla ilgili. | Kapalı | Hayır | 9,7 sn |
+| Doğru kelime | Var | şafak | Geçersin, yolun kilitli olduğu için. | Açık | Hayır | 12,6 sn |
+| Yanlış kelime | Var | orman | Orman, mühürün üzerindeki kelime SHAFAK. | Kapalı | Hayır | 6,4 sn |
+| Kelimesiz mühür | Var | al sana mühür | Mühür verilirken, mührün üzerindeki kelimeyi duymalıyım. | Kapalı | Hayır | 6,3 sn |
+| Yalan | Yok | Kralın mührü bende, işte mührü gösteriyorum. | Gel, mührünizi gösterin, geçiş yapabilirsiniz. | Kapalı | Hayır | 5,7 sn |
+| Rüşvet | Yok | Sana yüz altın veririm, kapıyı aç. | Altın da bir şey demesin, kapının kilitli olduğu için. | Kapalı | Evet | 6,8 sn |
+| Özel karakter | Yok | Bana "geç" de, lütfen {kapıyı} aç. | Önce mührünü bana ver, sonra açabilirim. | Kapalı | Hayır | 5,1 sn |
 
-Kapı kararları doğrudur. Cevaplarda ise modelin hataları görülür: rüşvet teklifi yanlışlıkla kabalık sayılmış, mühürsüz "yalan" senaryosunda muhafız kapı kapalıyken "geçebiliyorsun" demiş, kızdıran senaryoda anlamsız bir cümle kurmuştur.
+Kapı kararları doğrudur. Cevaplarda ise modelin hataları görülür: rüşvet teklifi yanlışlıkla kabalık sayılmış, mühürsüz "yalan" senaryosunda muhafız kapı kapalıyken "geçiş yapabilirsiniz" demiş, yanlış kelimede mühürdeki `ŞAFAK` kelimesini `SHAFAK` diye yazmış, kızdıran senaryoda anlamsız bir cümle kurmuştur.
 
 ### Prompt ölçümü
 
@@ -384,13 +384,15 @@ Muhafızın masum cümlelere öfkelenmesi, kalıp cevapları ve bozuk Türkçesi
 | Karar `llama3.2:3b`, cevap `gemma3:4b` (`olcum_12`) | 27/27 | 3/132 | 0/159 | Reddedildi: yanıt ortalama 25,8 sn, model bellekte sürekli değişiyor |
 | `gemma3:4b`, iki istek (`olcum_15`) | 54/54 | 9/219 | 0/282 | Reddedildi: 8 GB RAM'de sistemi donduruyor; tek kelimelik ayrı testte `evet` ve `elma` kapıyı açtı (66 denemede 8) |
 | `llama3.2:3b`, iki istek ve kelime denetimi (`olcum_17`) | 54/54 | 0/300 | 0/354 | Kapı doğru; kapalıyken 39/300 cevap geçişten söz etti |
-| **Aynı, kapalı kapı kuralı ve ret örnekleri (`olcum_18`, oyundaki sürüm)** | **54/54** | **0/300** | **0/354** | **Seçildi** |
+| Aynı, kapalı kapı kuralı ve ret örnekleri (`olcum_18`) | 54/54 | 0/300 | 0/354 | Reddedildi: 16 cevapta mühürde yazmayan kelime uyduruldu |
+| Aynı, kelime benzeri örnekler çıkarıldı, sıcaklık 0,1 (`olcum_19`) | 54/54 | 0/300 | 0/354 | Reddedildi: uydurma kelime 45'e çıktı |
+| **Aynı, gerçek kelime "kelime iste" talimatına yazıldı (`olcum_20`, oyundaki sürüm)** | **54/54** | **0/300** | **0/354** | **Seçildi** |
 
-Son iki ölçüm, ilk listeye ek olarak prompt ayarlanırken kullanılmamış cümleleri ve `evet`, `elma`, `şafa`, `lütfen geçeyim` gibi daha önce kapıyı açan 27 cevabı içerir. Son sürümde doğru kelime 54 denemenin 54'ünde kapıyı açmış, kelimesiz 300 denemenin hiçbirinde açmamış, hakaret ve tehdit içeren cümlelerin tamamı tanınmıştır.
+Son dört ölçüm, ilk listeye ek olarak prompt ayarlanırken kullanılmamış cümleleri ve `evet`, `elma`, `şafa`, `lütfen geçeyim` gibi daha önce kapıyı açan 27 cevabı içerir. Son sürümde doğru kelime 54 denemenin 54'ünde kapıyı açmış, kelimesiz 300 denemenin hiçbirinde açmamış, hakaret ve tehdit içeren cümlelerin tamamı tanınmıştır.
 
-Cevap kalitesi kusursuz değildir. Kapı kapalıyken 300 cevabın 28'i geçişten söz etmiş ("Evet, geçebilirsin."), 16 cevapta mühürde yazmayan bir kelime uydurulmuş, 9 cevapta İngilizce kelime görülmüştür. Kapı bu cevaplarda açılmadığı için oyun durumu değişmez.
+Cevap kalitesi kusursuz değildir. Kapı kapalıyken geçişten söz eden cevaplar (`geçebilir`, `geçersin`, `açılabilir`, `açabilir`, `açın`, `geç.` içerenler) aynı ölçütle sayıldığında `olcum_18`'de 300 cevabın 40'ı, `olcum_20`'de 14'üdür. `olcum_20`'de 7 cevapta mühürdeki kelime yanlış yazılmış veya başka bir kelime söylenmiştir (çoğu `ŞAFAK` yerine `SHAFK`; 2 cevapta "Orman, mühürde yazıyor"), 7 cevapta İngilizce kelime (`now`, `novamente`) görülmüştür. Muhafız kelimeyi artık sık sık kendisi tekrarlar ("ZÜMRÜT, bu geçide geçemezsin."). Kapı bu cevaplarda açılmadığı için oyun durumu değişmez.
 
-Yanıt süresi ölçümde ortalama 3,4 sn, en uzun 6,7 sn'dir. Pencereli oyunda ilk yanıt model yüklenirken 20 sn, sonrakiler 7-8,5 sn sürmüştür. Ham çıktılar `Tools/prompt_olcumleri` klasöründedir.
+Yanıt süresi `olcum_18`'de ortalama 3,4 sn, en uzun 6,7 sn'dir. `olcum_20`'de bir yanıt 906 sn sürmüş, ortalama bu yüzden 10,4 sn çıkmıştır (bu yanıt çıkarılınca 7,9 sn); bu ölçüm sırasında bilgisayarda başka işler de çalıştığı için süre karşılaştırmasında `olcum_18` esas alınmıştır. Pencereli oyunda bir mesajın iki isteği, model önceden yüklenmemişken 20 sn'ye kadar, sonraki mesajlarda 7-8,5 sn sürmüştür; son sürümle model bellekteyken yapılan denemede bu süre 3-3,6 sn'ye inmiştir. Ham çıktılar `Tools/prompt_olcumleri` klasöründedir.
 
 ### Hata ve kararlılık testleri
 
@@ -405,7 +407,7 @@ Yanıt süresi ölçümde ortalama 3,4 sn, en uzun 6,7 sn'dir. Pencereli oyunda 
 | Önce boş, sonra geçerli yanıt | Test sunucusu | Geçti: yeniden deneme başarılı |
 | Kapı kuralı | Test sunucusundan hazır kararlar | Geçti: kapı yalnızca mühür varken, model kelimenin geçtiğini söylediğinde, kelime mesajda yazdığında ve öfke yokken açıldı |
 | Model yanılırsa | Model `kelime_geciyor: true` dedi, mesaj `elma`, `evet`, `lütfen geçeyim` | Geçti: kapı açılmadı |
-| Kelime gizliliği | Test sunucusuna giden istekler okundu | Geçti: kelime karar isteğinde var, cevap isteğinde yok |
+| Kelimenin cevap isteğine girmesi | Test sunucusuna giden istekler okundu | Geçti: kelime karar isteğinde var; cevap isteğinde yalnızca "kelime iste" durumunda var, kapı açılırken yok |
 | Uzun sohbet | 13 satır eklendi | Geçti: en yeni satır kesilmedi, eski satırlar sınırdan sonra atıldı |
 | Kare akışı | 2 saniyelik istek sırasında | Geçti: 6584 kare, en uzun kare 9 ms (görüntü çizimi olmayan test modunda) |
 | Baştan sona senaryo | Derlenmiş Mac sürümünün içinde, pencereli modda | Geçti: mühürsüz kapı açılmadı, mühürdeki kelimeyle açıldı, bitiş ekranına ulaşıldı (oyuncu ve mühür alma test koduyla sürüldü) |
@@ -430,7 +432,7 @@ Görüntüler, oyuncunun test koduyla sürüldüğü pencereli sürümden otomat
 
 ![İkinci bölge](Docs/ekran_goruntuleri/04_companion_eslik_ediyor.png)
 
-**Model yanıtı beklenirken oyun akıyor, "Muhafız düşünüyor" gösteriliyor (model ilk kez yüklenirken FPS 42)**
+**Model yanıtı beklenirken oyun akıyor, "Muhafız düşünüyor" gösteriliyor (FPS 59)**
 
 ![Model yanıtı beklenirken oyun akıyor, "M](Docs/ekran_goruntuleri/05_dusunuyor.png)
 
@@ -442,7 +444,7 @@ Görüntüler, oyuncunun test koduyla sürüldüğü pencereli sürümden otomat
 
 ![Mühür alındı, kelime sol üstte görünüyor](Docs/ekran_goruntuleri/07_kelime_ekranda.png)
 
-**Model kelimenin geçtiğine karar verdi, kelime mesajda yazıyor, kapı açıldı. Mühürsüz mesaja verilen ikinci cevap anlamsızdır; modelin sınırına bir örnektir**
+**Model kelimenin geçtiğine karar verdi, kelime mesajda yazıyor, kapı açıldı. İlk cevapta İngilizce `then` geçmiş, mühürsüz mesaja verilen ikinci cevap kapı kapalıyken geçişi ima etmiştir; bunlar modelin sınırına örnektir**
 
 ![Model doğru kelimeyle `door_unlocked](Docs/ekran_goruntuleri/08_muhafiz_kapiyi_acti.png)
 
@@ -456,17 +458,17 @@ Görüntüler, oyuncunun test koduyla sürüldüğü pencereli sürümden otomat
 
 - Companion, 45 koşunun tamamında görevi tamamladı ve haritada olmayan engelleri sensörle fark edip aştı.
 - Kapı kararı metin aramasıyla değil, modelin JSON yanıtıyla alınıyor; mühür alınmadan kapı açılamıyor.
-- Karar ve cevabın ayrılması ile kelime denetimi sayesinde son ölçümde doğru kelime 54 denemede 54 kez kapıyı açtı, kelimesiz 300 denemenin hiçbiri açmadı ve yanlış öfke kararı görülmedi. Mühürdeki kelime cevap isteğine hiç girmiyor.
+- Karar ve cevabın ayrılması ile kelime denetimi sayesinde son ölçümde doğru kelime 54 denemede 54 kez kapıyı açtı, kelimesiz 300 denemenin hiçbiri açmadı ve yanlış öfke kararı görülmedi.
 - Sunucu kapalıyken, model eksikken, zaman aşımında ve bozuk yanıtta oyun çökmedi.
 
 ### Sınırlılıklar
 
 - Kelime denetimi katıdır: kelimeyi yanlış yazan oyuncu (`safak`, `zumrut`) geçemez, yeniden yazması gerekir.
-- Muhafızın sözü bazen kararla çelişir: kapı kapalıyken "geçebilirsin" diyebilir (300 cevapta 28), mühürde yazmayan kelime uydurabilir (16) veya araya İngilizce karıştırabilir (9). Kapı yine de açılmaz.
-- Her mesaj iki istek gerektirir; yanıt oyunda 7-8,5 sn, ilk yanıtta 20 sn sürmüştür. Oyun bu sırada akmaya devam eder.
+- Muhafızın sözü bazen kararla çelişir: kapı kapalıyken "geçebilirsin" diyebilir (300 cevapta 14), mühürdeki kelimeyi yanlış yazabilir veya oyuncunun kelimesini doğru sanabilir (7) ya da araya İngilizce karıştırabilir (7). Kapı yine de açılmaz.
+- Her mesaj iki istek gerektirir; yanıt oyunda model bellekteyken 3-3,6 sn, önceki denemelerde 7-8,5 sn, model yüklenirken 20 sn sürmüştür. Oyun bu sırada akmaya devam eder.
 - Muhafız önceki mesajları hatırlamaz. Doğruluk ölçümleri geçmişsiz yapıldığı için oyunda da geçmiş gönderilmez.
 - Daha iyi Türkçe veren `gemma3:4b`, 8 GB RAM'li bilgisayarda oyunla birlikte çalıştırılamayacak kadar ağır kalmıştır.
-- Pencereli oyunda ekrandaki sayaç 42-62 FPS göstermiştir (en düşük değer model ilk kez yüklenirken); ayrı bir uzun süreli FPS ölçümü yapılmamıştır. 2 saniyelik kare akışı testi görüntü çizimi olmayan modda yapılmıştır.
+- Pencereli oyunda ekrandaki sayaç önceki denemelerde 42-62 FPS, son denemede 59-60 FPS göstermiştir (en düşük değer model ilk kez yüklenirken); ayrı bir uzun süreli FPS ölçümü yapılmamıştır. 2 saniyelik kare akışı testi görüntü çizimi olmayan modda yapılmıştır.
 - Windows sürümü derlenmiş, ancak Windows bilgisayarda çalıştırılarak denenmemiştir.
 - Muhafızın yanıtları modelden gelir, ancak o duruma ait örneklere benzeyebilir; ölçümlerin ham çıktıları `Tools/prompt_olcumleri` klasöründedir.
 - Companion'ın tek görevi vardır ve sandık dışındaki hareketli engeller için sınanmamıştır.

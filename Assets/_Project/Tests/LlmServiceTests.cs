@@ -24,7 +24,9 @@ namespace YazLab.Tests
 
         private static OllamaSettings Settings(string baseUrl, string model = "test-modeli", int timeout = 45)
         {
-            return new OllamaSettings { baseUrl = baseUrl, model = model, timeoutSeconds = timeout, decisionPrompt = "karar", replyPrompt = "cevap" };
+            var settings = new OllamaSettings { baseUrl = baseUrl, model = model, timeoutSeconds = timeout, decisionPrompt = "karar", replyPrompt = "cevap" };
+            settings.askWordSituation.instruction = "Mührün üzerinde {kelime} yazıyor.";
+            return settings;
         }
 
         private static IEnumerator Await(Task<LlmResult> task)
@@ -105,13 +107,19 @@ namespace YazLab.Tests
         }
 
         [UnityTest]
-        public IEnumerator SealWordIsNotSentToReplyStage()
+        public IEnumerator SealWordReachesReplyStageOnlyWhenAsking()
         {
             var requests = new List<string>();
             yield return RunWithCannedContent(LlmStatus.Success, "ŞAFAK", "şafak", requests, null, WordSaid, ReplyContent);
             Assert.AreEqual(2, requests.Count);
             StringAssert.Contains("ŞAFAK", requests[0]);
             StringAssert.DoesNotContain("ŞAFAK", requests[1]);
+
+            requests.Clear();
+            yield return RunWithCannedContent(LlmStatus.Success, "ŞAFAK", "orman", requests, null, WordNotSaid, ReplyContent);
+            Assert.AreEqual(2, requests.Count);
+            StringAssert.Contains("Mührün üzerinde ŞAFAK yazıyor.", requests[1]);
+            StringAssert.DoesNotContain("{kelime}", requests[1]);
         }
 
         [UnityTest]

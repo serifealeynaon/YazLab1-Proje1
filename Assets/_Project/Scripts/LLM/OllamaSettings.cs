@@ -19,7 +19,7 @@ namespace YazLab.LLM
     [Serializable]
     public class NpcSituation
     {
-        public string instruction;
+        public string instruction = string.Empty;
         public NpcExample[] examples = new NpcExample[0];
     }
 
