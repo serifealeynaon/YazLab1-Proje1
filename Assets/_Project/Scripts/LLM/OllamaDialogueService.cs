@@ -10,10 +10,11 @@ namespace YazLab.LLM
 {
     public class OllamaDialogueService : ILlmDialogueService
     {
+        private delegate bool ParseMethod<T>(string content, out T value, out string error);
+
         private readonly OllamaSettings settings;
         private readonly INpcResponseParser parser;
-        private readonly List<OllamaMessage> history = new List<OllamaMessage>();
-        private string context;
+        private string sealWord;
 
         public OllamaDialogueService(OllamaSettings settings, INpcResponseParser parser)
         {
@@ -21,21 +22,16 @@ namespace YazLab.LLM
             this.parser = parser;
         }
 
-        public void ResetConversation()
+        public void SetSealWord(string word)
         {
-            history.Clear();
-        }
-
-        public void SetContext(string context)
-        {
-            this.context = context;
+            sealWord = word;
         }
 
         public async Task PreloadAsync(CancellationToken cancellationToken)
         {
             try
             {
-                OllamaChatRequest request = BuildRequest(null);
+                var request = new OllamaChatRequest { model = settings.model, messages = new OllamaMessage[0] };
                 using UnityWebRequest webRequest = CreateWebRequest(request);
                 await WaitAsync(webRequest, cancellationToken);
             }
@@ -51,19 +47,27 @@ namespace YazLab.LLM
 
             try
             {
-                LlmResult result = null;
+                var (decision, decisionFailure) = await RequestAsync<NpcDecision>(
+                    BuildDecisionRequest(playerMessage), parser.TryParseDecision, startTime, cancellationToken);
 
-                for (int attempt = 0; attempt <= settings.invalidResponseRetries; attempt++)
+                if (decisionFailure != null)
                 {
-                    result = await SendOnceAsync(playerMessage, startTime, cancellationToken);
-
-                    if (result.Status != LlmStatus.InvalidResponse)
-                    {
-                        break;
-                    }
+                    return decisionFailure;
                 }
 
-                return result;
+                bool hostile = decision.hakaret_veya_tehdit;
+                bool doorUnlocked = !string.IsNullOrEmpty(sealWord) && decision.kelime_geciyor && !hostile;
+
+                var (reply, replyFailure) = await RequestAsync<string>(
+                    BuildReplyRequest(playerMessage, doorUnlocked, hostile), parser.TryParseReply, startTime, cancellationToken);
+
+                if (replyFailure != null)
+                {
+                    return replyFailure;
+                }
+
+                var action = new NpcAction { reply = reply, door_unlocked = doorUnlocked, hostile = hostile };
+                return LlmResult.Success(action, Time.realtimeSinceStartup - startTime);
             }
             catch (OperationCanceledException)
             {
@@ -78,61 +82,99 @@ namespace YazLab.LLM
             }
         }
 
-        private async Task<LlmResult> SendOnceAsync(string playerMessage, float startTime, CancellationToken cancellationToken)
+        private async Task<(T value, LlmResult failure)> RequestAsync<T>(OllamaChatRequest request, ParseMethod<T> parse,
+            float startTime, CancellationToken cancellationToken)
         {
-            OllamaChatRequest request = BuildRequest(playerMessage);
-            using UnityWebRequest webRequest = CreateWebRequest(request);
-            await WaitAsync(webRequest, cancellationToken);
+            LlmResult failure = null;
 
-            float elapsed = Time.realtimeSinceStartup - startTime;
-
-            if (webRequest.result != UnityWebRequest.Result.Success)
+            for (int attempt = 0; attempt <= settings.invalidResponseRetries; attempt++)
             {
-                return ToFailure(webRequest, elapsed);
-            }
+                using UnityWebRequest webRequest = CreateWebRequest(request);
+                await WaitAsync(webRequest, cancellationToken);
+                float elapsed = Time.realtimeSinceStartup - startTime;
 
-            OllamaChatResponse response = JsonUtility.FromJson<OllamaChatResponse>(webRequest.downloadHandler.text);
-            string content = response?.message?.content;
-            Debug.Log($"[LLM] Ham yanıt ({elapsed:F1} sn): {content}");
+                if (webRequest.result != UnityWebRequest.Result.Success)
+                {
+                    return (default, ToFailure(webRequest, elapsed));
+                }
 
-            if (!parser.TryParse(content, out NpcAction action, out string parseError))
-            {
-                return LlmResult.Failure(LlmStatus.InvalidResponse,
+                OllamaChatResponse response = JsonUtility.FromJson<OllamaChatResponse>(webRequest.downloadHandler.text);
+                string content = response?.message?.content;
+                Debug.Log($"[LLM] Ham yanıt ({elapsed:F1} sn): {content}");
+
+                if (parse(content, out T value, out string parseError))
+                {
+                    return (value, null);
+                }
+
+                failure = LlmResult.Failure(LlmStatus.InvalidResponse,
                     $"Model geçersiz yanıt üretti ({parseError}) Lütfen tekrar deneyin.", elapsed);
             }
 
-            Remember(playerMessage, content);
-            return LlmResult.Success(action, elapsed);
+            return (default, failure);
         }
 
-        private OllamaChatRequest BuildRequest(string playerMessage)
+        private OllamaChatRequest BuildDecisionRequest(string playerMessage)
         {
-            var messages = new List<OllamaMessage>();
+            string word = string.IsNullOrEmpty(sealWord) ? "YOK" : sealWord;
 
-            if (playerMessage != null)
+            return new OllamaDecisionRequest
             {
-                messages.Add(new OllamaMessage("system", settings.systemPrompt));
-                messages.AddRange(history);
-
-                if (!string.IsNullOrEmpty(context))
+                model = settings.model,
+                messages = new[]
                 {
-                    messages.Add(new OllamaMessage("system", context));
+                    new OllamaMessage("system", settings.decisionPrompt),
+                    new OllamaMessage("user", $"Kelime: {word}. Mesaj: {playerMessage}")
+                },
+                options = new OllamaOptions
+                {
+                    temperature = settings.decisionTemperature,
+                    num_predict = settings.decisionMaxTokens
                 }
+            };
+        }
 
-                messages.Add(new OllamaMessage("user", playerMessage));
+        private OllamaChatRequest BuildReplyRequest(string playerMessage, bool doorUnlocked, bool hostile)
+        {
+            NpcSituation situation = SelectSituation(doorUnlocked, hostile);
+            var messages = new List<OllamaMessage>
+            {
+                new OllamaMessage("system", $"{settings.replyPrompt}Durum: {situation.instruction}")
+            };
+
+            foreach (NpcExample example in situation.examples)
+            {
+                messages.Add(new OllamaMessage("user", example.player));
+                messages.Add(new OllamaMessage("assistant", JsonUtility.ToJson(new NpcReply { reply = example.reply })));
             }
 
-            return new OllamaChatRequest
+            messages.Add(new OllamaMessage("user", doorUnlocked ? settings.correctWordMessage : playerMessage));
+
+            return new OllamaReplyRequest
             {
                 model = settings.model,
                 messages = messages.ToArray(),
-                stream = false,
                 options = new OllamaOptions
                 {
-                    temperature = settings.temperature,
-                    num_predict = settings.maxTokens
+                    temperature = settings.replyTemperature,
+                    num_predict = settings.replyMaxTokens
                 }
             };
+        }
+
+        private NpcSituation SelectSituation(bool doorUnlocked, bool hostile)
+        {
+            if (hostile)
+            {
+                return settings.hostileSituation;
+            }
+
+            if (doorUnlocked)
+            {
+                return settings.correctWordSituation;
+            }
+
+            return string.IsNullOrEmpty(sealWord) ? settings.findSealSituation : settings.askWordSituation;
         }
 
         private UnityWebRequest CreateWebRequest(OllamaChatRequest request)
@@ -189,17 +231,6 @@ namespace YazLab.LLM
 
             return LlmResult.Failure(LlmStatus.ServerError,
                 $"Ollama hata döndürdü (HTTP {webRequest.responseCode}). Tekrar deneyebilirsiniz.", elapsed);
-        }
-
-        private void Remember(string playerMessage, string assistantJson)
-        {
-            history.Add(new OllamaMessage("user", playerMessage));
-            history.Add(new OllamaMessage("assistant", assistantJson));
-
-            while (history.Count > settings.maxHistoryMessages)
-            {
-                history.RemoveAt(0);
-            }
         }
     }
 }

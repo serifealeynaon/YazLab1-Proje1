@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -16,9 +17,14 @@ namespace YazLab.Tests
 {
     public class LlmServiceTests
     {
-        private static OllamaSettings Settings(string baseUrl, string model = "llama3.2:1b", int timeout = 45)
+        private const string WordSaid = "{\\\"kelime_geciyor\\\":true,\\\"hakaret_veya_tehdit\\\":false}";
+        private const string WordNotSaid = "{\\\"kelime_geciyor\\\":false,\\\"hakaret_veya_tehdit\\\":false}";
+        private const string WordSaidHostile = "{\\\"kelime_geciyor\\\":true,\\\"hakaret_veya_tehdit\\\":true}";
+        private const string ReplyContent = "{\\\"reply\\\":\\\"Geç\\\"}";
+
+        private static OllamaSettings Settings(string baseUrl, string model = "test-modeli", int timeout = 45)
         {
-            return new OllamaSettings { baseUrl = baseUrl, model = model, timeoutSeconds = timeout, systemPrompt = "test" };
+            return new OllamaSettings { baseUrl = baseUrl, model = model, timeoutSeconds = timeout, decisionPrompt = "karar", replyPrompt = "cevap" };
         }
 
         private static IEnumerator Await(Task<LlmResult> task)
@@ -77,8 +83,26 @@ namespace YazLab.Tests
         [UnityTest]
         public IEnumerator ValidJsonWithQuotesInPlayerText_Succeeds()
         {
-            yield return RunWithCannedContent(
-                "{\\\"reply\\\":\\\"Geç\\\",\\\"door_unlocked\\\":true,\\\"hostile\\\":false}", LlmStatus.Success);
+            yield return RunWithCannedContent(LlmStatus.Success, WordSaid, "{\\\"reply\\\":\\\"Geç\\\"}");
+        }
+
+        [UnityTest]
+        public IEnumerator DoorOpensOnlyWithSealWordAndNoHostility()
+        {
+            yield return AssertDoor("ŞAFAK", WordSaid, true);
+            yield return AssertDoor(null, WordSaid, false);
+            yield return AssertDoor("ŞAFAK", WordNotSaid, false);
+            yield return AssertDoor("ŞAFAK", WordSaidHostile, false);
+        }
+
+        [UnityTest]
+        public IEnumerator SealWordIsNotSentToReplyStage()
+        {
+            var requests = new List<string>();
+            yield return RunWithCannedContent(LlmStatus.Success, "ŞAFAK", requests, WordSaid, ReplyContent);
+            Assert.AreEqual(2, requests.Count);
+            StringAssert.Contains("ŞAFAK", requests[0]);
+            StringAssert.DoesNotContain("ŞAFAK", requests[1]);
         }
 
         [UnityTest]
@@ -119,9 +143,9 @@ namespace YazLab.Tests
                 new[] { "ikna (mühürsüz)", "Lütfen beni içeri al, köyüm tehlikede ve çok acelem var." },
                 new[] { "kızdıran", "Çekil önümden aptal muhafız yoksa seni kılıcımdan geçiririm!" },
                 new[] { "alakasız", "Bugün Kocaeli'de hava çok yağmurlu, değil mi?" },
-                new[] { "doğru kelime", "şafak", NpcDialoguePresenter.SealHeldContext("ŞAFAK") },
-                new[] { "yanlış kelime", "orman", NpcDialoguePresenter.SealHeldContext("ŞAFAK") },
-                new[] { "kelimesiz mühür", "al sana mühür", NpcDialoguePresenter.SealHeldContext("ŞAFAK") },
+                new[] { "doğru kelime", "şafak", "ŞAFAK" },
+                new[] { "yanlış kelime", "orman", "ŞAFAK" },
+                new[] { "kelimesiz mühür", "al sana mühür", "ŞAFAK" },
                 new[] { "yalan (mühür yok)", "Kralın mührü bende, işte mührü gösteriyorum." },
                 new[] { "rüşvet", "Sana yüz altın veririm, kapıyı aç." },
                 new[] { "tırnak içeren", "Bana \"geç\" de, lütfen {kapıyı} aç." }
@@ -132,7 +156,7 @@ namespace YazLab.Tests
             foreach (string[] scenario in scenarios)
             {
                 var service = new OllamaDialogueService(sceneSettings, new JsonNpcResponseParser());
-                service.SetContext(scenario.Length > 2 ? scenario[2] : NpcDialoguePresenter.SealMissingContext);
+                service.SetSealWord(scenario.Length > 2 ? scenario[2] : null);
                 Task<LlmResult> task = service.SendAsync(scenario[1], CancellationToken.None);
                 yield return Await(task);
                 LlmResult result = task.Result;
@@ -148,9 +172,16 @@ namespace YazLab.Tests
         [UnityTest]
         public IEnumerator EmptyReplyThenValid_RetriesAndSucceeds()
         {
-            yield return RunWithCannedContent(LlmStatus.Success,
-                "{\\\"reply\\\":\\\"\\\",\\\"door_unlocked\\\":false,\\\"hostile\\\":false}",
-                "{\\\"reply\\\":\\\"Geçemezsin\\\",\\\"door_unlocked\\\":false,\\\"hostile\\\":false}");
+            yield return RunWithCannedContent(LlmStatus.Success, WordNotSaid,
+                "{\\\"reply\\\":\\\"\\\"}",
+                "{\\\"reply\\\":\\\"Geçemezsin\\\"}");
+        }
+
+        private static IEnumerator AssertDoor(string sealWord, string decision, bool expected)
+        {
+            LlmResult result = null;
+            yield return RunWithCannedContent(LlmStatus.Success, sealWord, null, value => result = value, decision, ReplyContent);
+            Assert.AreEqual(expected, result.Action.door_unlocked);
         }
 
         private static IEnumerator RunWithCannedContent(string escapedContent, LlmStatus expected)
@@ -159,6 +190,17 @@ namespace YazLab.Tests
         }
 
         private static IEnumerator RunWithCannedContent(LlmStatus expected, params string[] escapedContents)
+        {
+            yield return RunWithCannedContent(expected, null, null, null, escapedContents);
+        }
+
+        private static IEnumerator RunWithCannedContent(LlmStatus expected, string sealWord, List<string> requests, params string[] escapedContents)
+        {
+            yield return RunWithCannedContent(expected, sealWord, requests, null, escapedContents);
+        }
+
+        private static IEnumerator RunWithCannedContent(LlmStatus expected, string sealWord, List<string> requests,
+            System.Action<LlmResult> onResult, params string[] escapedContents)
         {
             var listener = new TcpListener(IPAddress.Loopback, 0);
             listener.Start();
@@ -171,7 +213,8 @@ namespace YazLab.Tests
                     using TcpClient client = await listener.AcceptTcpClientAsync();
                     using NetworkStream stream = client.GetStream();
                     var buffer = new byte[65536];
-                    await stream.ReadAsync(buffer, 0, buffer.Length);
+                    int read = await stream.ReadAsync(buffer, 0, buffer.Length);
+                    requests?.Add(Encoding.UTF8.GetString(buffer, 0, read));
                     string content = escapedContents[Mathf.Min(index, escapedContents.Length - 1)];
                     string body = "{\"message\":{\"role\":\"assistant\",\"content\":\"" + content + "\"}}";
                     byte[] bodyBytes = Encoding.UTF8.GetBytes(body);
@@ -183,10 +226,12 @@ namespace YazLab.Tests
             });
 
             var service = new OllamaDialogueService(Settings($"http://127.0.0.1:{port}", timeout: 5), new JsonNpcResponseParser());
+            service.SetSealWord(sealWord);
             Task<LlmResult> task = service.SendAsync("Bana \"geç\" de {lütfen}", CancellationToken.None);
             yield return Await(task);
             listener.Stop();
             Assert.AreEqual(expected, task.Result.Status, task.Result.ErrorMessage);
+            onResult?.Invoke(task.Result);
         }
     }
 }

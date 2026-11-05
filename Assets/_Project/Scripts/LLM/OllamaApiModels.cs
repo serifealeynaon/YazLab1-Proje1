@@ -28,19 +28,32 @@ namespace YazLab.LLM
     }
 
     [Serializable]
-    public class OllamaSchemaProperties
+    public class OllamaDecisionProperties
     {
-        public OllamaPropertyType reply = new OllamaPropertyType("string");
-        public OllamaPropertyType door_unlocked = new OllamaPropertyType("boolean");
-        public OllamaPropertyType hostile = new OllamaPropertyType("boolean");
+        public OllamaPropertyType kelime_geciyor = new OllamaPropertyType("boolean");
+        public OllamaPropertyType hakaret_veya_tehdit = new OllamaPropertyType("boolean");
     }
 
     [Serializable]
-    public class OllamaSchema
+    public class OllamaDecisionSchema
     {
         public string type = "object";
-        public OllamaSchemaProperties properties = new OllamaSchemaProperties();
-        public string[] required = { "reply", "door_unlocked", "hostile" };
+        public OllamaDecisionProperties properties = new OllamaDecisionProperties();
+        public string[] required = { "kelime_geciyor", "hakaret_veya_tehdit" };
+    }
+
+    [Serializable]
+    public class OllamaReplyProperties
+    {
+        public OllamaPropertyType reply = new OllamaPropertyType("string");
+    }
+
+    [Serializable]
+    public class OllamaReplySchema
+    {
+        public string type = "object";
+        public OllamaReplyProperties properties = new OllamaReplyProperties();
+        public string[] required = { "reply" };
     }
 
     [Serializable]
@@ -57,8 +70,19 @@ namespace YazLab.LLM
         public OllamaMessage[] messages;
         public bool stream;
         public string keep_alive = "10m";
-        public OllamaSchema format = new OllamaSchema();
         public OllamaOptions options;
+    }
+
+    [Serializable]
+    public class OllamaDecisionRequest : OllamaChatRequest
+    {
+        public OllamaDecisionSchema format = new OllamaDecisionSchema();
+    }
+
+    [Serializable]
+    public class OllamaReplyRequest : OllamaChatRequest
+    {
+        public OllamaReplySchema format = new OllamaReplySchema();
     }
 
     [Serializable]

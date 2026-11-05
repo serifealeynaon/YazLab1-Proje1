@@ -7,7 +7,6 @@ namespace YazLab.LLM
     {
         Task<LlmResult> SendAsync(string playerMessage, CancellationToken cancellationToken);
         Task PreloadAsync(CancellationToken cancellationToken);
-        void ResetConversation();
-        void SetContext(string context);
+        void SetSealWord(string word);
     }
 }

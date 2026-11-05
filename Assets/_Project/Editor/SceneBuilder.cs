@@ -64,9 +64,8 @@ namespace YazLab.EditorTools
             var presenter = guardObject.AddComponent<NpcDialoguePresenter>();
             Assign(presenter, "dialogueView", dialogueView);
             Assign(presenter, "guard", guard);
-            var so = new SerializedObject(presenter);
-            so.FindProperty("settings.systemPrompt").stringValue = NpcPrompt.System;
-            so.ApplyModifiedPropertiesWithoutUndo();
+            NpcPrompt.Apply(presenter.Settings);
+            EditorUtility.SetDirty(presenter);
 
             var flow = new GameObject("GameFlow").AddComponent<GameFlow>();
             Assign(flow, "player", player);
