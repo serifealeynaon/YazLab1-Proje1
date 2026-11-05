@@ -1,0 +1,4 @@
+ŞAFAK: açan 3/22 -> ['safak', 'şafa', 'evet']
+ELMAS: açan 3/22 -> ['elma', 'elmaslar', 'evet']
+ZÜMRÜT: açan 2/22 -> ['zumrut', 'evet']
+toplam açılan 8/66
