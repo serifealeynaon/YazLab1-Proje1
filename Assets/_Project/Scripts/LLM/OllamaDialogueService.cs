@@ -56,7 +56,7 @@ namespace YazLab.LLM
                 }
 
                 bool hostile = decision.hakaret_veya_tehdit;
-                bool doorUnlocked = !string.IsNullOrEmpty(sealWord) && decision.kelime_geciyor && !hostile;
+                bool doorUnlocked = decision.kelime_geciyor && !hostile && MessageContainsSealWord(playerMessage);
 
                 var (reply, replyFailure) = await RequestAsync<string>(
                     BuildReplyRequest(playerMessage, doorUnlocked, hostile), parser.TryParseReply, startTime, cancellationToken);
@@ -80,6 +80,12 @@ namespace YazLab.LLM
                 return LlmResult.Failure(LlmStatus.InvalidResponse,
                     "Model yanıtı işlenemedi. Lütfen tekrar deneyin.", Time.realtimeSinceStartup - startTime);
             }
+        }
+
+        private bool MessageContainsSealWord(string playerMessage)
+        {
+            return !string.IsNullOrEmpty(sealWord)
+                && playerMessage.ToLowerInvariant().Contains(sealWord.ToLowerInvariant());
         }
 
         private async Task<(T value, LlmResult failure)> RequestAsync<T>(OllamaChatRequest request, ParseMethod<T> parse,

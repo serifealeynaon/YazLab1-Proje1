@@ -89,17 +89,26 @@ namespace YazLab.Tests
         [UnityTest]
         public IEnumerator DoorOpensOnlyWithSealWordAndNoHostility()
         {
-            yield return AssertDoor("ŞAFAK", WordSaid, true);
-            yield return AssertDoor(null, WordSaid, false);
-            yield return AssertDoor("ŞAFAK", WordNotSaid, false);
-            yield return AssertDoor("ŞAFAK", WordSaidHostile, false);
+            yield return AssertDoor("ŞAFAK", "şafak", WordSaid, true);
+            yield return AssertDoor("ŞAFAK", "Mühürde ŞAFAK yazıyor.", WordSaid, true);
+            yield return AssertDoor(null, "şafak", WordSaid, false);
+            yield return AssertDoor("ŞAFAK", "şafak", WordNotSaid, false);
+            yield return AssertDoor("ŞAFAK", "şafak", WordSaidHostile, false);
+        }
+
+        [UnityTest]
+        public IEnumerator DoorStaysClosedWhenModelSaysYesButWordIsMissing()
+        {
+            yield return AssertDoor("ELMAS", "elma", WordSaid, false);
+            yield return AssertDoor("ŞAFAK", "evet", WordSaid, false);
+            yield return AssertDoor("ZÜMRÜT", "lütfen geçeyim", WordSaid, false);
         }
 
         [UnityTest]
         public IEnumerator SealWordIsNotSentToReplyStage()
         {
             var requests = new List<string>();
-            yield return RunWithCannedContent(LlmStatus.Success, "ŞAFAK", requests, WordSaid, ReplyContent);
+            yield return RunWithCannedContent(LlmStatus.Success, "ŞAFAK", "şafak", requests, null, WordSaid, ReplyContent);
             Assert.AreEqual(2, requests.Count);
             StringAssert.Contains("ŞAFAK", requests[0]);
             StringAssert.DoesNotContain("ŞAFAK", requests[1]);
@@ -177,11 +186,11 @@ namespace YazLab.Tests
                 "{\\\"reply\\\":\\\"Geçemezsin\\\"}");
         }
 
-        private static IEnumerator AssertDoor(string sealWord, string decision, bool expected)
+        private static IEnumerator AssertDoor(string sealWord, string message, string decision, bool expected)
         {
             LlmResult result = null;
-            yield return RunWithCannedContent(LlmStatus.Success, sealWord, null, value => result = value, decision, ReplyContent);
-            Assert.AreEqual(expected, result.Action.door_unlocked);
+            yield return RunWithCannedContent(LlmStatus.Success, sealWord, message, null, value => result = value, decision, ReplyContent);
+            Assert.AreEqual(expected, result.Action.door_unlocked, message);
         }
 
         private static IEnumerator RunWithCannedContent(string escapedContent, LlmStatus expected)
@@ -191,15 +200,10 @@ namespace YazLab.Tests
 
         private static IEnumerator RunWithCannedContent(LlmStatus expected, params string[] escapedContents)
         {
-            yield return RunWithCannedContent(expected, null, null, null, escapedContents);
+            yield return RunWithCannedContent(expected, null, "Bana \"geç\" de {lütfen}", null, null, escapedContents);
         }
 
-        private static IEnumerator RunWithCannedContent(LlmStatus expected, string sealWord, List<string> requests, params string[] escapedContents)
-        {
-            yield return RunWithCannedContent(expected, sealWord, requests, null, escapedContents);
-        }
-
-        private static IEnumerator RunWithCannedContent(LlmStatus expected, string sealWord, List<string> requests,
+        private static IEnumerator RunWithCannedContent(LlmStatus expected, string sealWord, string message, List<string> requests,
             System.Action<LlmResult> onResult, params string[] escapedContents)
         {
             var listener = new TcpListener(IPAddress.Loopback, 0);
@@ -227,7 +231,7 @@ namespace YazLab.Tests
 
             var service = new OllamaDialogueService(Settings($"http://127.0.0.1:{port}", timeout: 5), new JsonNpcResponseParser());
             service.SetSealWord(sealWord);
-            Task<LlmResult> task = service.SendAsync("Bana \"geç\" de {lütfen}", CancellationToken.None);
+            Task<LlmResult> task = service.SendAsync(message, CancellationToken.None);
             yield return Await(task);
             listener.Stop();
             Assert.AreEqual(expected, task.Result.Status, task.Result.ErrorMessage);

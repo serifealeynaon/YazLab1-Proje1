@@ -27,7 +27,7 @@ namespace YazLab.LLM
     public class OllamaSettings
     {
         public string baseUrl = "http://localhost:11434";
-        public string model = "gemma3:4b";
+        public string model = "llama3.2:3b";
         public int timeoutSeconds = 45;
         public int invalidResponseRetries = 1;
         [Range(0f, 1.5f)] public float decisionTemperature = 0f;

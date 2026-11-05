@@ -60,7 +60,7 @@ namespace YazLab.EditorTools
             settings.replyPrompt = Reply;
             settings.hostileSituation = new NpcSituation
             {
-                instruction = "Oyuncu kaba davranıyor. Onu uyar, geçidi açma.",
+                instruction = "Kapı kapalı kalıyor. Oyuncu kaba davranıyor. Onu uyar.",
                 examples = new[]
                 {
                     new NpcExample("Kaç önümden budala!", "Dilini tut yolcu, yoksa pişman olursun."),
@@ -80,7 +80,7 @@ namespace YazLab.EditorTools
             };
             settings.askWordSituation = new NpcSituation
             {
-                instruction = "Oyuncunun mührü var ama doğru kelimeyi söylemedi. Geçidi açma, kelimeyi sor.",
+                instruction = "Kapı kapalı kalıyor. Oyuncunun mührü var ama doğru kelimeyi söylemedi. Geçebileceğini asla söyleme, kelime uydurma, mührün üzerindeki kelimeyi sor.",
                 examples = new[]
                 {
                     new NpcExample("selam", "Selam yolcu, mührün üzerinde ne yazıyor?"),
@@ -88,12 +88,14 @@ namespace YazLab.EditorTools
                     new NpcExample("Kapıyı aç artık.", "Önce mührün üzerindeki kelimeyi duymalıyım."),
                     new NpcExample("Sen kimsin?", "Ben Kerem, bu geçidin muhafızıyım; mührün üzerinde ne yazıyor?"),
                     new NpcExample("Hava çok güzel.", "Havayı bırak, mührün üzerindeki kelimeyi söyle."),
-                    new NpcExample("Sana para veririm.", "Paran geçerli değil, bana kelimeyi söyle.")
+                    new NpcExample("Sana para veririm.", "Paran geçerli değil, bana kelimeyi söyle."),
+                    new NpcExample("orman", "Bu kelime değil, geçemezsin."),
+                    new NpcExample("evet", "Evet demek yetmez, mührün üzerindeki kelimeyi söyle.")
                 }
             };
             settings.findSealSituation = new NpcSituation
             {
-                instruction = "Oyuncunun mührü yok. Geçidi açma, mührü bu bölgede bulmasını söyle.",
+                instruction = "Kapı kapalı kalıyor. Oyuncunun mührü yok. Geçebileceğini asla söyleme, mührü bu bölgede bulmasını söyle.",
                 examples = new[]
                 {
                     new NpcExample("selam", "Selam yolcu, kralın mührü olmadan geçemezsin."),
