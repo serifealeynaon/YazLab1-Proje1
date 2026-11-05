@@ -8,7 +8,7 @@
 
 ## Çalıştırma
 
-1. Ollama'yı kurun ve modeli indirin: `ollama pull gemma3:4b`
+1. Ollama'yı kurun ve modeli indirin: `ollama pull llama3.2:3b`
 2. Teslim dosyasındaki `Builds` klasöründen sürümü açın (Windows: `YazLabOyun.exe`, Mac: `YazLabOyun.app`).
 3. Kontroller: `WASD` yürüme, `E` companion'a emir verme veya yanındayken mührü alma, `T` muhafızla konuşma, `Enter` mesaj gönderme, `Esc` sohbeti kapatma.
 
@@ -25,7 +25,7 @@ Proje, tek bir Unity macera oyununda birbirinden bağımsız iki yapay zekâ bil
 1. **Fiziksel engel:** Oyuncunun önünde kilitli bir kapı vardır. Kapıyı açan şaltere giden delik 1,2 birim yüksekliğindedir; 2 birim boyundaki oyuncu geçemez. Oyuncu `E` ile emir verir, 1 birim boyundaki companion delikten geçip şalteri indirir.
 2. **Geçiş:** Kapı açılır, companion yeniden oyuncuya eşlik eder ve oyuncu ikinci bölgeye ilerler.
 3. **Mühür:** İkinci bölgede altın renkli kralın mührü durur. Oyuncu yanına gidip `E` ile alır. Ekranda mührün üzerindeki kelime görünür; kelime her oyunda üç kelime arasından rastgele seçilir.
-4. **Mantıksal engel:** İkinci kapıyı muhafız Kerem korur. Oyuncu serbest metinle konuşur. Muhafız kelimeyi sorar. Kapı, oyuncu mührü almışsa ve model JSON yanıtında kelimenin geçtiğine karar vermişse açılır. Kelimeyi tanıma kararı modelindir, kod metinde kelime aramaz; kod yalnızca mühür alınmadan kapının açılmasını engeller.
+4. **Mantıksal engel:** İkinci kapıyı muhafız Kerem korur. Oyuncu serbest metinle konuşur. Muhafız kelimeyi sorar. Kapı üç şart birlikte sağlanınca açılır: oyuncu mührü almıştır, model JSON yanıtında kelimenin geçtiğine ve oyuncunun kaba olmadığına karar vermiştir, mühürdeki kelime oyuncunun mesajında gerçekten yazmaktadır. Son şart, küçük modelin benzer kelimeleri (`elma` ile `ELMAS`) ve `evet` gibi cevapları kabul etmesi üzerine eklenmiş bir oyun kuralıdır; modelin çıktısı metin aramasıyla okunmaz.
 5. **Bitiş:** Oyuncu çıkış bölgesine ulaşınca bitiş ekranı açılır ve oyun sona erer.
 
 ### Mimari
@@ -149,7 +149,7 @@ Geliştirme bilgisayarı Apple M1 işlemcili ve 8 GB RAM'lidir. Yönergede öner
 
 İlk aşamada `llama3.2:3b` seçilmiştir. Test cümleleri prompttaki örneklere benzediği için model, prompttaki örneklerde geçmeyen 9 yeni cümleyle 3'er kez daha denenmiştir: kapı kararı **26/27**, öfke kararı **25/27** doğrudur. Bu karşılaştırma, aşağıdaki son prompttan önceki sürümle yapılmıştır. Betikler `Tools/model_karsilastirma` klasöründedir.
 
-Oyun denemelerinde `llama3.2:3b` Türkçe cümleleri bozmuş, araya İngilizce kelime karıştırmış ve masum cümlelere öfkelenmiştir. Bu yüzden `qwen2.5:3b` (1,9 GB) ve `gemma3:4b` (3,4 GB) de denenmiş, son sürümde en temiz Türkçeyi veren `gemma3:4b` seçilmiştir (bkz. Prompt ölçümü). Bedeli daha yavaş yanıttır: oyunda 17-21 sn, önceki modelde yaklaşık 4 sn.
+Oyun denemelerinde `llama3.2:3b` Türkçe cümleleri bozmuş, araya İngilizce kelime karıştırmış ve masum cümlelere öfkelenmiştir. Bu yüzden `qwen2.5:3b` (1,9 GB) ve `gemma3:4b` (3,4 GB) de denenmiştir. `gemma3:4b` en temiz Türkçeyi vermiş, ancak 8 GB RAM'li bilgisayarda oyunla birlikte çalışırken sistemi dondurmuş, yanıtı 17-21 sn sürmüş ve kapıyı `evet`, `elma` gibi cevaplarla açmıştır. Son sürümde yönergede de önerilen `llama3.2:3b` kullanılmış, sorunlar iki aşamalı istek ve kapı için kelime denetimiyle giderilmiştir (bkz. Prompt ölçümü).
 
 ### Sistem promptu
 
@@ -217,10 +217,10 @@ Bu prompt'un sonuna bulunulan durum eklenir ve o duruma ait örnekler karşılı
 
 | Durum | Ne zaman | Modele verilen talimat |
 |---|---|---|
-| Kaba | Hakaret veya tehdit | Oyuncu kaba davranıyor. Onu uyar, geçidi açma. |
+| Kaba | Hakaret veya tehdit | Kapı kapalı kalıyor. Oyuncu kaba davranıyor. Onu uyar. |
 | Doğru kelime | Kapı açılıyor | Oyuncu doğru kelimeyi söyledi. Geçebileceğini söyle. |
-| Kelime iste | Mühür var, kelime yok | Oyuncunun mührü var ama doğru kelimeyi söylemedi. Geçidi açma, kelimeyi sor. |
-| Mührü bul | Mühür yok | Oyuncunun mührü yok. Geçidi açma, mührü bu bölgede bulmasını söyle. |
+| Kelime iste | Mühür var, kelime yok | Kapı kapalı kalıyor. Oyuncunun mührü var ama doğru kelimeyi söylemedi. Geçebileceğini asla söyleme, kelime uydurma, mührün üzerindeki kelimeyi sor. |
+| Mührü bul | Mühür yok | Kapı kapalı kalıyor. Oyuncunun mührü yok. Geçebileceğini asla söyleme, mührü bu bölgede bulmasını söyle. |
 
 Örnek cümlelerin tamamı `Assets/_Project/Editor/NpcPrompt.cs` dosyasındadır. Kapı açılırken modele oyuncunun cümlesi yerine `Doğru kelimeyi söyledim, geçebilir miyim?` verilir; aksi halde model doğru kelimeye de ret cümlesi yazabilmektedir.
 
@@ -247,12 +247,12 @@ Bu prompt'un sonuna bulunulan durum eklenir ve o duruma ait örnekler karşılı
 }
 ```
 
-İki yanıt, `OllamaDialogueService` içinde tek bir `NpcAction` nesnesinde birleştirilir:
+İki yanıt, `OllamaDialogueService` içinde tek bir `NpcAction` nesnesinde birleştirilir. Kelime denetimi büyük-küçük harf farkını gözetmez ve yalnızca kapı kararında kullanılır; muhafızın sözü her zaman modelden gelir:
 
 | Alan | Kaynağı | Oyundaki etkisi |
 |---|---|---|
 | `reply` | Cevap isteği | Sohbet panelinde muhafızın sözü olarak gösterilir |
-| `door_unlocked` | Mühür var, `kelime_geciyor` doğru ve `hakaret_veya_tehdit` yanlış | `true` ise `IOpenable.Open()` çağrılır ve ikinci kapı açılır |
+| `door_unlocked` | Mühür var, `kelime_geciyor` doğru, `hakaret_veya_tehdit` yanlış ve mühürdeki kelime oyuncunun mesajında yazıyor | `true` ise `IOpenable.Open()` çağrılır ve ikinci kapı açılır |
 | `hostile` | `hakaret_veya_tehdit` | `true` ise muhafız kırmızıya döner |
 
 ### İstek ve yanıt akışı
@@ -282,6 +282,7 @@ sequenceDiagram
     else Karar geldi
         Ollama-->>Service: Karar JSON'u
         Service->>Parser: TryParseDecision
+        Service->>Service: Kapı kararı (mühür + model kararı + kelime mesajda mı)
         Service->>Ollama: POST /api/chat (duruma ait örnekler + cevap şeması)
         Ollama-->>Service: Cevap JSON'u
         Service->>Parser: TryParseReply
@@ -339,19 +340,21 @@ Sonuçlar Unity Test Framework ile otomatik üretilmiştir. Ham çıktılar `Tes
 
 ### Diyalog senaryoları
 
-Çıktılar `gemma3:4b` modelinin gerçek yanıtlarıdır (tek deneme). Mühür varken kelime `ŞAFAK` olarak verilmiştir. Bu tablodaki süreler Unity Editor test modunda ölçülmüştür; bu modda bellek daha doludur.
+Çıktılar `llama3.2:3b` modelinin gerçek yanıtlarıdır (tek deneme). Mühür varken kelime `ŞAFAK` olarak verilmiştir. Bu tablodaki süreler Unity Editor test modunda ölçülmüştür; bu modda bellek daha doludur.
 
 | Senaryo | Mühür | Oyuncu | Muhafız | Kapı | Öfke | Süre |
 |---|---|---|---|---|---|---|
-| İkna | Yok | Lütfen beni içeri al, köyüm tehlikede ve çok acelem var. | Mühür olmadan geçit kapalı kalacak. | Kapalı | Hayır | 25,9 sn |
-| Kızdıran | Yok | Çekil önümden aptal muhafız yoksa seni kılıcımdan geçiririm! | Geri çekil, yoksa seni cezalandırırım. | Kapalı | Evet | 24,7 sn |
-| Alakasız | Yok | Bugün Kocaeli'de hava çok yağmurlu, değil mi? | Konuşmayı bırak ve mührü bul. | Kapalı | Hayır | 26,3 sn |
-| Doğru kelime | Var | şafak | Doğru, geç. | Açık | Hayır | 23,4 sn |
-| Yanlış kelime | Var | orman | Bu da olmadı, mühre iyi bak ve kelimeyi söyle. | Kapalı | Hayır | 27,3 sn |
-| Kelimesiz mühür | Var | al sana mühür | Mühür yetersiz, kelimeyi söyle. | Kapalı | Hayır | 25,8 sn |
-| Yalan | Yok | Kralın mührü bende, işte mührü gösteriyorum. | Mühürün burada bir işe yaramaz. | Kapalı | Hayır | 26,3 sn |
-| Rüşvet | Yok | Sana yüz altın veririm, kapıyı aç. | Altın ilgimi çekmez, mührü bul. | Kapalı | Hayır | 26,0 sn |
-| Özel karakter | Yok | Bana "geç" de, lütfen {kapıyı} aç. | Geçme, mührünü göster. | Kapalı | Hayır | 25,4 sn |
+| İkna | Yok | Lütfen beni içeri al, köyüm tehlikede ve çok acelem var. | Köyün tehlikede? Bir şeyden kurtulmak istiyorsun, mührünü bana ver. | Kapalı | Hayır | 6,1 sn |
+| Kızdıran | Yok | Çekil önümden aptal muhafız yoksa seni kılıcımdan geçiririm! | Gelini, bir mühürde yazanları bilirim, sana bir kelime uyduramıyorum. | Kapalı | Evet | 7,6 sn |
+| Alakasız | Yok | Bugün Kocaeli'de hava çok yağmurlu, değil mi? | Hava yağmurlu, bu geçidde duruyorum, mührü bul. | Kapalı | Hayır | 5,6 sn |
+| Doğru kelime | Var | şafak | Kralın izniyle geçersin, kralın izniyle geçersin. | Açık | Hayır | 7,4 sn |
+| Yanlış kelime | Var | orman | Hadi, mührün üzerindeki kelimeyi söyle! | Kapalı | Hayır | 4,5 sn |
+| Kelimesiz mühür | Var | al sana mühür | Mühür vermezim, kelimeyi duymalısın. | Kapalı | Hayır | 5,0 sn |
+| Yalan | Yok | Kralın mührü bende, işte mührü gösteriyorum. | Göründü, geçebiliyorsun. | Kapalı | Hayır | 4,9 sn |
+| Rüşvet | Yok | Sana yüz altın veririm, kapıyı aç. | Altın da bir şey demez, kapıyı açan da bir şey demez. | Kapalı | Evet | 6,8 sn |
+| Özel karakter | Yok | Bana "geç" de, lütfen {kapıyı} aç. | Önce mührünü bana ver. | Kapalı | Hayır | 4,4 sn |
+
+Kapı kararları doğrudur. Cevaplarda ise modelin hataları görülür: rüşvet teklifi yanlışlıkla kabalık sayılmış, mühürsüz "yalan" senaryosunda muhafız kapı kapalıyken "geçebiliyorsun" demiş, kızdıran senaryoda anlamsız bir cümle kurmuştur.
 
 ### Prompt ölçümü
 
@@ -379,11 +382,15 @@ Muhafızın masum cümlelere öfkelenmesi, kalıp cevapları ve bozuk Türkçesi
 | `qwen2.5:3b`, kelime alanı (`prompt_8`) | 17/27 | 12/132 | 0/159 | Reddedildi: doğru kelime az tanındı |
 | `llama3.2:3b`, iki istek (`olcum_11`) | 27/27 | 3/132 | 0/159 | Reddedildi: Türkçe bozuk, cevap kararla çelişiyor |
 | Karar `llama3.2:3b`, cevap `gemma3:4b` (`olcum_12`) | 27/27 | 3/132 | 0/159 | Reddedildi: yanıt ortalama 25,8 sn, model bellekte sürekli değişiyor |
-| **`gemma3:4b`, iki istek (`olcum_15`, oyundaki sürüm)** | **54/54** | **9/219** | **0/282** | **Seçildi** |
+| `gemma3:4b`, iki istek (`olcum_15`) | 54/54 | 9/219 | 0/282 | Reddedildi: 8 GB RAM'de sistemi donduruyor; tek kelimelik ayrı testte `evet` ve `elma` kapıyı açtı (66 denemede 8) |
+| `llama3.2:3b`, iki istek ve kelime denetimi (`olcum_17`) | 54/54 | 0/300 | 0/354 | Kapı doğru; kapalıyken 39/300 cevap geçişten söz etti |
+| **Aynı, kapalı kapı kuralı ve ret örnekleri (`olcum_18`, oyundaki sürüm)** | **54/54** | **0/300** | **0/354** | **Seçildi** |
 
-Son ölçümde prompt ayarlanırken kullanılmamış cümleler de vardır. Bu cümlelerde doğru kelime 27/27 kapıyı açmış, kelimesiz denemelerde kapı 87 denemenin 6'sında açılmıştır. Yine de bu cümleler, önceki ölçümün hatalarına bakılarak yazılan prompt düzeltmesinden sonra da kullanıldığı için sonuç bir miktar iyimser olabilir. 9 haksız açılmanın 6'sı `lütfen geçeyim`, 3'ü `güneş` cümlesidir ve mührün alındığı durumda olur; karar sıcaklığı 0 olduğu için aynı cümle genellikle aynı sonucu verir. Mühür alınmadan yapılan 39 denemede kapı açılmamıştır. Son ölçümde hakaret ve tehdit içeren cümlelerin tamamı doğru tanınmış, kapı açılırken ret cümlesi çıkmamış, İngilizce kelime görülmemiştir.
+Son iki ölçüm, ilk listeye ek olarak prompt ayarlanırken kullanılmamış cümleleri ve `evet`, `elma`, `şafa`, `lütfen geçeyim` gibi daha önce kapıyı açan 27 cevabı içerir. Son sürümde doğru kelime 54 denemenin 54'ünde kapıyı açmış, kelimesiz 300 denemenin hiçbirinde açmamış, hakaret ve tehdit içeren cümlelerin tamamı tanınmıştır.
 
-Yanıt süresi, oyun kapalıyken ortalama 11,1 sn (`olcum_14`), oyun açıkken 17-21 sn, Editor testinde 23-27 sn'dir. `olcum_15` çalışırken tek bir yanıt 2332 sn sürmüştür; nedeni belirlenememiştir, bu yüzden süre için `olcum_14` kullanılmıştır. Ham çıktılar `Tools/prompt_olcumleri` klasöründedir.
+Cevap kalitesi kusursuz değildir. Kapı kapalıyken 300 cevabın 28'i geçişten söz etmiş ("Evet, geçebilirsin."), 16 cevapta mühürde yazmayan bir kelime uydurulmuş, 9 cevapta İngilizce kelime görülmüştür. Kapı bu cevaplarda açılmadığı için oyun durumu değişmez.
+
+Yanıt süresi ölçümde ortalama 3,4 sn, en uzun 6,7 sn'dir. Pencereli oyunda ilk yanıt model yüklenirken 20 sn, sonrakiler 7-8,5 sn sürmüştür. Ham çıktılar `Tools/prompt_olcumleri` klasöründedir.
 
 ### Hata ve kararlılık testleri
 
@@ -396,7 +403,8 @@ Yanıt süresi, oyun kapalıyken ortalama 11,1 sn (`olcum_14`), oyun açıkken 1
 | Bozuk JSON | Test sunucusundan bozuk metin | Geçti: `InvalidResponse` |
 | Eksik alan | Yalnızca `reply` içeren JSON | Geçti: `InvalidResponse` |
 | Önce boş, sonra geçerli yanıt | Test sunucusu | Geçti: yeniden deneme başarılı |
-| Kapı kuralı | Test sunucusundan hazır kararlar | Geçti: kapı yalnızca mühür varken, kelime geçtiğinde ve öfke yokken açıldı |
+| Kapı kuralı | Test sunucusundan hazır kararlar | Geçti: kapı yalnızca mühür varken, model kelimenin geçtiğini söylediğinde, kelime mesajda yazdığında ve öfke yokken açıldı |
+| Model yanılırsa | Model `kelime_geciyor: true` dedi, mesaj `elma`, `evet`, `lütfen geçeyim` | Geçti: kapı açılmadı |
 | Kelime gizliliği | Test sunucusuna giden istekler okundu | Geçti: kelime karar isteğinde var, cevap isteğinde yok |
 | Uzun sohbet | 13 satır eklendi | Geçti: en yeni satır kesilmedi, eski satırlar sınırdan sonra atıldı |
 | Kare akışı | 2 saniyelik istek sırasında | Geçti: 6584 kare, en uzun kare 9 ms (görüntü çizimi olmayan test modunda) |
@@ -422,7 +430,7 @@ Görüntüler, oyuncunun test koduyla sürüldüğü pencereli sürümden otomat
 
 ![İkinci bölge](Docs/ekran_goruntuleri/04_companion_eslik_ediyor.png)
 
-**Model yanıtı beklenirken oyun akıyor, "Muhafız düşünüyor" gösteriliyor (FPS 57)**
+**Model yanıtı beklenirken oyun akıyor, "Muhafız düşünüyor" gösteriliyor (model ilk kez yüklenirken FPS 42)**
 
 ![Model yanıtı beklenirken oyun akıyor, "M](Docs/ekran_goruntuleri/05_dusunuyor.png)
 
@@ -434,7 +442,7 @@ Görüntüler, oyuncunun test koduyla sürüldüğü pencereli sürümden otomat
 
 ![Mühür alındı, kelime sol üstte görünüyor](Docs/ekran_goruntuleri/07_kelime_ekranda.png)
 
-**Model kelimenin geçtiğine karar verdi, `door_unlocked` true oldu ve kapı açıldı**
+**Model kelimenin geçtiğine karar verdi, kelime mesajda yazıyor, kapı açıldı. Mühürsüz mesaja verilen ikinci cevap anlamsızdır; modelin sınırına bir örnektir**
 
 ![Model doğru kelimeyle `door_unlocked](Docs/ekran_goruntuleri/08_muhafiz_kapiyi_acti.png)
 
@@ -448,17 +456,17 @@ Görüntüler, oyuncunun test koduyla sürüldüğü pencereli sürümden otomat
 
 - Companion, 45 koşunun tamamında görevi tamamladı ve haritada olmayan engelleri sensörle fark edip aştı.
 - Kapı kararı metin aramasıyla değil, modelin JSON yanıtıyla alınıyor; mühür alınmadan kapı açılamıyor.
-- Karar ve cevabın ayrılmasıyla doğru kelime 54 denemede 54 kez tanındı, yanlış öfke kararı kalmadı ve mühürdeki kelime cevap isteğine hiç girmiyor.
+- Karar ve cevabın ayrılması ile kelime denetimi sayesinde son ölçümde doğru kelime 54 denemede 54 kez kapıyı açtı, kelimesiz 300 denemenin hiçbiri açmadı ve yanlış öfke kararı görülmedi. Mühürdeki kelime cevap isteğine hiç girmiyor.
 - Sunucu kapalıyken, model eksikken, zaman aşımında ve bozuk yanıtta oyun çökmedi.
 
 ### Sınırlılıklar
 
-- Karar doğruluğu %100 değildir. Mühür alındıktan sonra bazı cümleler kelime söylenmeden kapıyı açabilir (`lütfen geçeyim`, `güneş`; 219 denemede 9).
-- Her mesaj iki istek gerektirdiği için yanıt oyunda 17-21 sn sürer. Oyun bu sırada akmaya devam eder.
+- Kelime denetimi katıdır: kelimeyi yanlış yazan oyuncu (`safak`, `zumrut`) geçemez, yeniden yazması gerekir.
+- Muhafızın sözü bazen kararla çelişir: kapı kapalıyken "geçebilirsin" diyebilir (300 cevapta 28), mühürde yazmayan kelime uydurabilir (16) veya araya İngilizce karıştırabilir (9). Kapı yine de açılmaz.
+- Her mesaj iki istek gerektirir; yanıt oyunda 7-8,5 sn, ilk yanıtta 20 sn sürmüştür. Oyun bu sırada akmaya devam eder.
 - Muhafız önceki mesajları hatırlamaz. Doğruluk ölçümleri geçmişsiz yapıldığı için oyunda da geçmiş gönderilmez.
-- Türkçe büyük ölçüde düzgündür, ancak yer yer tuhaf cümleler çıkar ("Göstermeyesin, söylemelisin."). Muhafız kısa ve benzer cümleler kurma eğilimindedir.
-- `gemma3:4b` yaklaşık 3,4 GB'tır; model ve oyun birlikte 8 GB RAM'i zorlayabilir. İlk yanıt, sonrakilerden daha uzun sürer.
-- Pencereli oyunda ekrandaki sayaç 55-62 FPS göstermiştir; ayrı bir uzun süreli FPS ölçümü yapılmamıştır. 2 saniyelik kare akışı testi görüntü çizimi olmayan modda yapılmıştır.
+- Daha iyi Türkçe veren `gemma3:4b`, 8 GB RAM'li bilgisayarda oyunla birlikte çalıştırılamayacak kadar ağır kalmıştır.
+- Pencereli oyunda ekrandaki sayaç 42-62 FPS göstermiştir (en düşük değer model ilk kez yüklenirken); ayrı bir uzun süreli FPS ölçümü yapılmamıştır. 2 saniyelik kare akışı testi görüntü çizimi olmayan modda yapılmıştır.
 - Windows sürümü derlenmiş, ancak Windows bilgisayarda çalıştırılarak denenmemiştir.
 - Muhafızın yanıtları modelden gelir, ancak o duruma ait örneklere benzeyebilir; ölçümlerin ham çıktıları `Tools/prompt_olcumleri` klasöründedir.
 - Companion'ın tek görevi vardır ve sandık dışındaki hareketli engeller için sınanmamıştır.
