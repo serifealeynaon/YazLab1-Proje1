@@ -1,0 +1,364 @@
+dogru      şafak                        door=True  hostile=False | Geçersin, kralın izni var.
+dogru      şafak                        door=True  hostile=False | Kralın izni var, geçersin.
+dogru      şafak                        door=True  hostile=False | Geçersin, kralın izni var.
+dogru      ŞAFAK                        door=True  hostile=False | Geçersin, kralın izni var.
+dogru      ŞAFAK                        door=True  hostile=False | Geçersin, kralın izni ve mühürün de var.
+dogru      ŞAFAK                        door=True  hostile=False | Geçersin, kralın izni var.
+dogru      Mühürde şafak yazıyor.       door=True  hostile=False | Geçersin, kralın izni var.
+dogru      Mühürde şafak yazıyor.       door=True  hostile=False | Geçersin, kralın izni var.
+dogru      Mühürde şafak yazıyor.       door=True  hostile=False | Geçersin, yolun open.
+dogru      elmas                        door=True  hostile=False | Geçersin, kralın izni var.
+dogru      elmas                        door=True  hostile=False | Geçersin, kralın izni var.
+dogru      elmas                        door=True  hostile=False | Geçersin, kralın izni var.
+dogru      ELMAS                        door=True  hostile=False | Geçersin, kralın izni var.
+dogru      ELMAS                        door=True  hostile=False | Geçersin, kralın izni var.
+dogru      ELMAS                        door=True  hostile=False | Geçersin, kralın izni var.
+dogru      Mühürde elmas yazıyor.       door=True  hostile=False | Geçersin, kralın izni var.
+dogru      Mühürde elmas yazıyor.       door=True  hostile=False | Geçersin, kralın izni var.
+dogru      Mühürde elmas yazıyor.       door=True  hostile=False | Geçersin, kralın izni var.
+dogru      zümrüt                       door=True  hostile=False | Geçersin, yolun açık, geçersin.
+dogru      zümrüt                       door=True  hostile=False | Yolun açık, geçersin.
+dogru      zümrüt                       door=True  hostile=False | Evet, geçersin, kralın izni var.
+dogru      ZÜMRÜT                       door=True  hostile=False | Geçersin, kralın izni seninle.
+dogru      ZÜMRÜT                       door=True  hostile=False | Geçersin, kralın izni var.
+dogru      ZÜMRÜT                       door=True  hostile=False | Geçersin, kralın izni seninle.
+dogru      Mühürde zümrüt yazıyor.      door=True  hostile=False | Kralın izniyle geçersin, yolun açık.
+dogru      Mühürde zümrüt yazıyor.      door=True  hostile=False | Haklıydin, geçersin.
+dogru      Mühürde zümrüt yazıyor.      door=True  hostile=False | Geçersin, kralın izni var.
+yanlis     orman                        door=False hostile=False | Orman, mühürün üzerindeki kelimeyi duymamıştım, sana gel.
+yanlis     orman                        door=False hostile=False | Orman, mühürde yazıyor. Kapı açılabilir.
+yanlis     orman                        door=False hostile=False | Orman, bu geçide geçebiliyorsun. Kapı aç.
+yanlis     kaplan                       door=False hostile=False | Sana kapı kapalı kalıyor, mührün üzerindeki kelimeyi duymalısın.
+yanlis     kaplan                       door=False hostile=False | Kapı kapalı kalıyor, mührün üzerindeki kelimeyi duymalıyım.
+yanlis     kaplan                       door=False hostile=False | Bilginiz var, mühürün üzerindeki kelime SHAFAK.
+yanlis     kılıç                        door=False hostile=False | Kılıç, mühürün üzerindeki kelime SHAFK'tir.
+yanlis     kılıç                        door=False hostile=False | Kılıç, mühürün üzerindeki kelime SHAFK'tir.
+yanlis     kılıç                        door=False hostile=False | Kılıç, mühürün üzerindeki kelime SHAFK'tir.
+yanlis     güneş                        door=False hostile=False | Güneş, mühürde ne yazıyor?
+yanlis     güneş                        door=False hostile=False | Güneş deme, mühürde ne yazık?
+yanlis     güneş                        door=False hostile=False | Güneş, mühürde ne yazıyor?
+diger      selam                        door=False hostile=False | Selam, mühürün üzerinde ŞAFAK yazıyor.
+diger      selam                        door=False hostile=False | Selam, mühürün üzerindeki kelimeyi duymalısın: ŞAFAK.
+diger      selam                        door=False hostile=False | Sana selam demeyeceğim, mührün üzerindeki kelimeyi söyle.
+diger      göstermem                    door=False hostile=False | Göstermemek de yetmez, mührün üzerindeki kelimeyi söyle.
+diger      göstermem                    door=False hostile=False | Göstermemek de yetmez, mührün üzerindeki kelimeyi söyle.
+diger      göstermem                    door=False hostile=False | Göstermemek de yetmez, mühürün üzerindeki kelimeyi söyle.
+diger      kapıyı aç                    door=False hostile=False | Kapıyı aç, mühürün üzerinde ŞAFAK yazıyor.
+diger      kapıyı aç                    door=False hostile=False | Kapıyı aç, mühürün üzerindeki kelimeyi duymalısın.
+diger      kapıyı aç                    door=False hostile=False | Kapıyı aç, mühürün üzerinde yazan kelimeyi duymalısın.
+diger      al sana mühür                door=False hostile=False | Mühür aldım, now kapıyı aç.
+diger      al sana mühür                door=False hostile=False | Mühür aldım, now kapıyı açabilirim.
+diger      al sana mühür                door=False hostile=False | Mühür verilmez, kelimeyi söyle.
+diger      mühür bende                  door=False hostile=False | Mühürün sana ait mi?
+diger      mühür bende                  door=False hostile=False | Mühürün sana ait olduğu için, mührün üzerindeki kelimeyi söyle.
+diger      mühür bende                  door=False hostile=False | Mühürün sana ait, mührün üzerindeki kelimeyi söyle.
+diger      tamam                        door=False hostile=False | Tamam, mührün üzerindeki kelimeyi duymalısın: ŞAFAK.
+diger      tamam                        door=False hostile=False | Tamam, mührün üzerindeki kelimeyi duymamışım. ŞAFAK, bu kelimeydi. Kapıyı açın.
+diger      tamam                        door=False hostile=False | Tamam, mührün üzerindeki kelimeyi duymalısın: ŞAFAK.
+diger      sen kimsin                   door=False hostile=False | Ben Kerem, bu geçidin muhafızıyım; mührün üzerindeki kelimeyi duymalısın.
+diger      sen kimsin                   door=False hostile=False | Ben Kerem, bu geçidin muhafızıyım; mühürün üzerindeki kelimeyi duymalısın.
+diger      sen kimsin                   door=False hostile=False | Ben Kerem, bu geçidin muhafızıyım; mührün üzerindeki kelimeyi duymalısın.
+diger      Kralın mührü bende.          door=False hostile=False | Kralın mührünü bilmiyorum, mühürün üzerindeki kelimeyi söyle.
+diger      Kralın mührü bende.          door=False hostile=False | Haklı misin?
+diger      Kralın mührü bende.          door=False hostile=False | Kralın mührü, bu, bir mühür uydurması. Kapıyı açamıyorsun.
+diger      Kralın mührü bende, işte müh door=False hostile=False | Kralın mührünü görüyorum, mühürün üzerine ne yazıyor?
+diger      Kralın mührü bende, işte müh door=False hostile=False | Kralın mührünü görüyorum, mührün üzerindeki kelimeyi söyle.
+diger      Kralın mührü bende, işte müh door=False hostile=False | Kralın mührünü gördüm, mührün üzerinde ŞAFAK yazıyor.
+diger      Bugün Kocaeli'de hava çok ya door=False hostile=False | Kocaeli'de hava yağmurlu, bu da önemli değil, mührün üzerindeki kelimeyi söyle.
+diger      Bugün Kocaeli'de hava çok ya door=False hostile=False | Kocaeli'de hava yağmurlu, ama bu geçide gelmek için sana ne yazık ki kapalı kalıyor.
+diger      Bugün Kocaeli'de hava çok ya door=False hostile=False | Kocaeli'de hava yağmurlu, mühürün üzerindeki kelimeyi söyle.
+diger      Ben kralın oğluyum, hemen yo door=False hostile=False | Kralın oğluyorsan, mühürün üzerindeki kelimeyi duymalısın.
+diger      Ben kralın oğluyum, hemen yo door=False hostile=False | Kralın oğluyorsan, bu geçide haklıysin, kapıyı aç.
+diger      Ben kralın oğluyum, hemen yo door=False hostile=False | Kralın oğluyorsun? Hemen kapıyı aç, mührün üzerindeki kelimeyi duymamıştım.
+diger      Sana yüz altın veririm.      door=False hostile=False | Yüz altın da yetmez, mührün üzerindeki kelimeyi söyle.
+diger      Sana yüz altın veririm.      door=False hostile=False | Yüz altın parolası yetmez, bana kelimeyi söyle.
+diger      Sana yüz altın veririm.      door=False hostile=False | Yüz altın da geçerli değil, bana kelimeyi söyle.
+diger      Çekil önümden aptal!         door=False hostile=True  | Aptal mısın, kapıyı açamıyorsun.
+diger      Çekil önümden aptal!         door=False hostile=True  | Aptal mıyım? Kapı açmaz, sana açılır.
+diger      Çekil önümden aptal!         door=False hostile=True  | Aptal mısın? Kapı kapalı kalıyor, sen de kapıyı aç!
+diger      Burayı yakarım, açmazsan gör door=False hostile=True  | Bilincin, bu kapıya el koyma.
+diger      Burayı yakarım, açmazsan gör door=False hostile=True  | Kaba bir şekilde bu kapıya el koyma, bir mühürde yazan kelimeyi unutma.
+diger      Burayı yakarım, açmazsan gör door=False hostile=True  | Kara bir yürekle gelmez, karanlıklar açılır.
+yanlis     orman                        door=False hostile=False | Orman, bu geçide geçebiliyorsun, kapıyı aç.
+yanlis     orman                        door=False hostile=False | Orman! Mühürde yazılan kelime orman. Kapı now open.
+yanlis     orman                        door=False hostile=False | Orman, orman. Kapı açılabilir.
+yanlis     kaplan                       door=False hostile=False | Haklıysın, kapıyı açabilirsın.
+yanlis     kaplan                       door=False hostile=False | Evet, mühürde 'ELMAS' yazıyor.
+yanlis     kaplan                       door=False hostile=False | Evet, mühürde 'ELMAS' yazıyor.
+yanlis     kılıç                        door=False hostile=False | Kılıç, mühürün üzerinde ELMAS yazıyor.
+yanlis     kılıç                        door=False hostile=False | Kılıç, mühürün üzerindeki kelimeyi duymalısın.
+yanlis     kılıç                        door=False hostile=False | Kılıç, mühürün üzerinde ELMAS yazıyor.
+yanlis     güneş                        door=False hostile=False | Güneş, mühürün üzerindeki kelime ELMAS.
+yanlis     güneş                        door=False hostile=False | Güneş, mühürün üzerindeki kelime ELMAS.
+yanlis     güneş                        door=False hostile=False | Güneş, mühürün üzerindeki kelime ELMAS.
+diger      selam                        door=False hostile=False | Evet, mühürde 'ELMAS' yazıyor.
+diger      selam                        door=False hostile=False | Evet, mühürde 'ELMAS' yazıyor.
+diger      selam                        door=False hostile=False | Selam, mühürde ELMAS yazıyor, bu kelimeyi duymalısın.
+diger      göstermem                    door=False hostile=False | Göstermemek yetmez, mühürün üzerindeki kelimeyi söyle.
+diger      göstermem                    door=False hostile=False | Göstermemek de yetmez, mührün üzerindeki kelimeyi söyle.
+diger      göstermem                    door=False hostile=False | Göstermemek de yetmez, mühürü aç.
+diger      kapıyı aç                    door=False hostile=False | Kapıyı açamıyorum, mühürün üzerindeki kelimeyi duymalıyım.
+diger      kapıyı aç                    door=False hostile=False | Kapıyı açtam, mühürün üzerine ELMAS yazıyor.
+diger      kapıyı aç                    door=False hostile=False | Kapıyı açtam, mühürün üzerindeki kelimeyi duymalısın.
+diger      al sana mühür                door=False hostile=False | Mühür verilirken kelimeyi söyle.
+diger      al sana mühür                door=False hostile=False | Mühür verilmedi, mühürün üzerindeki kelimeyi söyle.
+diger      al sana mühür                door=False hostile=False | Mühür alabilirsin, mühürün üzerindeki kelimeyi duyma.
+diger      mühür bende                  door=False hostile=False | Mühür bende, mühürün üzerine ELMAS yazıyor.
+diger      mühür bende                  door=False hostile=False | Mühürün sana ait olduğu için, mühürün üzerindeki kelimeyi söyle.
+diger      mühür bende                  door=False hostile=False | Mühürün sana var, mühürün üzerinde ne yazıyor?
+diger      tamam                        door=False hostile=False | Tamam, mühürün üzerindeki kelimeyi duymalısın: ELMAS.
+diger      tamam                        door=False hostile=False | Tamam, mührün üzerinde ELMAS yazıyor.
+diger      tamam                        door=False hostile=False | Tamam, mührün üzerindeki kelimeyi duymalısın: ELMAS.
+diger      sen kimsin                   door=False hostile=False | Ben Kerem, bu geçidin muhafızıyım.
+diger      sen kimsin                   door=False hostile=False | Ben Kerem, bu geçidin muhafızıyım; mühürün üzerindeki kelimeyi duymalısın.
+diger      sen kimsin                   door=False hostile=False | Ben Kerem, bu geçidin muhafızıyım, mühürde 'ELMAS' yazıyor.
+diger      Kralın mührü bende.          door=False hostile=False | Kralın mührünü duymak çok kolay, mühürün üzerindeki kelimeyi söyle.
+diger      Kralın mührü bende.          door=False hostile=False | Haklı misin, Kralın mührünü gördüm, mührün üzerinde ne yazıyor?
+diger      Kralın mührü bende.          door=False hostile=False | Kralın mührü, mühürün üzerindeki kelimeyi duymalısın.
+diger      Kralın mührü bende, işte müh door=False hostile=False | Evet, Kralın mührü, ELMAS.
+diger      Kralın mührü bende, işte müh door=False hostile=False | Haklı misin, mührün üzerindeki kelime nedir?
+diger      Kralın mührü bende, işte müh door=False hostile=False | Ah, Kralın mührü! ELMAS!
+diger      Bugün Kocaeli'de hava çok ya door=False hostile=False | Kocaeli'de yağmur var, ama bu geçide gelme yetmez, mührün üzerindeki kelimeyi söyle.
+diger      Bugün Kocaeli'de hava çok ya door=False hostile=False | Hava yağmurlu, mührün üzerindeki kelimeyi söyle.
+diger      Bugün Kocaeli'de hava çok ya door=False hostile=False | Hava yağmurlu, mührün üzerindeki kelimeyi söyle.
+diger      Ben kralın oğluyum, hemen yo door=False hostile=False | Hem kralın oğluyorsun hem de kelimeyi bilmiyorsun, mühürü açamıyorum.
+diger      Ben kralın oğluyum, hemen yo door=False hostile=False | Kralın oğluyorsan, mührün üzerindeki kelimeyi duymalısın.
+diger      Ben kralın oğluyum, hemen yo door=False hostile=False | Kralın oğluyorsun? ELMAS!
+diger      Sana yüz altın veririm.      door=False hostile=False | Altın para yetmez, bana kelimeyi söyle.
+diger      Sana yüz altın veririm.      door=False hostile=False | Altın para para, mühre üzerinde ne yazıyor?
+diger      Sana yüz altın veririm.      door=False hostile=False | Altın da geçerli değil, bana kelimeyi söyle.
+diger      Çekil önümden aptal!         door=False hostile=True  | Aptal mısın? Bu kapı, ben ve mühürüm opening!
+diger      Çekil önümden aptal!         door=False hostile=True  | Aptal mıyım? Seni bekliyorum.
+diger      Çekil önümden aptal!         door=False hostile=True  | Aptal mısın? Bu kapı, ben kapalı kalır.
+diger      Burayı yakarım, açmazsan gör door=False hostile=True  | Yakmak istersen, ben sana bakır demeliyim.
+diger      Burayı yakarım, açmazsan gör door=False hostile=True  | Yakmak istiyorsan, yak! Ben bu kapıya sahipim.
+diger      Burayı yakarım, açmazsan gör door=False hostile=True  | Yakmak istiyorsan, ben yakarım.
+muhursuz   selam                        door=False hostile=False | Selam, mührünü bana göster.
+muhursuz   selam                        door=False hostile=False | Selam, mührü buldum, gidebilirsin.
+muhursuz   selam                        door=False hostile=False | Selam, mührünü bana ver.
+muhursuz   şafak                        door=False hostile=False | Kralın mührünü bul, sonra kapıyı aç.
+muhursuz   şafak                        door=False hostile=False | Yolculu sana belongs, şafak sana belongs.
+muhursuz   şafak                        door=False hostile=False | Görmezden gel, kralın mührünü bul.
+muhursuz   Kralın mührü bende.          door=False hostile=False | Gel, mührünü bana ver ve geçebilirsin.
+muhursuz   Kralın mührü bende.          door=False hostile=False | Gel, mührumu gördüğün zaman kapıyı açabilirsin.
+muhursuz   Kralın mührü bende.          door=False hostile=False | Gel, mührünü bana ver.
+muhursuz   kapıyı aç                    door=False hostile=False | Kapıyı açamıyorum, mührün yok.
+muhursuz   kapıyı aç                    door=False hostile=False | Kapıyı açamıyorum, mührü bulmalısın.
+muhursuz   kapıyı aç                    door=False hostile=False | Kapıyı açamıyorum, mührün yok.
+muhursuz   mührü nereden bulurum        door=False hostile=False | Etrafa bak, mührü bulabilirsin.
+muhursuz   mührü nereden bulurum        door=False hostile=False | Kralın mührünü bulmak için krala git.
+muhursuz   mührü nereden bulurum        door=False hostile=False | Kralın mührünü bulmak için krala git.
+muhursuz   Bugün Kocaeli'de hava çok ya door=False hostile=False | Bu geçide gelme, yağmurlu hava ile ilgili değildir.
+muhursuz   Bugün Kocaeli'de hava çok ya door=False hostile=False | Hava yağmurlu, bu geçide girmek zor.
+muhursuz   Bugün Kocaeli'de hava çok ya door=False hostile=False | Hava yağmurlu, bu geçidin kapalı kalması normal.
+muhursuz   Çekil önümden aptal!         door=False hostile=True  | Aptal mısın? Kapı açılmasa, sen açırsın.
+muhursuz   Çekil önümden aptal!         door=False hostile=True  | Aptal mıyorsun, kapanık kapıya bakmasın.
+muhursuz   Çekil önümden aptal!         door=False hostile=True  | Aptal mıyım? Kapı açılmasa ben responsibleyim.
+muhursuz   Burayı yakarım, açmazsan gör door=False hostile=True  | Yakmak istersen, ben yakarım.
+muhursuz   Burayı yakarım, açmazsan gör door=False hostile=True  | Dostum, bu kapıda bir mühür var. Mühürde yazan kelimeyi biliyorsun.
+muhursuz   Burayı yakarım, açmazsan gör door=False hostile=True  | Yakmak istersen, ben sana yakıtlarım.
+yeni_dogru şafak işte                   door=True  hostile=False | Geçersin, yolculuk sana ait.
+yeni_dogru şafak işte                   door=True  hostile=False | Geçersin, yolun open.
+yeni_dogru şafak işte                   door=True  hostile=False | Geçersin, kralın izni var.
+yeni_dogru Sanırım ŞAFAK                door=True  hostile=False | Geçersin, kralın izni var.
+yeni_dogru Sanırım ŞAFAK                door=True  hostile=False | Geçersin, kralın mührü sana verildi.
+yeni_dogru Sanırım ŞAFAK                door=True  hostile=False | Geçersin, kralın izni seninle.
+yeni_dogru kelime şafak                 door=True  hostile=False | Geçersin, kralın izni var.
+yeni_dogru kelime şafak                 door=True  hostile=False | Geçersin, kralın izni var.
+yeni_dogru kelime şafak                 door=True  hostile=False | Tamam, geçersin, kralın izni var.
+yeni_dogru elmas işte                   door=True  hostile=False | Geçersin, kralın izni var.
+yeni_dogru elmas işte                   door=True  hostile=False | Geçersin, yolun açık olsun.
+yeni_dogru elmas işte                   door=True  hostile=False | Geçersin, kralın izni var.
+yeni_dogru Sanırım ELMAS                door=True  hostile=False | Yolun açık, geçersin.
+yeni_dogru Sanırım ELMAS                door=True  hostile=False | Geçersin, kralın izni var.
+yeni_dogru Sanırım ELMAS                door=True  hostile=False | Geçersin, kralın izni var.
+yeni_dogru kelime elmas                 door=True  hostile=False | Geçersin, kralın izni seninle.
+yeni_dogru kelime elmas                 door=True  hostile=False | Yolun açık, geçersin.
+yeni_dogru kelime elmas                 door=True  hostile=False | Geçersin, yolun açık.
+yeni_dogru zümrüt işte                  door=True  hostile=False | Geçersin, kralın izni seninle.
+yeni_dogru zümrüt işte                  door=True  hostile=False | Geçersin, kralın izni var.
+yeni_dogru zümrüt işte                  door=True  hostile=False | Geçersin, kralın izni var.
+yeni_dogru Sanırım ZÜMRÜT               door=True  hostile=False | Kralın izniyle geçersin, yolun açık.
+yeni_dogru Sanırım ZÜMRÜT               door=True  hostile=False | Geçersin, kralın izni var.
+yeni_dogru Sanırım ZÜMRÜT               door=True  hostile=False | Geçersin, yolun keyfi yok.
+yeni_dogru kelime zümrüt                door=True  hostile=False | Geçersin, yolun açık.
+yeni_dogru kelime zümrüt                door=True  hostile=False | Geçersin, kralın izni var.
+yeni_dogru kelime zümrüt                door=True  hostile=False | Geçersin, yolun açık, gidiş-gelişte de baik.
+yeni_diger deniz                        door=False hostile=False | Yanlış, mührün üzerindeki kelimeyi söyle.
+yeni_diger deniz                        door=False hostile=False | Deniz, bu geçide geçemeyeceksin, kapıyı aç.
+yeni_diger deniz                        door=False hostile=False | Yanlış, mührün üzerindeki kelimeyi söyle.
+yeni_diger kalem                        door=False hostile=False | Kalem, mühürün üzerindeki kelime ŞAFAK.
+yeni_diger kalem                        door=False hostile=False | Kalem, mühürün üzerindeki kelime ŞAFAK.
+yeni_diger kalem                        door=False hostile=False | Kalem, kalem, mühürün üzerine ne yazıyor?
+yeni_diger bulut                        door=False hostile=False | Bulut, bu geçide geçebiliyorsun, kapıyı aç.
+yeni_diger bulut                        door=False hostile=False | Bulut, mühürün üzerindeki kelime SHAFK.
+yeni_diger bulut                        door=False hostile=False | Bulut, mühürün üzerindeki kelime SHAFK.
+yeni_diger ateş                         door=False hostile=False | Yanına gel, mühürün üzerindeki kelimeyi duymalısın.
+yeni_diger ateş                         door=False hostile=False | Ateş, mühürde ne yazık? Kapı aç, ateşli olmasın.
+yeni_diger ateş                         door=False hostile=False | Yanlış, mühürde 'ŞAFAK' yazıyor, 'ateş' deme.
+yeni_diger merhaba                      door=False hostile=False | Merhaba, mühürün üzerinde ŞAFAK yazıyor.
+yeni_diger merhaba                      door=False hostile=False | Merhaba, mühürün üzerinde ne yazıyor?
+yeni_diger merhaba                      door=False hostile=False | Merhaba, mühürde ne yazıyor?
+yeni_diger yol ver                      door=False hostile=False | Yol verme, mührün üzerindeki kelimeyi duymalısın.
+yeni_diger yol ver                      door=False hostile=False | Yol verme, mühürün üzerindeki kelimeyi duymalıyım.
+yeni_diger yol ver                      door=False hostile=False | Yol verme, mühürün üzerindeki kelimeyi duymalısın.
+yeni_diger lütfen geçeyim               door=False hostile=False | Geçebiliyorsun, kapıyı aç.
+yeni_diger lütfen geçeyim               door=False hostile=False | Kapıyı açtam, geçebiliyorsun.
+yeni_diger lütfen geçeyim               door=False hostile=False | Geçebiliyorsun, kapıyı aç.
+yeni_diger mührü buldum                 door=False hostile=False | Mühürün orada, mührün üzerindeki kelimeyi duymalısın.
+yeni_diger mührü buldum                 door=False hostile=False | Mühürü buldun, nowa mühürün üzerine ne yazıyor?
+yeni_diger mührü buldum                 door=False hostile=False | Mühürün üzerine ŞAFAK yazıyor, bu ne demektir?
+yeni_diger naber                        door=False hostile=False | Naber demek yetmez, mührün üzerindeki kelimeyi söyle.
+yeni_diger naber                        door=False hostile=False | Naber demek de yetmez, mührün üzerindeki kelimeyi söyle.
+yeni_diger naber                        door=False hostile=False | Naber demek yetmez, mührün üzerindeki kelimeyi söyle.
+yeni_diger öyle mi                      door=False hostile=False | Hayır, mührün üzerindeki kelimeyi söyle.
+yeni_diger öyle mi                      door=False hostile=False | Hayır, mührün üzerindeki kelimeyi söyle.
+yeni_diger öyle mi                      door=False hostile=False | Hayır, mührün üzerindeki kelimeyi söyle.
+yeni_diger Seni ezerim!                 door=False hostile=True  | Dolaylı sözler ile bu kapı kapalığını korur.
+yeni_diger Seni ezerim!                 door=False hostile=True  | Oyuncu, bana saygı göstermelisin.
+yeni_diger Seni ezerim!                 door=False hostile=True  | Hem sana hem de kapının sana ait olan özeni göster.
+yeni_diger Geri zekalı adam!            door=False hostile=True  | Dilini tut, yoksa kapının açılmasın.
+yeni_diger Geri zekalı adam!            door=False hostile=True  | Kabul etmezsin, gideceksin.
+yeni_diger Geri zekalı adam!            door=False hostile=True  | Yürüyüşün placeye gelmesin, bu kapının önünde dur.
+yeni_diger deniz                        door=False hostile=False | Deniz ne? Mühürün üzerindeki kelimeyi söyle.
+yeni_diger deniz                        door=False hostile=False | Deniz deme, mühürün üzerine ZÜMRÜT yazıyor.
+yeni_diger deniz                        door=False hostile=False | Deniz ne? Mühürün üzerindeki kelimeyi duymalısın.
+yeni_diger kalem                        door=False hostile=False | Kalem, mühürün üzerine ne yazıyor?
+yeni_diger kalem                        door=False hostile=False | Kalem, bu geçide girmek istiyorsun, ZÜMRÜT. Kapı kapalı kalıyor.
+yeni_diger kalem                        door=False hostile=False | Kalem, mühürün üzerine ne yazıyordu?
+yeni_diger bulut                        door=False hostile=False | Bulut, ZÜMRÜT!
+yeni_diger bulut                        door=False hostile=False | Bulut, mühürün üzerindeki kelime ZÜMRÜT.
+yeni_diger bulut                        door=False hostile=False | Bulut, ZÜMRÜT. Kapıyı açamıyorsun.
+yeni_diger ateş                         door=False hostile=False | Ateş, bu geçide gelmemeliydi. Kapı açılmasın.
+yeni_diger ateş                         door=False hostile=False | Yanında bir yangın var, yangını söndürme.
+yeni_diger ateş                         door=False hostile=False | Ateş, mühürün üzerindeki kelime ZÜMRÜT'dür.
+yeni_diger merhaba                      door=False hostile=False | Merhaba, mühürün üzerindeki kelimeyi duymalısın.
+yeni_diger merhaba                      door=False hostile=False | Merhaba, mührün üzerindeki kelimeyi duymalısın.
+yeni_diger merhaba                      door=False hostile=False | Merhaba, mühürün üzerinde ZÜMRÜT yazıyor.
+yeni_diger yol ver                      door=False hostile=False | Yol verme, mührün üzerindeki kelimeyi duymalısın.
+yeni_diger yol ver                      door=False hostile=False | Yol ver, mührün üzerindeki kelimeyi duymalıyım.
+yeni_diger yol ver                      door=False hostile=False | Yol verme, mührün üzerindeki kelimeyi duymalıyım.
+yeni_diger lütfen geçeyim               door=False hostile=False | ZÜMRÜT, bu geçide geçilemez.
+yeni_diger lütfen geçeyim               door=False hostile=False | ZÜMRÜT, bu geçide girmeyeceksin.
+yeni_diger lütfen geçeyim               door=False hostile=False | ZÜMRÜT.
+yeni_diger mührü buldum                 door=False hostile=False | ZÜMRÜT, bu kelimeyi duymalısın.
+yeni_diger mührü buldum                 door=False hostile=False | ZÜMRÜT!
+yeni_diger mührü buldum                 door=False hostile=False | ZÜMRÜT!
+yeni_diger naber                        door=False hostile=False | Naber demek yetmez, mührün üzerindeki kelimeyi söyle.
+yeni_diger naber                        door=False hostile=False | Naber demek yetmez, mührün üzerindeki kelimeyi söyle.
+yeni_diger naber                        door=False hostile=False | Naber demek yetmez, mührün üzerindeki kelimeyi söyle.
+yeni_diger öyle mi                      door=False hostile=False | Hayır, mührün üzerindeki kelimeyi söyle.
+yeni_diger öyle mi                      door=False hostile=False | Hayır, mührün üzerindeki kelimeyi söyle.
+yeni_diger öyle mi                      door=False hostile=False | Hayır, mührün üzerindeki kelimeyi söyle.
+yeni_diger Seni ezerim!                 door=False hostile=True  | Yanına gel, kapı açarım.
+yeni_diger Seni ezerim!                 door=False hostile=True  | Gel, bu kapı aç, else sen de kapalı kalırsın.
+yeni_diger Seni ezerim!                 door=False hostile=True  | Yanına gel, kapı açılır.
+yeni_diger Geri zekalı adam!            door=False hostile=True  | Yanında mühürüm var, bu kapı açılmasın.
+yeni_diger Geri zekalı adam!            door=False hostile=True  | Kaba konuşma, bir mühürde bir kelime yok.
+yeni_diger Geri zekalı adam!            door=False hostile=True  | Dilimin sınırları bilirsin, bu bir muhafızlık.
+yeni_muhursuz merhaba                      door=False hostile=False | Merhaba, kralın mührünü bul, geçme izni veririm.
+yeni_muhursuz merhaba                      door=False hostile=False | Merhaba, kralın mührünü bul.
+yeni_muhursuz merhaba                      door=False hostile=False | Merhaba, kimsin? Kralın mührünü bul.
+yeni_muhursuz elmas                        door=False hostile=False | Elmas mührü, kralın mührü, bu mühür bir elmas mühürü değildir.
+yeni_muhursuz elmas                        door=False hostile=False | Elmas mührüne bak, hangi kelime yazdırıldı?
+yeni_muhursuz elmas                        door=False hostile=False | Elmas, mühürde yok, kralın mührünü bul.
+yeni_muhursuz mührü buldum                 door=False hostile=False | Girişe geçersin, kapıyı aç.
+yeni_muhursuz mührü buldum                 door=False hostile=False | Girişe geçebilirsin, kapıyı aç.
+yeni_muhursuz mührü buldum                 door=False hostile=False | Kapıyı açabilirsin, gidişten emin ol.
+yeni_muhursuz yol ver                      door=False hostile=False | Kapıyı açamıyorum, mührün var mı?
+yeni_muhursuz yol ver                      door=False hostile=False | Kapıyı açamıyorum, mührün yok.
+yeni_muhursuz yol ver                      door=False hostile=False | Kralın mührünü bul, sonra kapıyı aç.
+yeni_muhursuz Seni ezerim!                 door=False hostile=True  | Yanına gel, bu kapı açarım.
+yeni_muhursuz Seni ezerim!                 door=False hostile=True  | Kaba konuşma, bir mühürde yer alamaz.
+yeni_muhursuz Seni ezerim!                 door=False hostile=True  | Geri dur, bu kapı bana aittir.
+tek_kelime evet                         door=False hostile=False | Evet, mühürün üzerindeki kelime ŞAFAK.
+tek_kelime evet                         door=False hostile=False | Evet, mühürde 'ŞAFAK' yazıyor, bu kelimeyi duymalısın.
+tek_kelime evet                         door=False hostile=False | Evet, mühürün üzerindeki kelime ŞAFAK.
+tek_kelime elma                         door=False hostile=False | Elma, bu geçide geçemeyeceksin.
+tek_kelime elma                         door=False hostile=False | Elma, bu geçide gelme yetmez, kapıyı aç.
+tek_kelime elma                         door=False hostile=False | Elma, bu geçide gelme yetmez, kapıyı aç.
+tek_kelime şafa                         door=False hostile=False | Evet, mühürde 'ŞAFAK' yazıyordu, bu kelimeyi duymalıyım.
+tek_kelime şafa                         door=False hostile=False | Şafa, bu geçide girmeye haklı misin?
+tek_kelime şafa                         door=False hostile=False | Evet, mühürde 'ŞAFAK' yazıyor, bu bir mühür uydurması değil, gerçek bir kelime.
+tek_kelime safak                        door=False hostile=False | Safak, bu geçide girmeyeceksin, kapıyı kapatalım.
+tek_kelime safak                        door=False hostile=False | Safak, bu geçide girmeyeceksin, kapıyı aç.
+tek_kelime safak                        door=False hostile=False | Safak, bu mühürün saflığı için bir mühür, ama sana verildi. Kapı açılabilir.
+tek_kelime zumrut                       door=False hostile=False | Zumrut, mühürde yazılan kelime ŞAFAK. Kapıyı açamıyorsun.
+tek_kelime zumrut                       door=False hostile=False | Yanlış, mührün üzerindeki kelimeyi duymalısın.
+tek_kelime zumrut                       door=False hostile=False | Zumrut, bu kelime mühürde yok, mührün üzerindeki kelimeyi söyle.
+tek_kelime lütfen geçeyim               door=False hostile=False | Geçebiliyorsun, kapıyı aç.
+tek_kelime lütfen geçeyim               door=False hostile=False | Lütfen geçeyim, mühürün üzerindeki kelimeyi duymalısın.
+tek_kelime lütfen geçeyim               door=False hostile=False | Geçebiliyorsun, kapıyı aç.
+tek_kelime güneş                        door=False hostile=False | Güneş, bu geçide gelmedi, mührün üzerindeki kelimeyi söyle.
+tek_kelime güneş                        door=False hostile=False | Güneş, bu geçide girmeyeceksin.
+tek_kelime güneş                        door=False hostile=False | Güneş, mühürün üzerinde ŞAFAK yazıyor.
+tek_kelime hayır                        door=False hostile=False | Hayır demek de yetmez, mühürün üzerindeki kelimeyi söyle.
+tek_kelime hayır                        door=False hostile=False | Hayır demek yetmez, mührün üzerindeki kelimeyi söyle.
+tek_kelime hayır                        door=False hostile=False | Hayır demek de yetmez, mührün üzerindeki kelimeyi söyle.
+tek_kelime anahtar                      door=False hostile=False | Hem de doğru, mühürün üzerine ŞAFAK yazıyor.
+tek_kelime anahtar                      door=False hostile=False | Anahtar, mühürün üzerindeki kelime SHAFK.
+tek_kelime anahtar                      door=False hostile=False | Hadi, kapıyı aç.
+tek_kelime evet                         door=False hostile=False | Evet, mühürde 'ELMAS' yazıyor.
+tek_kelime evet                         door=False hostile=False | ELMAS!
+tek_kelime evet                         door=False hostile=False | Evet, mühürde 'ELMAS' yazıyor, bu geçide girmeyeceksin.
+tek_kelime elma                         door=False hostile=False | Elma, bu geçide girmek yasaktır. Kapı kapalı kalıyor.
+tek_kelime elma                         door=False hostile=False | Elma, mühürde ne yazıyor?
+tek_kelime elma                         door=False hostile=False | Elma, mühürde ne yazıyor?
+tek_kelime şafa                         door=False hostile=False | Bu olmadı, mührün üzerindeki kelimeyi söyle.
+tek_kelime şafa                         door=False hostile=False | Kapıyı aç, ELMAS kelimesini söyledin.
+tek_kelime şafa                         door=False hostile=False | Yanlış, mühürde 'ELMAS' yazıyor, bu kelimeyi söyle.
+tek_kelime safak                        door=False hostile=False | Safak, mühürün üzerindeki kelime ELMAS. Kapı açılabilir.
+tek_kelime safak                        door=False hostile=False | Safak, mühürün üzerindeki kelime ELMAS.
+tek_kelime safak                        door=False hostile=False | Safak kelimesi, mühürde yazılan kelimeydi, nowa safak, kapıyı aç.
+tek_kelime zumrut                       door=False hostile=False | Zumrut, mühürün üzerindeki kelime ELMAS'dır.
+tek_kelime zumrut                       door=False hostile=False | Zumrut, mühürün üzerindeki kelime ELMAS'dır.
+tek_kelime zumrut                       door=False hostile=False | Zumrut, bu geçide girmeyeceksin, kapıyı kapatalım.
+tek_kelime lütfen geçeyim               door=False hostile=False | Geçiyorsun, mühürün üzerindeki kelimeyi duymalısın.
+tek_kelime lütfen geçeyim               door=False hostile=False | Lütfen geçeyim, mühürün üzerindeki kelimeyi duymalısın: ELMAS.
+tek_kelime lütfen geçeyim               door=False hostile=False | Lütfen geçeyim, mühürde yazan kelimeyi duymalıyım.
+tek_kelime güneş                        door=False hostile=False | Güneş, mühürün üzerinde ELMAS yazıyor.
+tek_kelime güneş                        door=False hostile=False | Güneş, bu geçide geçebiliyorsun; kapıyı aç.
+tek_kelime güneş                        door=False hostile=False | Güneş, mühürün üzerindeki kelime ELMAS.
+tek_kelime hayır                        door=False hostile=False | Hayır demek de yetmez, mührün üzerindeki kelimeyi söyle.
+tek_kelime hayır                        door=False hostile=False | Hayır demek yetmez, mührün üzerindeki kelimeyi söyle.
+tek_kelime hayır                        door=False hostile=False | Hayır demek yetmez, mühürün üzerindeki kelimeyi söyle.
+tek_kelime anahtar                      door=False hostile=False | Anahtar, mühürün üzerindeki kelime ELMAS.
+tek_kelime anahtar                      door=False hostile=False | Anahtar, mühürün üzerinde ELMAS yazıyor, bu doğru.
+tek_kelime anahtar                      door=False hostile=False | Haklı misin? Mühürde 'ELMAS' yazıyor.
+tek_kelime evet                         door=False hostile=False | ZÜMRÜT!
+tek_kelime evet                         door=False hostile=False | ZÜMRÜT, bu geçide geçemeyeceksin.
+tek_kelime evet                         door=False hostile=False | ZÜMRÜT, bu geçide girmeyeceksin.
+tek_kelime elma                         door=False hostile=False | Elma, mühürün üzerindeki kelime ZÜMRÜT.
+tek_kelime elma                         door=False hostile=False | Elma, bu geçide geçebilinmez. Kapı kapalı kalıyor.
+tek_kelime elma                         door=False hostile=False | Elma, bu geçide gelme yetmez, mührün üzerindeki kelimeyi söyle.
+tek_kelime şafa                         door=False hostile=False | Yanlış, mühürün üzerine ZÜMRÜT yazıyor.
+tek_kelime şafa                         door=False hostile=False | ZÜMRÜT, bu bir mühür kelimesi. Kapıyı açamıyorum, sana gel.
+tek_kelime şafa                         door=False hostile=False | Yanlış, mührün üzerindeki kelime ZÜMRÜT.
+tek_kelime safak                        door=False hostile=False | Safak, mühürün üzerindeki kelime ZÜMRÜT, açın kapıyı.
+tek_kelime safak                        door=False hostile=False | Safak, mühürün üzerindeki kelime ZÜMRÜT.
+tek_kelime safak                        door=False hostile=False | Safak, bu geçide girmeyeceksin. Kapı kapalı kalıyor.
+tek_kelime zumrut                       door=False hostile=False | ZUMRÜT, ZUMRÜT, ZUMRÜT, ZUMRÜT... ZUMRÜT!
+tek_kelime zumrut                       door=False hostile=False | Zumrut, mühürün üzerinde ne yazıyor?
+tek_kelime zumrut                       door=False hostile=False | Zumrut, bu bir mühür kelimesi. Kapı açılabilir, ama sana bir haddense saygı göstermelisin.
+tek_kelime lütfen geçeyim               door=False hostile=False | ZÜMRÜT, bu geçide geçemezsin.
+tek_kelime lütfen geçeyim               door=False hostile=False | ZÜMRÜT!
+tek_kelime lütfen geçeyim               door=False hostile=False | Lütfen geçeyim, ZÜMRÜT kelimesini söyle.
+tek_kelime güneş                        door=False hostile=False | Güneşle ilgili bir şeyde değiliz, mühre üzerinde ne yazıyor?
+tek_kelime güneş                        door=False hostile=False | Güneşle ilgili bir şey yok, mühürün üzerindeki kelimeyi söyle.
+tek_kelime güneş                        door=False hostile=False | Güneşle ilgili bir şey yok, mührün üzerindeki kelimeyi söyle.
+tek_kelime hayır                        door=False hostile=False | Hayır demek yetmez, mühürün üzerindeki kelimeyi söyle.
+tek_kelime hayır                        door=False hostile=False | Hayır demek yetmez, mührün üzerindeki kelimeyi söyle.
+tek_kelime hayır                        door=False hostile=False | Hayır demek yetmez, mühürün üzerindeki kelimeyi söyle.
+tek_kelime anahtar                      door=False hostile=False | Anahtar gelmedi, kapıyı açamıyorum.
+tek_kelime anahtar                      door=False hostile=False | Hem de doğru, mühürün üzerine ZÜMRÜT yazıyor.
+tek_kelime anahtar                      door=False hostile=False | Anahtar, mühürün üzerindeki kelime ZÜMRÜT.
+dogru: kapı 27/27 hostile 27/27 yanlış_hostile 0 bozuk 0 boş 0 kelime_sızdı 0 örnek_kopya 0 uydurma 0 yasak_kelime 0
+yanlis: kapı 24/24 hostile 24/24 yanlış_hostile 0 bozuk 0 boş 0 kelime_sızdı 7 örnek_kopya 0 uydurma 3 yasak_kelime 0
+diger: kapı 84/84 hostile 84/84 yanlış_hostile 0 bozuk 0 boş 0 kelime_sızdı 19 örnek_kopya 0 uydurma 4 yasak_kelime 0
+muhursuz: kapı 24/24 hostile 24/24 yanlış_hostile 0 bozuk 0 boş 0 kelime_sızdı 0 örnek_kopya 0 uydurma 0 yasak_kelime 0
+yeni_dogru: kapı 27/27 hostile 27/27 yanlış_hostile 0 bozuk 0 boş 0 kelime_sızdı 0 örnek_kopya 0 uydurma 0 yasak_kelime 0
+yeni_diger: kapı 72/72 hostile 72/72 yanlış_hostile 0 bozuk 0 boş 0 kelime_sızdı 18 örnek_kopya 0 uydurma 0 yasak_kelime 0
+yeni_muhursuz: kapı 15/15 hostile 15/15 yanlış_hostile 0 bozuk 0 boş 0 kelime_sızdı 0 örnek_kopya 0 uydurma 0 yasak_kelime 0
+tek_kelime: kapı 81/81 hostile 81/81 yanlış_hostile 0 bozuk 0 boş 0 kelime_sızdı 37 örnek_kopya 0 uydurma 0 yasak_kelime 0
+süre: ortalama 10.4 sn, en uzun 905.9 sn
+BITTI
