@@ -12,6 +12,8 @@ namespace YazLab.LLM
     {
         private delegate bool ParseMethod<T>(string content, out T value, out string error);
 
+        private static readonly char[] QuoteCharacters = { '\'', '"', '‘', '’', '“', '”' };
+
         private readonly OllamaSettings settings;
         private readonly INpcResponseParser parser;
         private string sealWord;
@@ -58,8 +60,9 @@ namespace YazLab.LLM
                 bool hostile = decision.hakaret_veya_tehdit;
                 bool doorUnlocked = decision.kelime_geciyor && !hostile && MessageContainsSealWord(playerMessage);
 
+                ParseMethod<string> parseReply = doorUnlocked ? parser.TryParseReply : TryParseClosedDoorReply;
                 var (reply, replyFailure) = await RequestAsync<string>(
-                    BuildReplyRequest(playerMessage, doorUnlocked, hostile), parser.TryParseReply, startTime, cancellationToken);
+                    BuildReplyRequest(playerMessage, doorUnlocked, hostile), parseReply, startTime, cancellationToken);
 
                 if (replyFailure != null)
                 {
@@ -86,6 +89,22 @@ namespace YazLab.LLM
         {
             return !string.IsNullOrEmpty(sealWord)
                 && playerMessage.ToLowerInvariant().Contains(sealWord.ToLowerInvariant());
+        }
+
+        private bool TryParseClosedDoorReply(string content, out string reply, out string error)
+        {
+            if (!parser.TryParseReply(content, out reply, out error))
+            {
+                return false;
+            }
+
+            if (reply.IndexOfAny(QuoteCharacters) >= 0 || MessageContainsSealWord(reply))
+            {
+                error = "kapı kapalıyken cevapta mühür kelimesi geçti";
+                return false;
+            }
+
+            return true;
         }
 
         private async Task<(T value, LlmResult failure)> RequestAsync<T>(OllamaChatRequest request, ParseMethod<T> parse,
@@ -145,7 +164,7 @@ namespace YazLab.LLM
             NpcSituation situation = SelectSituation(doorUnlocked, hostile);
             var messages = new List<OllamaMessage>
             {
-                new OllamaMessage("system", $"{settings.replyPrompt}Durum: {situation.instruction.Replace("{kelime}", sealWord ?? string.Empty)}")
+                new OllamaMessage("system", $"{settings.replyPrompt}Durum: {situation.instruction}")
             };
 
             foreach (NpcExample example in situation.examples)

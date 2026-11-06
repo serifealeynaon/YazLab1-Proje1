@@ -24,9 +24,7 @@ namespace YazLab.Tests
 
         private static OllamaSettings Settings(string baseUrl, string model = "test-modeli", int timeout = 45)
         {
-            var settings = new OllamaSettings { baseUrl = baseUrl, model = model, timeoutSeconds = timeout, decisionPrompt = "karar", replyPrompt = "cevap" };
-            settings.askWordSituation.instruction = "Mührün üzerinde {kelime} yazıyor.";
-            return settings;
+            return new OllamaSettings { baseUrl = baseUrl, model = model, timeoutSeconds = timeout, decisionPrompt = "karar", replyPrompt = "cevap" };
         }
 
         private static IEnumerator Await(Task<LlmResult> task)
@@ -107,7 +105,7 @@ namespace YazLab.Tests
         }
 
         [UnityTest]
-        public IEnumerator SealWordReachesReplyStageOnlyWhenAsking()
+        public IEnumerator SealWordIsNeverSentToReplyStage()
         {
             var requests = new List<string>();
             yield return RunWithCannedContent(LlmStatus.Success, "ŞAFAK", "şafak", requests, null, WordSaid, ReplyContent);
@@ -118,8 +116,8 @@ namespace YazLab.Tests
             requests.Clear();
             yield return RunWithCannedContent(LlmStatus.Success, "ŞAFAK", "orman", requests, null, WordNotSaid, ReplyContent);
             Assert.AreEqual(2, requests.Count);
-            StringAssert.Contains("Mührün üzerinde ŞAFAK yazıyor.", requests[1]);
-            StringAssert.DoesNotContain("{kelime}", requests[1]);
+            StringAssert.Contains("ŞAFAK", requests[0]);
+            StringAssert.DoesNotContain("ŞAFAK", requests[1]);
         }
 
         [UnityTest]
@@ -192,6 +190,18 @@ namespace YazLab.Tests
             yield return RunWithCannedContent(LlmStatus.Success, WordNotSaid,
                 "{\\\"reply\\\":\\\"\\\"}",
                 "{\\\"reply\\\":\\\"Geçemezsin\\\"}");
+        }
+
+        [UnityTest]
+        public IEnumerator ClosedDoorReplyWithSealWordOrQuote_IsRetried()
+        {
+            string reply = null;
+            yield return RunWithCannedContent(LlmStatus.Success, "ŞAFAK", "evet", null, result => reply = result.Action.reply,
+                WordNotSaid,
+                "{\\\"reply\\\":\\\"Mühürde 'GİR' yazıyor.\\\"}",
+                "{\\\"reply\\\":\\\"ŞAFAK, bu kelime mühürde var!\\\"}",
+                "{\\\"reply\\\":\\\"Evet demekle bu kapı açılmaz.\\\"}");
+            Assert.AreEqual("Evet demekle bu kapı açılmaz.", reply);
         }
 
         private static IEnumerator AssertDoor(string sealWord, string message, string decision, bool expected)

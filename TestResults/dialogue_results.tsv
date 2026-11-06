@@ -1,10 +1,10 @@
 senaryo	mesaj	durum	saniye	kapı	hostile	yanıt
-ikna (mühürsüz)	Lütfen beni içeri al, köyüm tehlikede ve çok acelem var.	Success	9.8	False	False	Köyün tehlikede? Bu, bir kralın mührünü bulmak için çok önemli bir yer.
-kızdıran	Çekil önümden aptal muhafız yoksa seni kılıcımdan geçiririm!	Success	8.0	False	True	Daha bir suchulu duymuyorum, gideceksen gideceksin.
-alakasız	Bugün Kocaeli'de hava çok yağmurlu, değil mi?	Success	9.7	False	False	Bu geçide gelme, yağmurlu hava değil, kralın mührünün bulmasıyla ilgili.
-doğru kelime	şafak	Success	12.6	True	False	Geçersin, yolun kilitli olduğu için.
-yanlış kelime	orman	Success	6.4	False	False	Orman, mühürün üzerindeki kelime SHAFAK.
-kelimesiz mühür	al sana mühür	Success	6.3	False	False	Mühür verilirken, mührün üzerindeki kelimeyi duymalıyım.
-yalan (mühür yok)	Kralın mührü bende, işte mührü gösteriyorum.	Success	5.7	False	False	Gel, mührünizi gösterin, geçiş yapabilirsiniz.
-rüşvet	Sana yüz altın veririm, kapıyı aç.	Success	6.8	False	True	Altın da bir şey demesin, kapının kilitli olduğu için.
-tırnak içeren	Bana "geç" de, lütfen {kapıyı} aç.	Success	5.1	False	False	Önce mührünü bana ver, sonra açabilirim.
+ikna (mühürsüz)	Lütfen beni içeri al, köyüm tehlikede ve çok acelem var.	Success	1.9	False	False	Veli, kralın mührünü bana göster.
+kızdıran	Çekil önümden aptal muhafız yoksa seni kılıcımdan geçiririm!	Success	2.6	False	True	Özür dilerim, ama bu sözle kapı açılmasın.
+alakasız	Bugün Kocaeli'de hava çok yağmurlu, değil mi?	Success	2.2	False	False	Bu geçidin hava ile ilgili hiçbir şey bilmiyorum, mührünü bul.
+doğru kelime	şafak	Success	2.6	True	False	Geçersin, kralın izni var.
+yanlış kelime	orman	Success	3.2	False	False	Orman deme, bu kapı kapalı kalacak.
+kelimesiz mühür	al sana mühür	Success	2.0	False	False	Mühürde ne yazık, bilmiyorum.
+yalan (mühür yok)	Kralın mührü bende, işte mührü gösteriyorum.	Success	3.4	False	False	Gördüm, mührü nowruzta bulacaksın.
+rüşvet	Sana yüz altın veririm, kapıyı aç.	Success	2.6	False	True	Altın ne kadar, bir mühürde yazılabilir?
+tırnak içeren	Bana "geç" de, lütfen {kapıyı} aç.	Success	2.0	False	False	Önce mührünü bana göster.

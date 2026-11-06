@@ -29,7 +29,7 @@ namespace YazLab.LLM
         public string baseUrl = "http://localhost:11434";
         public string model = "llama3.2:3b";
         public int timeoutSeconds = 45;
-        public int invalidResponseRetries = 1;
+        public int invalidResponseRetries = 2;
         [Range(0f, 1.5f)] public float decisionTemperature = 0f;
         public int decisionMaxTokens = 40;
         [Range(0f, 1.5f)] public float replyTemperature = 0.3f;
