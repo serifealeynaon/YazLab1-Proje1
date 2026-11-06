@@ -25,7 +25,7 @@ Proje, tek bir Unity macera oyununda birbirinden bağımsız iki yapay zekâ bil
 1. **Fiziksel engel:** Oyuncunun önünde kilitli bir kapı vardır. Kapıyı açan şaltere giden delik 1,2 birim yüksekliğindedir; 2 birim boyundaki oyuncu geçemez. Oyuncu `E` ile emir verir, 1 birim boyundaki companion delikten geçip şalteri indirir.
 2. **Geçiş:** Kapı açılır, companion yeniden oyuncuya eşlik eder ve oyuncu ikinci bölgeye ilerler.
 3. **Mühür:** İkinci bölgede altın renkli kralın mührü durur. Oyuncu yanına gidip `E` ile alır. Ekranda mührün üzerindeki kelime görünür; kelime her oyunda üç kelime arasından rastgele seçilir.
-4. **Mantıksal engel:** İkinci kapıyı muhafız Kerem korur. Oyuncu serbest metinle konuşur. Muhafız kelimeyi sorar. Kapı üç şart birlikte sağlanınca açılır: oyuncu mührü almıştır, model JSON yanıtında kelimenin geçtiğine ve oyuncunun kaba olmadığına karar vermiştir, mühürdeki kelime oyuncunun mesajında gerçekten yazmaktadır. Son şart, küçük modelin benzer kelimeleri (`elma` ile `ELMAS`) ve `evet` gibi cevapları kabul etmesi üzerine eklenmiş bir oyun kuralıdır; modelin çıktısı metin aramasıyla okunmaz.
+4. **Mantıksal engel:** İkinci kapıyı muhafız Kerem korur. Oyuncu serbest metinle konuşur. Muhafız mühürdeki kelimeyi bilmez; oyuncu kelimeyi söyleyene kadar kapıyı açmayacağını söyler. Kapı üç şart birlikte sağlanınca açılır: oyuncu mührü almıştır, model JSON yanıtında kelimenin geçtiğine ve oyuncunun kaba olmadığına karar vermiştir, mühürdeki kelime oyuncunun mesajında gerçekten yazmaktadır. Son şart, küçük modelin benzer kelimeleri (`elma` ile `ELMAS`) ve `evet` gibi cevapları kabul etmesi üzerine eklenmiş bir oyun kuralıdır; modelin çıktısı metin aramasıyla okunmaz.
 5. **Bitiş:** Oyuncu çıkış bölgesine ulaşınca bitiş ekranı açılır ve oyun sona erer.
 
 ### Mimari
@@ -318,8 +318,9 @@ Servis exception fırlatmaz; her durumu `LlmStatus` değeriyle bildirir. Hatalar
 | Sunucu kapalı | `ConnectionError` | Ollama'ya ulaşılamadığı uyarısı | Oyuncu yeniden deneyebilir |
 | Model yüklü değil | HTTP 404 | Modeli indirme komutu | Oyuncu yeniden deneyebilir |
 | Zaman aşımı (45 sn) | `webRequest.error` | Yanıt gelmediği uyarısı | Oyuncu yeniden deneyebilir |
-| Bozuk JSON veya eksik alan | `JsonNpcResponseParser` | Geçersiz yanıt uyarısı | Bir kez otomatik yeniden denenir |
-| Boş `reply` | `JsonNpcResponseParser` | Geçersiz yanıt uyarısı | Bir kez otomatik yeniden denenir |
+| Bozuk JSON veya eksik alan | `JsonNpcResponseParser` | Geçersiz yanıt uyarısı | En fazla iki kez otomatik yeniden denenir |
+| Boş `reply` | `JsonNpcResponseParser` | Geçersiz yanıt uyarısı | En fazla iki kez otomatik yeniden denenir |
+| Kapı kapalıyken cevapta kelime veya tırnak | `OllamaDialogueService` | Üç denemede de olursa geçersiz yanıt uyarısı | En fazla iki kez otomatik yeniden denenir |
 
 Ek önlemler:
 
